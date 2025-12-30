@@ -11,75 +11,26 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-
+    
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #e2e8f0;
-        }
-
-        .glass {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .fade-in {
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 3px;
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+        
         /* Badges de Dificuldade */
-        .badge-facil {
-            background-color: #065f46;
-            color: #6ee7b7;
-            border: 1px solid #059669;
-        }
-
-        .badge-medio {
-            background-color: #713f12;
-            color: #fcd34d;
-            border: 1px solid #d97706;
-        }
-
-        .badge-dificil {
-            background-color: #7f1d1d;
-            color: #fca5a5;
-            border: 1px solid #dc2626;
-        }
+        .badge-facil { background-color: #065f46; color: #6ee7b7; border: 1px solid #059669; }
+        .badge-medio { background-color: #854d0e; color: #fcd34d; border: 1px solid #ca8a04; }
+        .badge-dificil { background-color: #7f1d1d; color: #fca5a5; border: 1px solid #dc2626; }
     </style>
 </head>
 
@@ -90,95 +41,273 @@
         const { useState, useEffect, useMemo } = React;
 
         // ==========================================================================================
-        // 1. BANCO DE DADOS
+        // 1. BANCO DE DADOS E CONTEÚDO (PDF T2 + PESQUISA)
         // ==========================================================================================
-
+        
         const QUOTES = [
             "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
             "A persistência é o caminho do êxito.",
             "Não espere por oportunidades, crie-as.",
-            "O único lugar onde o sucesso vem antes do trabalho é no dicionário.",
-            "Acredite que você pode, assim você já está no meio do caminho.",
             "Disciplina é a ponte entre metas e realizações.",
             "Investir em conhecimento rende sempre os melhores juros."
         ];
 
+        // --- MATERIAL DE APOIO (TEXTO CORRIDO PARA ABA "MATERIAL") ---
         const MATERIAL_DB = {
             CPA: [
-                { title: "Fluxo Circular da Renda", content: "Modelo que explica a circulação de dinheiro e bens. Famílias ofertam trabalho e consomem; Empresas produzem e investem; Governo arrecada e gasta; Mercado intermedia. (Aula 1)" },
-                { title: "Sistema Financeiro Nacional", content: "Normativos (CMN, CNSP, CNPC) apenas mandam. Supervisores (Bacen, CVM, Susep, Previc) fiscalizam. Operadores (Bancos, Bolsa) executam. O CMN é o órgão máximo." },
-                { title: "Conceitos Econômicos", content: "PIB (Soma de bens/serviços finais). Inflação (IPCA = Meta; IGP-M = Aluguel). Câmbio PTAX (Média do mercado calculada pelo Bacen). Taxa Selic Meta (Definida pelo COPOM) vs Selic Over (Mercado)." },
-                { title: "Políticas Econômicas", content: "Fiscal (Impostos/Gastos - Superávit/Déficit Primário). Monetária (Controle de liquidez via Compulsório, Redesconto, Open Market). Cambial (Swaps, Reservas)." },
-                { title: "Renda Fixa & Duration", content: "Duration de Macaulay: Prazo médio de recebimento (Risco). Títulos: LFT (Pós), LTN (Pré), NTN-B (IPCA+). FGC garante R$ 250k." }
+                { title: "Fluxo Circular da Renda", content: "Base da Economia. Famílias ofertam trabalho e consomem; Empresas produzem e investem; Governo arrecada e regula. Essência: Produção gera renda → renda gera consumo → consumo gera produção." },
+                { title: "Sistema Financeiro Nacional (SFN)", content: "Normativos (MANDAM): CMN (Moeda/Crédito), CNSP (Seguros). Supervisores (FISCALIZAM): Bacen (Bancos), CVM (Bolsa/Fundos), Susep (Seguros). Operadores (EXECUTAM): Bancos, Corretoras." },
+                { title: "Conceitos Econômicos", content: "PIB: Soma de bens finais. Inflação: IPCA (Meta) vs IGP-M (Aluguel). Câmbio PTAX (Média Bacen). Selic: Meta (Copom) vs Over (Mercado). Taxa Selic alta = Crédito caro." },
+                { title: "Políticas Econômicas", content: "Fiscal (Impostos/Gastos). Monetária (Controle de liquidez via Selic/Compulsório). Cambial (Swaps/Reservas). Macete: Controle da inflação é responsabilidade da Política Monetária." },
+                { title: "Renda Fixa & Duration", content: "Pré (Risco de juros sobe/preço cai). Pós (Proteção). Duration: Mede sensibilidade aos juros. Quanto maior o prazo, maior a duration e o risco." }
             ],
             C_PRO_R: [
-                { title: "Suitability & Perfil", content: "Análise obrigatória do perfil do cliente (Conservador, Moderado, Arrojado). O objetivo é garantir que o produto vendido seja adequado ao risco que o cliente tolera." },
-                { title: "Finanças Comportamentais", content: "Vieses: Ancoragem (Preço de referência), Aversão à Perda (Dor da perda > Prazer do ganho), Efeito Manada (Seguir a maioria), Excesso de Confiança." },
-                { title: "Previdência (PGBL x VGBL)", content: "PGBL: Abate 12% na completa (IR sobre total). VGBL: Ideal para simplificada (IR sobre rendimento). Tabela Regressiva (cai pra 10% após 10 anos) vs Progressiva (conforme salário)." },
-                { title: "Tributação de Investimentos", content: "Ações: 15% (Swing) e 20% (Day Trade). Fundos de Ações: 15% fixo. Come-cotas (Maio/Nov) em fundos RF/Multimercado: 15% (Longo Prazo) ou 20% (Curto Prazo)." }
+                { title: "Suitability (Perfil)", content: "Espinha dorsal do atendimento. Analisa Objetivo, Prazo e Tolerância a Risco. Produto inadequado gera processo. O foco é venda responsável, não apenas bater meta." },
+                { title: "Finanças Comportamentais", content: "O investidor não é racional. Vieses: Aversão à Perda (Dor > Prazer), Ancoragem (Preço passado), Efeito Manada (Seguir maioria), Excesso de Confiança." },
+                { title: "Previdência Privada", content: "PGBL (Abate 12% na completa, IR sobre total). VGBL (Ideal para simplificada/sucessão, IR sobre rendimento). Regimes: Progressivo (Salário) vs Regressivo (Tempo - 10% após 10 anos)." },
+                { title: "Tributação", content: "Ações: 15% (Swing), 20% (Day Trade). Fundos: Come-cotas (Mai/Nov). Curto Prazo (20%) vs Longo Prazo (15%). FIIs: 20% no ganho de capital na venda." }
             ],
             C_PRO_I: [
-                { title: "Acordo de Basileia", content: "Basileia I, II e III. Foco em exigência de capital mínimo para cobrir Risco de Crédito, Mercado e Operacional. O Índice de Basileia mede a solvência do banco." },
-                { title: "Derivativos (Hedge)", content: "Opções (Call/Put), Futuros, Termo e Swaps. Usados para proteção (Hedge) ou alavancagem. Titular tem direito, Lançador tem obrigação." },
-                { title: "Gestão de Risco", content: "VaR (Value at Risk): Perda máxima esperada. Stress Test: Cenários extremos. Backtesting: Validar o modelo. Índice de Sharpe: Retorno excedente sobre volatilidade." },
-                { title: "Fundos Estruturados", content: "FIDC (Direitos Creditórios - Cotas Sênior/Subordinada), FII (Imobiliário - Isento IR mensal PF), FIP (Participações). Marcação a Mercado (MaM) é obrigatória." }
+                { title: "Acordo de Basileia", content: "Regra global para evitar quebra de bancos. Exige Capital Mínimo (Índice de Basileia) para cobrir riscos de Crédito, Mercado e Operacional. Índice alto = Banco sólido." },
+                { title: "Derivativos", content: "Ferramentas de Proteção (Hedge) e Alavancagem. Opções (Call/Put), Futuros, Swaps. Lembre-se: Hedge não é para ganhar dinheiro, é para travar preço e proteger." },
+                { title: "Gestão de Risco", content: "VaR (Perda máxima esperada). Stress Test (Cenário de catástrofe). Sharpe (Retorno por risco). Retorno absoluto não importa, o que vale é o ajustado ao risco." },
+                { title: "Fundos Estruturados", content: "FIDC (Direitos Creditórios), FII (Imobiliário), FIP (Participações). Produtos complexos, geralmente para investidores qualificados, com menor liquidez." }
             ]
         };
 
+        // --- MAPA MENTAL (ESTRUTURA HIERÁRQUICA PARA ABA "MAPA") ---
+        const MINDMAP_DB = {
+            CPA: [
+                {
+                    title: "1️⃣ Fluxo Circular da Renda",
+                    detail: "Base da Economia: Produção gera renda → renda gera consumo → consumo gera produção.",
+                    points: [
+                        "Famílias: Donas dos fatores (trabalho/capital), recebem renda e consomem.",
+                        "Empresas: Produzem bens, geram empregos e investem.",
+                        "Governo: Arrecada impostos, redistribui e regula.",
+                        "Mercado: Conecta poupadores e investidores."
+                    ]
+                },
+                {
+                    title: "2️⃣ Sistema Financeiro Nacional (SFN)",
+                    detail: "Arquitetura institucional: Quem manda, quem fiscaliza e quem opera.",
+                    points: [
+                        "Normativos (MANDAM): CMN (Moeda/Crédito), CNSP (Seguros), CNPC (Previdência).",
+                        "Supervisores (FISCALIZAM): Bacen (Bancos), CVM (Bolsa/Fundos), Susep (Seguros), Previc (Fundos Pensão).",
+                        "Operadores (EXECUTAM): Bancos, Corretoras, B3, Seguradoras."
+                    ]
+                },
+                {
+                    title: "3️⃣ Conceitos Econômicos",
+                    detail: "Indicadores vitais para o mercado.",
+                    points: [
+                        "PIB: Soma de bens finais. Mede crescimento, não qualidade de vida.",
+                        "Inflação: IPCA (Meta oficial) vs IGP-M (Aluguel/Contratos).",
+                        "Câmbio: PTAX (Média Bacen). Dólar alto = exportação feliz, inflação sobe.",
+                        "Selic: Meta (Copom) vs Over (Mercado). Controla inflação/crédito."
+                    ]
+                },
+                {
+                    title: "4️⃣ Políticas Econômicas",
+                    detail: "As ferramentas do governo para pilotar a economia.",
+                    points: [
+                        "Fiscal (Governo): Impostos e Gastos (Superávit/Déficit).",
+                        "Monetária (Bacen): Selic, Compulsório, Redesconto, Open Market.",
+                        "Cambial (Bacen): Swaps Cambiais e Reservas Internacionais."
+                    ]
+                },
+                {
+                    title: "5️⃣ Renda Fixa & Duration",
+                    detail: "Empréstimo de dinheiro em troca de juros.",
+                    points: [
+                        "Títulos: LFT (Pós), LTN (Pré), NTN-B (IPCA+).",
+                        "Risco: Pré (Juros sobem = PU cai). Pós (Proteção).",
+                        "Duration: Prazo médio de recebimento. Maior prazo = Maior risco."
+                    ]
+                }
+            ],
+            C_PRO_R: [
+                {
+                    title: "6️⃣ Suitability (Perfil)",
+                    detail: "Espinha dorsal do atendimento. Venda responsável.",
+                    points: [
+                        "Análise Obrigatória: Objetivo, Prazo, Tolerância a Risco.",
+                        "API: Análise de Perfil do Investidor.",
+                        "Risco Legal: Produto inadequado gera processo e multa."
+                    ]
+                },
+                {
+                    title: "7️⃣ Finanças Comportamentais",
+                    detail: "O investidor não é racional. Vieses cognitivos.",
+                    points: [
+                        "Aversão à Perda: Dor da perda é 2x maior que prazer do ganho.",
+                        "Ancoragem: Fixar-se em preço/taxa passada irrelevante.",
+                        "Efeito Manada: Seguir a maioria sem análise.",
+                        "Excesso de Confiança: Achar que sabe mais que o mercado."
+                    ]
+                },
+                {
+                    title: "8️⃣ Previdência Privada",
+                    detail: "Sucessão + Imposto + Longo Prazo.",
+                    points: [
+                        "PGBL: Abate 12% na completa. IR sobre o TOTAL (Principal + Rendimento).",
+                        "VGBL: Ideal para simplificada/sucessão. IR só sobre o RENDIMENTO.",
+                        "Regimes: Progressivo (Salário) vs Regressivo (Tempo - 10% após 10 anos)."
+                    ]
+                },
+                {
+                    title: "9️⃣ Tributação de Investimentos",
+                    detail: "O Leão é sócio. Saber as regras é vital.",
+                    points: [
+                        "Ações: 15% (Swing), 20% (Day Trade). Isenção 20k/mês (Swing).",
+                        "Fundos: Come-cotas (Mai/Nov). Curto (20%) vs Longo (15%).",
+                        "FIIs: 20% no ganho de capital. Rendimentos isentos (sob regras)."
+                    ]
+                }
+            ],
+            C_PRO_I: [
+                {
+                    title: "🔟 Acordo de Basileia",
+                    detail: "Regra global anti-quebra de bancos.",
+                    points: [
+                        "Pilar 1: Capital Mínimo (Índice de Basileia).",
+                        "Pilar 2: Supervisão Bancária.",
+                        "Pilar 3: Transparência e Disciplina de Mercado.",
+                        "Foco: Riscos de Crédito, Mercado e Operacional."
+                    ]
+                },
+                {
+                    title: "1️⃣1️⃣ Derivativos",
+                    detail: "Ferramentas de Proteção (Hedge) e Alavancagem.",
+                    points: [
+                        "Opções: Call (Direito Compra) vs Put (Direito Venda). Titular x Lançador.",
+                        "Futuros: Contratos padronizados (Dólar, Índice, DI). Ajuste diário.",
+                        "Swaps: Troca de indexadores (ex: CDI x Dólar) para proteção.",
+                        "Conceito: Hedge não é para ganhar, é para travar preço."
+                    ]
+                },
+                {
+                    title: "1️⃣2️⃣ Gestão de Risco",
+                    detail: "Retorno só existe ajustado ao risco.",
+                    points: [
+                        "VaR (Value at Risk): Perda máxima esperada em N dias.",
+                        "Stress Test: Cenário de catástrofe (Cisne Negro).",
+                        "Sharpe: Retorno excedente por unidade de volatilidade.",
+                        "Backtesting: Validar se o modelo estatístico funciona."
+                    ]
+                },
+                {
+                    title: "1️⃣3️⃣ Fundos Estruturados",
+                    detail: "Produtos complexos para investidores qualificados.",
+                    points: [
+                        "FIDC: Direitos Creditórios (Recebíveis). Cotas Sênior vs Subordinada.",
+                        "FII: Imobiliário (Tijolo/Papel). Renda passiva.",
+                        "FIP: Participações em empresas (Private Equity). Iliquidez."
+                    ]
+                }
+            ]
+        };
+
+        // BANCO DE QUESTÕES EXPANDIDO (PDF T2)
         const QUESTION_TEMPLATES = {
             CPA: [
-                { l: 'Fácil', q: "Qual o órgão normativo máximo do SFN?", opts: ["Bacen", "CVM", "CMN", "BB"], a: 2, exp: "O Conselho Monetário Nacional (CMN) é o órgão superior que dita as regras." },
-                { l: 'Fácil', q: "Quem calcula e divulga o IPCA?", opts: ["FGV", "IBGE", "Bacen", "Fipe"], a: 1, exp: "O IBGE é responsável pelo índice oficial de inflação (IPCA)." },
-                { l: 'Fácil', q: "A taxa Selic Meta é definida pelo:", opts: ["Mercado", "Bacen", "COPOM", "Presidente"], a: 2, exp: "O COPOM define a meta da Selic a cada 45 dias." },
-                { l: 'Médio', q: "No Fluxo Circular da Renda, as Famílias:", opts: ["Arrecadam impostos", "Ofertam trabalho e consomem", "Emitem moeda", "Fiscalizam bancos"], a: 1, exp: "As famílias fornecem mão de obra e consomem bens/serviços das empresas." },
-                { l: 'Médio', q: "A Taxa PTAX, calculada pelo Bacen, representa:", opts: ["A inflação do dólar", "A média das taxas de câmbio do mercado", "O juro americano", "O custo do turismo"], a: 1, exp: "PTAX é a média ponderada das taxas de câmbio praticadas no mercado interbancário." },
-                { l: 'Médio', q: "O que acontece com o preço de um título pré-fixado se o juro sobe?", opts: ["Sobe", "Cai", "Fica igual", "Zera"], a: 1, exp: "Na Marcação a Mercado, se o juro sobe, o Preço Unitário (PU) do título cai." },
-                { l: 'Difícil', q: "A Duration de Macaulay mede:", opts: ["O vencimento do título", "O risco de crédito", "A sensibilidade do preço aos juros (prazo médio)", "A liquidez"], a: 2, exp: "Duration é o prazo médio ponderado de recebimento dos fluxos, indicando o risco de mercado." },
-                { l: 'Difícil', q: "Sobre o Acordo de Basileia, o foco principal é:", opts: ["Regular o câmbio", "Garantir solvência via capital mínimo", "Reduzir a inflação", "Aumentar o crédito"], a: 1, exp: "Basileia exige que bancos tenham Patrimônio de Referência compatível com os riscos assumidos." }
+                // FÁCIL
+                { l: 'Fácil', q: "Qual o órgão normativo máximo do SFN?", opts: ["Bacen", "CVM", "CMN", "BB"], a: 2, exp: "O Conselho Monetário Nacional (CMN) dita as regras, não executa." },
+                { l: 'Fácil', q: "Quem calcula e divulga o IPCA (Inflação Oficial)?", opts: ["FGV", "IBGE", "Bacen", "Fipe"], a: 1, exp: "O IBGE calcula o IPCA. A FGV calcula o IGP-M." },
+                { l: 'Fácil', q: "A Taxa Selic Meta é definida pelo:", opts: ["Mercado", "Bacen", "COPOM", "Presidente"], a: 2, exp: "O Comitê de Política Monetária (COPOM) define a meta a cada 45 dias." },
+                { l: 'Fácil', q: "O FGC garante depósitos até:", opts: ["R$ 100 mil", "R$ 250 mil", "R$ 1 milhão", "Sem limite"], a: 1, exp: "Garantia de até R$ 250.000 por CPF por instituição financeira." },
+                { l: 'Fácil', q: "Quem fiscaliza os Fundos de Investimento?", opts: ["Bacen", "CVM", "Susep", "Previc"], a: 1, exp: "A CVM (Comissão de Valores Mobiliários) fiscaliza o mercado de capitais e fundos." },
+                { l: 'Fácil', q: "O PIB (Produto Interno Bruto) é a soma de:", opts: ["Bens intermediários", "Bens e serviços finais", "Exportações apenas", "Lucro das empresas"], a: 1, exp: "PIB considera apenas bens e serviços FINAIS para evitar dupla contagem." },
+                { l: 'Fácil', q: "CDB é um título emitido por:", opts: ["Governo", "Bancos", "Empresas S.A.", "Seguradoras"], a: 1, exp: "Certificado de Depósito Bancário é emitido por bancos para captar recursos." },
+
+                // MÉDIO
+                { l: 'Médio', q: "No Fluxo Circular da Renda, as Famílias são responsáveis por:", opts: ["Emitir moeda", "Ofertar trabalho e consumir", "Arrecadar impostos", "Regular o mercado"], a: 1, exp: "Famílias vendem trabalho e compram bens. Empresas compram trabalho e vendem bens." },
+                { l: 'Médio', q: "A Taxa PTAX, calculada pelo Bacen, representa:", opts: ["A inflação do dólar", "A média das taxas de câmbio do mercado", "O juro do cartão", "O custo do ouro"], a: 1, exp: "PTAX é a média ponderada das taxas de câmbio praticadas no mercado interbancário." },
+                { l: 'Médio', q: "Se a taxa de juros de mercado SOBE, o preço (PU) de um título pré-fixado:", opts: ["Sobe", "Cai", "Fica igual", "Zera"], a: 1, exp: "Relação inversa: Juro sobe = Preço cai (Marcação a Mercado)." },
+                { l: 'Médio', q: "No sistema de amortização SAC, as prestações são:", opts: ["Crescentes", "Decrescentes", "Fixas", "Aleatórias"], a: 1, exp: "No SAC (Sistema de Amortização Constante), a amortização é fixa, juros caem, logo a parcela cai." },
+                { l: 'Médio', q: "O que é 'Spread Bancário'?", opts: ["Lucro líquido do banco", "Diferença entre custo de captação e taxa de empréstimo", "Imposto sobre cheque", "Taxa do cartão"], a: 1, exp: "Spread é a diferença entre o que o banco paga para captar dinheiro e o que cobra para emprestar." },
+                { l: 'Médio', q: "Sobre Política Monetária Contracionista, o BC deve:", opts: ["Comprar títulos", "Reduzir compulsório", "Vender títulos (Open Market)", "Baixar Selic"], a: 2, exp: "Vender títulos retira dinheiro de circulação, desaquecendo a economia e controlando inflação." },
+                { l: 'Médio', q: "Debêntures Incentivadas são isentas de IR para PF pois:", opts: ["São do governo", "Financiam infraestrutura", "Têm garantia real", "São de curto prazo"], a: 1, exp: "A Lei 12.431 isenta IR para incentivar obras de infraestrutura." },
+
+                // DIFÍCIL
+                { l: 'Difícil', q: "A Duration de Macaulay é uma medida de:", opts: ["Liquidez", "Risco de Crédito", "Prazo médio e sensibilidade aos juros", "Rentabilidade passada"], a: 2, exp: "Duration mede o tempo médio para recuperar o investimento e a sensibilidade do preço às taxas." },
+                { l: 'Difícil', q: "O objetivo principal do Acordo de Basileia é:", opts: ["Controlar a inflação", "Garantir solvência bancária via capital mínimo", "Regular o câmbio", "Baixar os juros"], a: 1, exp: "Basileia exige que bancos tenham Patrimônio de Referência compatível com os riscos assumidos." },
+                { l: 'Difícil', q: "A Taxa Selic OVER é definida por:", opts: ["Meta do Copom", "Média das operações lastreadas em títulos públicos", "Decreto presidencial", "Média dos empréstimos privados"], a: 1, exp: "Selic Over é a taxa efetiva praticada no mercado interbancário com lastro em LFTs." },
+                { l: 'Difícil', q: "No Sistema PRICE (Tabela Price), a amortização é:", opts: ["Constante", "Decrescente", "Crescente", "Nula"], a: 2, exp: "Na Price, a parcela é fixa. Como os juros (sobre o saldo devedor) caem, a parte de amortização sobe." },
+                { l: 'Difícil', q: "Uma LFT (Tesouro Selic) tem ágio se:", opts: ["Taxa negociada < Taxa Selic", "Taxa negociada > Taxa Selic", "Taxa for negativa", "Não existe ágio"], a: 0, exp: "Se a taxa negociada for menor que a Selic (ex: Selic - 0,01%), o título está sendo vendido com ágio (mais caro)." }
             ],
             C_PRO_R: [
-                { l: 'Fácil', q: "Suitability é o processo de:", opts: ["Lavagem de dinheiro", "Verificar adequação do produto ao perfil", "Cobrança de IR", "Emissão de ações"], a: 1, exp: "É a verificação obrigatória se o investimento condiz com o perfil de risco do cliente." },
-                { l: 'Fácil', q: "Para abater 12% na declaração completa do IR, usa-se:", opts: ["VGBL", "CDB", "PGBL", "LCI"], a: 2, exp: "O PGBL permite o diferimento fiscal de até 12% da renda bruta tributável." },
-                { l: 'Médio', q: "O viés da Ancoragem ocorre quando o investidor:", opts: ["Segue a manada", "Se fixa a um preço/valor de referência passado", "Tem medo de perder", "Opera demais"], a: 1, exp: "Ancoragem é a dependência excessiva da primeira informação (preço âncora) para decidir." },
-                { l: 'Médio', q: "A alíquota mínima de 10% na Tabela Regressiva exige prazo de:", opts: ["2 anos", "5 anos", "8 anos", "10 anos ou mais"], a: 3, exp: "Na tabela regressiva, as alíquotas caem a cada 2 anos, chegando a 10% após 10 anos." },
-                { l: 'Difícil', q: "No planejamento sucessório, o VGBL é vantajoso pois:", opts: ["Não tem taxa de adm", "Geralmente não entra em inventário", "É isento de IR sempre", "Garante rentabilidade"], a: 1, exp: "Em muitos estados, o VGBL é considerado seguro de pessoa e transmitido diretamente aos beneficiários." },
-                { l: 'Difícil', q: "Um cliente com aversão à perda deve evitar:", opts: ["LFT", "CDB de grande banco", "Derivativos especulativos", "Fundo DI"], a: 2, exp: "Aversão à perda é um viés emocional; produtos voláteis como derivativos causam dor desproporcional." }
+                // FÁCIL
+                { l: 'Fácil', q: "O processo de Suitability visa:", opts: ["Garantir lucro", "Verificar adequação do produto ao perfil", "Cobrar taxas", "Evitar lavagem de dinheiro"], a: 1, exp: "É a verificação obrigatória para garantir que o cliente entenda e tolere os riscos." },
+                { l: 'Fácil', q: "Para abater 12% na declaração completa do IR, usa-se:", opts: ["VGBL", "CDB", "PGBL", "LCI"], a: 2, exp: "O PGBL permite diferir o IR de até 12% da renda bruta tributável anual." },
+                { l: 'Fácil', q: "Investidor 'Conservador' prioriza:", opts: ["Alta rentabilidade", "Segurança e Liquidez", "Risco cambial", "Ações"], a: 1, exp: "O conservador tem baixa tolerância a risco e prefere preservar o capital." },
+
+                // MÉDIO
+                { l: 'Médio', q: "O viés da Ancoragem ocorre quando o investidor:", opts: ["Segue a maioria", "Se fixa a um preço/valor de referência passado", "Tem medo de perder", "Opera demais"], a: 1, exp: "Ancoragem é a dependência excessiva da primeira informação (preço âncora) para decidir." },
+                { l: 'Médio', q: "A Tabela Regressiva de IR atinge a alíquota mínima de 10% após:", opts: ["2 anos", "5 anos", "8 anos", "10 anos"], a: 3, exp: "As alíquotas caem a cada 2 anos, começando em 35% e chegando a 10% após 10 anos." },
+                { l: 'Médio', q: "O 'Come-Cotas' em fundos de Longo Prazo cobra:", opts: ["20% e 15%", "15% (maio/nov)", "22,5%", "Isento"], a: 1, exp: "Fundos de Longo Prazo sofrem antecipação de 15%. Curto Prazo é 20%." },
+                { l: 'Médio', q: "O Efeito Manada é caracterizado por:", opts: ["Analisar balanços", "Seguir a decisão da maioria sem análise", "Medo de perder", "Excesso de trocas"], a: 1, exp: "É o comportamento de imitar as ações de um grupo maior, ignorando informações individuais." },
+                
+                // DIFÍCIL
+                { l: 'Difícil', q: "No planejamento sucessório, o VGBL é vantajoso pois:", opts: ["Não tem taxa de adm", "Geralmente não entra em inventário", "É isento de IR sempre", "Garante rentabilidade"], a: 1, exp: "Por ter natureza de seguro, o VGBL é transmitido diretamente aos beneficiários com liquidez rápida." },
+                { l: 'Difícil', q: "Investidor com 'Aversão à Perda' sente:", opts: ["Prazer igual ao ganho", "Dor da perda 2x maior que prazer do ganho", "Indiferença", "Vontade de arriscar mais"], a: 1, exp: "Teoria da Perspectiva: a dor da perda é psicologicamente muito mais forte que a alegria do ganho equivalente." },
+                { l: 'Difícil', q: "A portabilidade de Previdência permite:", opts: ["Mudar de PGBL para VGBL", "Mudar de Tabela Regressiva para Progressiva", "Mudar de fundo sem pagar IR", "Sacar sem imposto"], a: 2, exp: "A portabilidade permite trocar de fundo/seguradora sem resgate (sem IR), mas não permite trocar o regime tributário (Progressivo p/ Regressivo pode, o inverso não) ou tipo (PGBL/VGBL)." }
             ],
             C_PRO_I: [
-                { l: 'Fácil', q: "O titular de uma Opção de Compra (CALL) tem:", opts: ["A obrigação de comprar", "O direito de comprar", "A obrigação de vender", "O direito de vender"], a: 1, exp: "Quem compra a CALL (Titular) adquire o DIREITO de comprar o ativo-objeto." },
-                { l: 'Fácil', q: "O Fundo Garantidor de Crédito (FGC) não cobre:", opts: ["CDB", "LCI", "Debêntures", "Poupança"], a: 2, exp: "Debêntures são títulos de crédito corporativo (risco da empresa), sem garantia do FGC." },
-                { l: 'Médio', q: "O Índice de Sharpe calcula:", opts: ["Retorno absoluto", "Risco sistêmico", "Retorno excedente sobre volatilidade", "Correlação"], a: 2, exp: "Sharpe = (Retorno do Fundo - Risk Free) / Desvio Padrão. Mede eficiência." },
-                { l: 'Médio', q: "Em um FIDC, a cota que absorve prejuízos primeiro é a:", opts: ["Sênior", "Mezanino", "Subordinada", "Preferencial"], a: 2, exp: "A cota Subordinada funciona como um 'colchão' de proteção para as cotas Sênior." },
-                { l: 'Difícil', q: "Para proteção (Hedge) contra alta do Dólar, uma empresa deve:", opts: ["Vender Dólar Futuro", "Comprar Dólar Futuro ou Call de Dólar", "Vender Put de Dólar", "Comprar Título Público"], a: 1, exp: "Quem tem dívida em dólar (passivo) precisa comprar dólar. Para travar o preço, compra Dólar Futuro." },
-                { l: 'Difícil', q: "O VaR (Value at Risk) estima:", opts: ["O ganho médio", "A perda máxima esperada com dada confiança", "O desvio padrão", "A duration"], a: 1, exp: "VaR é uma medida estatística da perda máxima potencial em condições normais de mercado." }
+                // FÁCIL
+                { l: 'Fácil', q: "O titular de uma Opção de Compra (CALL) tem:", opts: ["A obrigação de comprar", "O direito de comprar", "A obrigação de vender", "O direito de vender"], a: 1, exp: "Quem compra a CALL (Titular) adquire o DIREITO de comprar o ativo pelo preço de exercício (Strike)." },
+                { l: 'Fácil', q: "Debêntures são títulos de dívida emitidos por:", opts: ["Governo", "Bancos", "Empresas S.A. não financeiras", "Pessoas Físicas"], a: 2, exp: "Debêntures são usadas por empresas para captar recursos para projetos ou dívidas." },
+                { l: 'Fácil', q: "O que é um IPO?", opts: ["Imposto Predial", "Oferta Pública Inicial de Ações", "Índice de Preços", "Opção de Venda"], a: 1, exp: "Initial Public Offering é quando a empresa abre capital na bolsa pela primeira vez." },
+
+                // MÉDIO
+                { l: 'Médio', q: "O Índice de Sharpe calcula:", opts: ["Retorno absoluto", "Risco sistêmico", "Retorno excedente sobre a volatilidade", "Correlação"], a: 2, exp: "Sharpe = (Retorno do Fundo - Risk Free) / Desvio Padrão. Mede eficiência." },
+                { l: 'Médio', q: "Em um FIDC, a cota que absorve prejuízos primeiro é a:", opts: ["Sênior", "Mezanino", "Subordinada", "Preferencial"], a: 2, exp: "A cota Subordinada funciona como um 'colchão' de proteção (equity) para as cotas Sênior." },
+                { l: 'Médio', q: "Para fazer Hedge contra a alta do Dólar, uma empresa deve:", opts: ["Vender Dólar Futuro", "Comprar Dólar Futuro ou Call", "Vender Put", "Comprar Título Público"], a: 1, exp: "Quem tem dívida em dólar (passivo) precisa garantir a compra. Compra Futuro ou Call." },
+                { l: 'Médio', q: "Um Fundo de Investimento Imobiliário (FII) distribui:", opts: ["Juros", "Dividendos (Aluguéis)", "Bônus", "Ações"], a: 1, exp: "FIIs devem distribuir 95% do lucro caixa semestralmente, geralmente na forma de rendimentos mensais." },
+
+                // DIFÍCIL
+                { l: 'Difícil', q: "O VaR (Value at Risk) estima:", opts: ["O ganho médio", "A perda máxima esperada (confiança/prazo)", "O desvio padrão", "A duration"], a: 1, exp: "VaR é uma medida estatística da perda máxima potencial em condições normais de mercado." },
+                { l: 'Difícil', q: "A Convexidade em Renda Fixa serve para:", opts: ["Calcular IR", "Ajustar a imprecisão da Duration em grandes variações de juros", "Medir liquidez", "Ignorar o cupom"], a: 1, exp: "A Duration é linear, a Convexidade corrige a curvatura da relação Preço x Taxa." },
+                { l: 'Difícil', q: "No mercado de Opções, o Lançador de uma PUT tem:", opts: ["Direito de vender", "Obrigação de comprar se exercido", "Direito de comprar", "Obrigação de vender"], a: 1, exp: "Quem lança (vende) a PUT assume a obrigação de comprar o ativo se o titular exercer o direito de venda." }
             ]
         };
 
+        // --- GERADOR DE PROVA 70 QUESTÕES (25% / 50% / 25%) ---
         const generateExam = (cert) => {
             const templates = QUESTION_TEMPLATES[cert];
             const easyTpl = templates.filter(t => t.l === 'Fácil');
             const medTpl = templates.filter(t => t.l === 'Médio');
             const hardTpl = templates.filter(t => t.l === 'Difícil');
 
-            const generateList = (source, count) => {
+            // Função para gerar lista SEM repetição se possível, ou com variação se necessário
+            const generateUniqueList = (source, count) => {
                 const list = [];
-                for (let i = 0; i < count; i++) {
-                    const t = source[i % source.length];
+                // Primeiro, adiciona todas as únicas disponíveis
+                const uniqueSource = [...source].sort(() => Math.random() - 0.5);
+                
+                for(let i=0; i<count; i++) {
+                    const templateIndex = i % uniqueSource.length;
+                    const t = uniqueSource[templateIndex];
+                    const isRepeat = i >= uniqueSource.length;
+                    
                     list.push({
                         ...t,
                         id: Math.random().toString(36).substr(2, 9),
-                        q: i >= source.length ? `${t.q} (Variação ${Math.floor(i / source.length) + 1})` : t.q
+                        // O "IF" QUE VOCÊ PEDIU:
+                        q: isRepeat ? `${t.q} (Revisão)` : t.q 
                     });
                 }
                 return list;
             };
 
+            // Metas: 18 Fáceis, 35 Médias, 17 Difíceis = 70 Total
             const exam = [
-                ...generateList(easyTpl, 18),
-                ...generateList(medTpl, 35),
-                ...generateList(hardTpl, 17)
+                ...generateUniqueList(easyTpl, 18),
+                ...generateUniqueList(medTpl, 35),
+                ...generateUniqueList(hardTpl, 17)
             ];
 
+            // Embaralhar a prova final para misturar as dificuldades
             return exam.sort(() => Math.random() - 0.5);
         };
 
@@ -282,19 +411,19 @@
 
         const Icon = ({ name, className }) => {
             const icons = {
-                target: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
-                users: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
-                trending: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>,
-                briefcase: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>,
-                brain: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" /><path d="M12 5v13" /></svg>,
-                check: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>,
-                x: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>,
-                search: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>,
-                home: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
-                logOut: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>,
-                trash: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>,
-                plus: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>,
-                menu: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" x2="21" y1="6" y2="6" /><line x1="3" x2="21" y1="12" y2="12" /><line x1="3" x2="21" y1="18" y2="18" /></svg>
+                target: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+                users: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+                trending: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
+                briefcase: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>,
+                brain: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/></svg>,
+                check: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+                x: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>,
+                search: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>,
+                home: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+                logOut: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>,
+                trash: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>,
+                plus: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+                menu: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
             };
             return icons[name] || null;
         };
@@ -315,7 +444,7 @@
                 let correct = 0;
                 Object.keys(answers).forEach(qId => {
                     const q = questions.find(item => item.id === qId);
-                    if (q && answers[qId] === q.a) correct++;
+                    if(q && answers[qId] === q.a) correct++;
                 });
                 return { total, correct };
             };
@@ -329,7 +458,7 @@
                         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-3">
                             <div className="flex gap-2">
                                 {['Todos', 'Fácil', 'Médio', 'Difícil'].map(l => (
-                                    <button
+                                    <button 
                                         key={l}
                                         onClick={() => setFilter(l)}
                                         className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${filter === l ? `bg-${color}-600 text-white` : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}
@@ -358,8 +487,8 @@
                             const isCorrect = userAnswer === q.a;
                             const options = q.opts || [];
                             let badgeClass = "badge-facil";
-                            if (q.l === 'Médio') badgeClass = "badge-medio";
-                            if (q.l === 'Difícil') badgeClass = "badge-dificil";
+                            if(q.l === 'Médio') badgeClass = "badge-medio";
+                            if(q.l === 'Difícil') badgeClass = "badge-dificil";
 
                             return (
                                 <div key={q.id} className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
@@ -385,8 +514,8 @@
                                             return (
                                                 <button key={i} onClick={() => handleSelect(q.id, i)} disabled={isAnswered} className={btnClass}>
                                                     <span>{String.fromCharCode(65 + i)}) {opt}</span>
-                                                    {isAnswered && i === q.a && <Icon name="check" className="w-4 h-4" />}
-                                                    {isAnswered && i === userAnswer && !isCorrect && <Icon name="x" className="w-4 h-4" />}
+                                                    {isAnswered && i === q.a && <Icon name="check" className="w-4 h-4"/>}
+                                                    {isAnswered && i === userAnswer && !isCorrect && <Icon name="x" className="w-4 h-4"/>}
                                                 </button>
                                             )
                                         })}
@@ -418,7 +547,7 @@
             return (
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                        <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Icon name="search" className="w-5 h-5" /> Pesquisa</h3>
+                        <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Icon name="search" className="w-5 h-5"/> Pesquisa</h3>
                         <input type="text" placeholder="Ex: Finanças, RH..." className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-blue-500 outline-none mb-4" value={search} onChange={(e) => setSearch(e.target.value)} />
                         <div className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
                             {filtered.map((item, i) => (
@@ -443,50 +572,77 @@
             );
         };
 
-        const MindMap = () => (
-            <div className="bg-slate-800 p-8 rounded-xl border border-slate-700 overflow-x-auto text-center">
-                <div className="inline-block min-w-[600px]">
-                    <div className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold mb-8 shadow-lg inline-block border border-emerald-500">Carreira 2026</div>
-                    <div className="grid grid-cols-3 gap-8">
-                        {['CPA (Base)', 'C-Pro R (Comercial)', 'C-Pro I (Técnico)'].map((t, i) => (
-                            <div key={i} className="flex flex-col items-center space-y-4">
-                                <div className="h-8 w-0.5 bg-slate-600 -mt-8"></div>
-                                <div className={`px-4 py-2 rounded-lg border font-bold ${i === 0 ? 'bg-emerald-900/50 text-emerald-300 border-emerald-700' : i === 1 ? 'bg-blue-900/50 text-blue-300 border-blue-700' : 'bg-purple-900/50 text-purple-300 border-purple-700'}`}>{t}</div>
-                                <div className="text-xs text-slate-400 bg-slate-900 p-3 rounded border border-slate-800 w-full">
-                                    {i === 0 ? 'SFN, Ética, Economia' : i === 1 ? 'Vendas, Perfil, CRM' : 'Derivativos, Risco, Estuturação'}
-                                </div>
+        const MindMap = () => {
+            const [activeMap, setActiveMap] = useState('CPA'); // Default
+
+            const renderMapContent = () => {
+                const data = MINDMAP_DB[activeMap];
+                return (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left fade-in">
+                        {data.map((item, i) => (
+                            <div key={i} className="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-slate-500 transition">
+                                <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
+                                <p className="text-xs text-slate-400 mb-3">{item.detail}</p>
+                                <ul className="space-y-1">
+                                    {item.points.map((p, idx) => (
+                                        <li key={idx} className="text-xs text-slate-300 flex items-start gap-1">
+                                            <span className="text-emerald-500 mt-0.5">•</span> {p}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         ))}
                     </div>
+                );
+            };
+
+            return (
+                <div className="space-y-6">
+                    <div className="flex justify-center gap-4">
+                        {['CPA', 'C_PRO_R', 'C_PRO_I'].map(cert => (
+                            <button
+                                key={cert}
+                                onClick={() => setActiveMap(cert)}
+                                className={`px-6 py-2 rounded-full font-bold text-sm transition-all ${
+                                    activeMap === cert 
+                                    ? (cert === 'CPA' ? 'bg-emerald-600 text-white' : cert === 'C_PRO_R' ? 'bg-blue-600 text-white' : 'bg-purple-600 text-white')
+                                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                                }`}
+                            >
+                                {cert.replace('_', '-').replace('_', ' ')}
+                            </button>
+                        ))}
+                    </div>
+                    {renderMapContent()}
                 </div>
-            </div>
-        );
+            );
+        };
 
         const RealGrade = () => {
             const [open, setOpen] = useState(null);
-
+            
             return (
                 <div className="space-y-4">
                     {ADM_GRADE_REAL.map(sem => (
                         <div key={sem.id} className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-                            <button
+                            <button 
                                 onClick={() => setOpen(open === sem.id ? null : sem.id)}
                                 className="w-full flex justify-between items-center p-4 bg-slate-800 hover:bg-slate-700 transition"
                             >
                                 <h3 className="font-bold text-white text-lg">{sem.title}</h3>
                                 <span className={`text-slate-400 transition-transform ${open === sem.id ? 'rotate-180' : ''}`}>▼</span>
                             </button>
-
+                            
                             {open === sem.id && (
                                 <div className="p-4 grid md:grid-cols-1 gap-4 bg-slate-900/50 border-t border-slate-700 fade-in">
                                     {sem.subjects.map((sub, idx) => (
                                         <div key={idx} className="bg-slate-800 p-4 rounded-lg border border-slate-700 shadow-sm">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <div className="bg-blue-900/50 p-1.5 rounded text-blue-400"><Icon name="briefcase" className="w-4 h-4" /></div>
+                                                <div className="bg-blue-900/50 p-1.5 rounded text-blue-400"><Icon name="briefcase" className="w-4 h-4"/></div>
                                                 <h4 className="font-bold text-blue-200">{sub.name}</h4>
                                             </div>
                                             <p className="text-sm text-slate-300 mb-3 leading-relaxed">{sub.concept}</p>
-
+                                            
                                             <div className="grid md:grid-cols-2 gap-3 text-xs">
                                                 <div className="bg-emerald-900/20 border border-emerald-800 p-2 rounded text-emerald-300">
                                                     <strong>💡 Dica de Estudo:</strong> {sub.tip}
@@ -528,7 +684,7 @@
                     {/* Welcome & Quote */}
                     <div className="bg-gradient-to-r from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-5">
-                            <Icon name="brain" className="w-48 h-48 text-white" />
+                            <Icon name="brain" className="w-48 h-48 text-white"/>
                         </div>
                         <div className="relative z-10 flex justify-between items-start">
                             <div>
@@ -541,19 +697,19 @@
                     {/* Todo List */}
                     <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
                         <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <Icon name="check" className="w-6 h-6 text-emerald-500" /> Minhas Tarefas
+                            <Icon name="check" className="w-6 h-6 text-emerald-500"/> Minhas Tarefas
                         </h3>
-
+                        
                         <form onSubmit={handleAdd} className="flex gap-2 mb-6">
-                            <input
-                                type="text"
-                                placeholder="Adicionar nova tarefa..."
+                            <input 
+                                type="text" 
+                                placeholder="Adicionar nova tarefa..." 
                                 className="flex-1 bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-emerald-500 outline-none"
                                 value={newTask}
                                 onChange={(e) => setNewTask(e.target.value)}
                             />
                             <button type="submit" className="bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded-lg transition">
-                                <Icon name="plus" className="w-6 h-6" />
+                                <Icon name="plus" className="w-6 h-6"/>
                             </button>
                         </form>
 
@@ -564,16 +720,16 @@
                                 userTasks.map(task => (
                                     <div key={task.id} className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-slate-700 group hover:border-slate-600 transition">
                                         <div className="flex items-center gap-3">
-                                            <button
+                                            <button 
                                                 onClick={() => toggleTask(task.id)}
                                                 className={`w-5 h-5 rounded border flex items-center justify-center transition ${task.completed ? 'bg-emerald-500 border-emerald-500 text-slate-900' : 'border-slate-500 hover:border-emerald-500'}`}
                                             >
-                                                {task.completed && <Icon name="check" className="w-3 h-3 stroke-[4]" />}
+                                                {task.completed && <Icon name="check" className="w-3 h-3 stroke-[4]"/>}
                                             </button>
                                             <span className={`text-sm ${task.completed ? 'text-slate-500 line-through' : 'text-slate-200'}`}>{task.text}</span>
                                         </div>
                                         <button onClick={() => deleteTask(task.id)} className="text-slate-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition">
-                                            <Icon name="trash" className="w-4 h-4" />
+                                            <Icon name="trash" className="w-4 h-4"/>
                                         </button>
                                     </div>
                                 ))
@@ -596,7 +752,7 @@
                     </div>
                     <h1 className="text-4xl font-bold text-white mb-2">CasalInvest</h1>
                     <p className="text-slate-400 font-mono text-sm uppercase tracking-widest mb-10">Pro System 2026</p>
-
+                    
                     <div className="grid grid-cols-2 gap-4">
                         <button onClick={() => onLogin('Wesley')} className="group relative bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-blue-500 p-6 rounded-2xl transition-all duration-300">
                             <div className="w-14 h-14 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-4 font-bold text-2xl border border-blue-500/30 group-hover:scale-110 transition-transform">W</div>
@@ -658,12 +814,11 @@
             if (!user) return <Login onLogin={handleLogin} />;
 
             const renderCertTab = (key, color) => {
-                // Novas descrições mais explicativas e robustas
-                const info = key === 'CPA'
-                    ? { t: 'CPA (Base)', d: 'Certificação fundamental que valida conhecimentos sobre a estrutura do Sistema Financeiro Nacional, conceitos básicos de economia, ética, regulamentação e as principais características dos produtos de investimento. Essencial para quem está iniciando na carreira bancária e financeira.' }
-                    : key === 'C_PRO_R'
-                        ? { t: 'C-Pro R (Relacionamento)', d: 'Especialização voltada para profissionais de atendimento comercial e gerência. Aprofunda-se em técnicas de vendas, finanças comportamentais, planejamento financeiro pessoal, sucessão patrimonial e a adequação de produtos ao perfil do cliente (Suitability).' }
-                        : { t: 'C-Pro I (Investimento)', d: 'Certificação avançada para especialistas em investimentos. Foca na análise técnica de produtos complexos, gestão de riscos (mercado, crédito, liquidez), estratégias com derivativos, alocação de ativos e estruturação de carteiras de alta performance.' };
+                const info = key === 'CPA' 
+                    ? {t: 'CPA (Base)', d: 'Certificação fundamental que valida conhecimentos sobre a estrutura do Sistema Financeiro Nacional, conceitos básicos de economia, ética, regulamentação e as principais características dos produtos de investimento. Essencial para quem está iniciando na carreira bancária e financeira.'} 
+                    : key === 'C_PRO_R' 
+                        ? {t: 'C-Pro R (Relacionamento)', d: 'Especialização voltada para profissionais de atendimento comercial e gerência. Aprofunda-se em técnicas de vendas, finanças comportamentais, planejamento financeiro pessoal, sucessão patrimonial e a adequação de produtos ao perfil do cliente (Suitability).'} 
+                        : {t: 'C-Pro I (Investimento)', d: 'Certificação avançada para especialistas em investimentos. Foca na análise técnica de produtos complexos, gestão de riscos (mercado, crédito, liquidez), estratégias com derivativos, alocação de ativos e estruturação de carteiras de alta performance.'};
 
                 return (
                     <div className="fade-in space-y-6">
@@ -672,7 +827,7 @@
                             <p className="text-slate-400 text-sm leading-relaxed">{info.d}</p>
                         </div>
                         <div className="flex gap-4 border-b border-slate-800 pb-1">
-                            <button onClick={() => setSubTab('material')} className={`pb-2 px-4 text-sm font-bold transition ${subTab === 'material' ? `text-${color}-400 border-b-2 border-${color}-400` : 'text-slate-500 hover:text-white'}`}>Material de Apoio</button>
+                            <button onClick={() => setSubTab('material')} className={`pb-2 px-4 text-sm font-bold transition ${subTab === 'material' ? `text-${color}-400 border-b-2 border-${color}-400` : 'text-slate-500 hover:text-white'}`}>Material de Apoio (Cards)</button>
                             <button onClick={() => setSubTab('quiz')} className={`pb-2 px-4 text-sm font-bold transition ${subTab === 'quiz' ? `text-${color}-400 border-b-2 border-${color}-400` : 'text-slate-500 hover:text-white'}`}>Simulado (70 Questões)</button>
                         </div>
                         {subTab === 'material' ? (
@@ -691,7 +846,7 @@
 
             return (
                 <div className="min-h-screen flex flex-col md:flex-row bg-slate-900 text-slate-200">
-
+                    
                     {/* Mobile Header */}
                     <div className="md:hidden flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
                         <div className="flex items-center gap-2">
@@ -699,7 +854,7 @@
                             <span className="font-bold text-lg text-white">CasalInvest</span>
                         </div>
                         <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white p-2">
-                            {sidebarOpen ? <Icon name="x" className="w-6 h-6" /> : <Icon name="menu" className="w-6 h-6" />}
+                            {sidebarOpen ? <Icon name="x" className="w-6 h-6"/> : <Icon name="menu" className="w-6 h-6" />}
                         </button>
                     </div>
 
@@ -727,31 +882,31 @@
                             </div>
 
                             <button onClick={() => handleNavClick('HOME')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'HOME' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
-                                <Icon name="home" className="w-4 h-4" /> Home
+                                <Icon name="home" className="w-4 h-4"/> Home
                             </button>
 
                             <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 px-2 mt-6">Certificações</div>
                             {['CPA', 'C_PRO_R', 'C_PRO_I'].map(c => (
                                 <button key={c} onClick={() => handleNavClick(c)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === c ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
-                                    <Icon name={c === 'CPA' ? 'target' : c === 'C_PRO_R' ? 'users' : 'trending'} className="w-4 h-4" /> {c.replace('_', ' ').replace('_', ' ')}
+                                    <Icon name={c==='CPA'?'target':c==='C_PRO_R'?'users':'trending'} className="w-4 h-4"/> {c.replace('_', ' ').replace('_', ' ')}
                                 </button>
                             ))}
-
+                            
                             <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 mt-6 px-2">Acadêmico</div>
-                            <button onClick={() => handleNavClick('ADM')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'ADM' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="briefcase" className="w-4 h-4" /> ADM & TCC</button>
-                            <button onClick={() => handleNavClick('MAP')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'MAP' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="brain" className="w-4 h-4" /> Mapa Mental</button>
+                            <button onClick={() => handleNavClick('ADM')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'ADM' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="briefcase" className="w-4 h-4"/> ADM & TCC</button>
+                            <button onClick={() => handleNavClick('MAP')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'MAP' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="brain" className="w-4 h-4"/> Mapa Mental</button>
                         </div>
-
+                        
                         <div className="p-4 border-t border-slate-800">
                             <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition">
-                                <Icon name="logOut" className="w-4 h-4" /> Sair
+                                <Icon name="logOut" className="w-4 h-4"/> Sair
                             </button>
                         </div>
                     </nav>
-
+                    
                     {/* Mobile Overlay */}
                     {sidebarOpen && (
-                        <div
+                        <div 
                             className="fixed inset-0 bg-black/50 z-40 md:hidden"
                             onClick={() => setSidebarOpen(false)}
                         ></div>
@@ -789,5 +944,4 @@
         root.render(<App />);
     </script>
 </body>
-
 </html>
