@@ -293,7 +293,8 @@
                 home: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
                 logOut: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>,
                 trash: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>,
-                plus: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                plus: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>,
+                menu: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" x2="21" y1="6" y2="6" /><line x1="3" x2="21" y1="12" y2="12" /><line x1="3" x2="21" y1="18" y2="18" /></svg>
             };
             return icons[name] || null;
         };
@@ -529,8 +530,12 @@
                         <div className="absolute top-0 right-0 p-8 opacity-5">
                             <Icon name="brain" className="w-48 h-48 text-white" />
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-2 relative z-10">Olá, <span className="text-emerald-400">{user}</span>! 👋</h2>
-                        <p className="text-slate-400 italic text-lg relative z-10">"{quote}"</p>
+                        <div className="relative z-10 flex justify-between items-start">
+                            <div>
+                                <h2 className="text-3xl font-bold text-white mb-2">Olá, <span className="text-emerald-400">{user}</span>! 👋</h2>
+                                <p className="text-slate-400 italic text-lg">"{quote}"</p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Todo List */}
@@ -612,6 +617,7 @@
             const [tab, setTab] = useState('HOME');
             const [subTab, setSubTab] = useState('material');
             const [admSub, setAdmSub] = useState('grade');
+            const [sidebarOpen, setSidebarOpen] = useState(false); // Mobile sidebar state
             const [tasks, setTasks] = useState(() => {
                 const saved = localStorage.getItem('casalinvest_tasks');
                 return saved ? JSON.parse(saved) : [];
@@ -640,20 +646,30 @@
 
             const handleLogout = () => {
                 setUser(null);
+                setSidebarOpen(false);
+            };
+
+            // Helper to close sidebar on mobile when navigating
+            const handleNavClick = (newTab) => {
+                setTab(newTab);
+                setSidebarOpen(false);
             };
 
             if (!user) return <Login onLogin={handleLogin} />;
 
             const renderCertTab = (key, color) => {
-                const info = key === 'CPA' ? { t: 'CPA (Base)', d: 'Obrigatória. Foco em Regulação e Produtos.' } :
-                    key === 'C_PRO_R' ? { t: 'C-Pro R (Relacionamento)', d: 'Foco Comercial, Vendas e Soft Skills.' } :
-                        { t: 'C-Pro I (Técnico)', d: 'Foco Técnico, Derivativos e Estruturação.' };
+                // Novas descrições mais explicativas e robustas
+                const info = key === 'CPA'
+                    ? { t: 'CPA (Base)', d: 'Certificação fundamental que valida conhecimentos sobre a estrutura do Sistema Financeiro Nacional, conceitos básicos de economia, ética, regulamentação e as principais características dos produtos de investimento. Essencial para quem está iniciando na carreira bancária e financeira.' }
+                    : key === 'C_PRO_R'
+                        ? { t: 'C-Pro R (Relacionamento)', d: 'Especialização voltada para profissionais de atendimento comercial e gerência. Aprofunda-se em técnicas de vendas, finanças comportamentais, planejamento financeiro pessoal, sucessão patrimonial e a adequação de produtos ao perfil do cliente (Suitability).' }
+                        : { t: 'C-Pro I (Investimento)', d: 'Certificação avançada para especialistas em investimentos. Foca na análise técnica de produtos complexos, gestão de riscos (mercado, crédito, liquidez), estratégias com derivativos, alocação de ativos e estruturação de carteiras de alta performance.' };
 
                 return (
                     <div className="fade-in space-y-6">
                         <div className={`bg-${color}-900/20 border border-${color}-500/30 p-6 rounded-xl`}>
                             <h2 className={`text-2xl font-bold text-${color}-400 mb-2`}>{info.t}</h2>
-                            <p className="text-slate-400">{info.d}</p>
+                            <p className="text-slate-400 text-sm leading-relaxed">{info.d}</p>
                         </div>
                         <div className="flex gap-4 border-b border-slate-800 pb-1">
                             <button onClick={() => setSubTab('material')} className={`pb-2 px-4 text-sm font-bold transition ${subTab === 'material' ? `text-${color}-400 border-b-2 border-${color}-400` : 'text-slate-500 hover:text-white'}`}>Material de Apoio</button>
@@ -674,13 +690,32 @@
             };
 
             return (
-                <div className="min-h-screen flex flex-col md:flex-row">
-                    <nav className="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col sticky top-0 md:h-screen z-50">
-                        <div className="p-6 flex items-center gap-3 border-b border-slate-800">
+                <div className="min-h-screen flex flex-col md:flex-row bg-slate-900 text-slate-200">
+
+                    {/* Mobile Header */}
+                    <div className="md:hidden flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center font-bold text-white">CI</div>
+                            <span className="font-bold text-lg text-white">CasalInvest</span>
+                        </div>
+                        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white p-2">
+                            {sidebarOpen ? <Icon name="x" className="w-6 h-6" /> : <Icon name="menu" className="w-6 h-6" />}
+                        </button>
+                    </div>
+
+                    {/* Sidebar Navigation */}
+                    <nav className={`
+                        fixed inset-y-0 left-0 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+                        md:translate-x-0 md:static md:inset-auto md:w-64 md:h-screen
+                        w-64 bg-slate-900 border-r border-slate-800 flex flex-col z-50 transition-transform duration-300 ease-in-out
+                        h-screen shadow-2xl md:shadow-none
+                    `}>
+                        <div className="p-6 flex items-center gap-3 border-b border-slate-800 hidden md:flex">
                             <div className="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center font-bold text-white">CI</div>
                             <span className="font-bold text-lg">CasalInvest <span className="text-emerald-500 text-xs align-top">2026</span></span>
                         </div>
-                        <div className="p-4 space-y-2 flex-1 overflow-y-auto">
+
+                        <div className="p-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar">
                             <div className="bg-slate-800 rounded-lg p-3 mb-4 flex items-center gap-3 border border-slate-700">
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-white ${user === 'Wesley' ? 'bg-blue-600' : 'bg-pink-600'}`}>
                                     {user[0]}
@@ -691,20 +726,20 @@
                                 </div>
                             </div>
 
-                            <button onClick={() => setTab('HOME')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'HOME' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
+                            <button onClick={() => handleNavClick('HOME')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'HOME' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
                                 <Icon name="home" className="w-4 h-4" /> Home
                             </button>
 
                             <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 px-2 mt-6">Certificações</div>
                             {['CPA', 'C_PRO_R', 'C_PRO_I'].map(c => (
-                                <button key={c} onClick={() => setTab(c)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === c ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
+                                <button key={c} onClick={() => handleNavClick(c)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === c ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
                                     <Icon name={c === 'CPA' ? 'target' : c === 'C_PRO_R' ? 'users' : 'trending'} className="w-4 h-4" /> {c.replace('_', ' ').replace('_', ' ')}
                                 </button>
                             ))}
 
                             <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 mt-6 px-2">Acadêmico</div>
-                            <button onClick={() => setTab('ADM')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'ADM' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="briefcase" className="w-4 h-4" /> ADM & TCC</button>
-                            <button onClick={() => setTab('MAP')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'MAP' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="brain" className="w-4 h-4" /> Mapa Mental</button>
+                            <button onClick={() => handleNavClick('ADM')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'ADM' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="briefcase" className="w-4 h-4" /> ADM & TCC</button>
+                            <button onClick={() => handleNavClick('MAP')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'MAP' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="brain" className="w-4 h-4" /> Mapa Mental</button>
                         </div>
 
                         <div className="p-4 border-t border-slate-800">
@@ -714,9 +749,18 @@
                         </div>
                     </nav>
 
-                    <main className="flex-1 p-8 overflow-y-auto h-screen bg-slate-900 relative">
+                    {/* Mobile Overlay */}
+                    {sidebarOpen && (
+                        <div
+                            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                            onClick={() => setSidebarOpen(false)}
+                        ></div>
+                    )}
+
+                    {/* Main Content Area */}
+                    <main className="flex-1 p-4 md:p-8 overflow-y-auto h-[calc(100vh-64px)] md:h-screen bg-slate-900 relative">
                         <div className="fixed inset-0 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
-                        <div className="relative z-10 max-w-5xl mx-auto">
+                        <div className="relative z-10 max-w-5xl mx-auto pt-4 md:pt-0">
                             {tab === 'HOME' && <HomeDashboard user={user} tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
                             {tab === 'CPA' && renderCertTab('CPA', 'emerald')}
                             {tab === 'C_PRO_R' && renderCertTab('C_PRO_R', 'blue')}
