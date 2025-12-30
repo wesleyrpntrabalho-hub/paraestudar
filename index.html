@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasalInvest 2026 | Ultimate System</title>
+
+    <!-- React & Tailwind -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+
+        /* Badges de Dificuldade */
+        .badge-facil {
+            background-color: #065f46;
+            color: #6ee7b7;
+            border: 1px solid #059669;
+        }
+
+        .badge-medio {
+            background-color: #713f12;
+            color: #fcd34d;
+            border: 1px solid #d97706;
+        }
+
+        .badge-dificil {
+            background-color: #7f1d1d;
+            color: #fca5a5;
+            border: 1px solid #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // ==========================================================================================
+        // 1. BANCO DE DADOS
+        // ==========================================================================================
+
+        const QUOTES = [
+            "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+            "A persistência é o caminho do êxito.",
+            "Não espere por oportunidades, crie-as.",
+            "O único lugar onde o sucesso vem antes do trabalho é no dicionário.",
+            "Acredite que você pode, assim você já está no meio do caminho.",
+            "Disciplina é a ponte entre metas e realizações.",
+            "Investir em conhecimento rende sempre os melhores juros."
+        ];
+
+        const MATERIAL_DB = {
+            CPA: [
+                { title: "Fluxo Circular da Renda", content: "Modelo que explica a circulação de dinheiro e bens. Famílias ofertam trabalho e consomem; Empresas produzem e investem; Governo arrecada e gasta; Mercado intermedia. (Aula 1)" },
+                { title: "Sistema Financeiro Nacional", content: "Normativos (CMN, CNSP, CNPC) apenas mandam. Supervisores (Bacen, CVM, Susep, Previc) fiscalizam. Operadores (Bancos, Bolsa) executam. O CMN é o órgão máximo." },
+                { title: "Conceitos Econômicos", content: "PIB (Soma de bens/serviços finais). Inflação (IPCA = Meta; IGP-M = Aluguel). Câmbio PTAX (Média do mercado calculada pelo Bacen). Taxa Selic Meta (Definida pelo COPOM) vs Selic Over (Mercado)." },
+                { title: "Políticas Econômicas", content: "Fiscal (Impostos/Gastos - Superávit/Déficit Primário). Monetária (Controle de liquidez via Compulsório, Redesconto, Open Market). Cambial (Swaps, Reservas)." },
+                { title: "Renda Fixa & Duration", content: "Duration de Macaulay: Prazo médio de recebimento (Risco). Títulos: LFT (Pós), LTN (Pré), NTN-B (IPCA+). FGC garante R$ 250k." }
+            ],
+            C_PRO_R: [
+                { title: "Suitability & Perfil", content: "Análise obrigatória do perfil do cliente (Conservador, Moderado, Arrojado). O objetivo é garantir que o produto vendido seja adequado ao risco que o cliente tolera." },
+                { title: "Finanças Comportamentais", content: "Vieses: Ancoragem (Preço de referência), Aversão à Perda (Dor da perda > Prazer do ganho), Efeito Manada (Seguir a maioria), Excesso de Confiança." },
+                { title: "Previdência (PGBL x VGBL)", content: "PGBL: Abate 12% na completa (IR sobre total). VGBL: Ideal para simplificada (IR sobre rendimento). Tabela Regressiva (cai pra 10% após 10 anos) vs Progressiva (conforme salário)." },
+                { title: "Tributação de Investimentos", content: "Ações: 15% (Swing) e 20% (Day Trade). Fundos de Ações: 15% fixo. Come-cotas (Maio/Nov) em fundos RF/Multimercado: 15% (Longo Prazo) ou 20% (Curto Prazo)." }
+            ],
+            C_PRO_I: [
+                { title: "Acordo de Basileia", content: "Basileia I, II e III. Foco em exigência de capital mínimo para cobrir Risco de Crédito, Mercado e Operacional. O Índice de Basileia mede a solvência do banco." },
+                { title: "Derivativos (Hedge)", content: "Opções (Call/Put), Futuros, Termo e Swaps. Usados para proteção (Hedge) ou alavancagem. Titular tem direito, Lançador tem obrigação." },
+                { title: "Gestão de Risco", content: "VaR (Value at Risk): Perda máxima esperada. Stress Test: Cenários extremos. Backtesting: Validar o modelo. Índice de Sharpe: Retorno excedente sobre volatilidade." },
+                { title: "Fundos Estruturados", content: "FIDC (Direitos Creditórios - Cotas Sênior/Subordinada), FII (Imobiliário - Isento IR mensal PF), FIP (Participações). Marcação a Mercado (MaM) é obrigatória." }
+            ]
+        };
+
+        const QUESTION_TEMPLATES = {
+            CPA: [
+                { l: 'Fácil', q: "Qual o órgão normativo máximo do SFN?", opts: ["Bacen", "CVM", "CMN", "BB"], a: 2, exp: "O Conselho Monetário Nacional (CMN) é o órgão superior que dita as regras." },
+                { l: 'Fácil', q: "Quem calcula e divulga o IPCA?", opts: ["FGV", "IBGE", "Bacen", "Fipe"], a: 1, exp: "O IBGE é responsável pelo índice oficial de inflação (IPCA)." },
+                { l: 'Fácil', q: "A taxa Selic Meta é definida pelo:", opts: ["Mercado", "Bacen", "COPOM", "Presidente"], a: 2, exp: "O COPOM define a meta da Selic a cada 45 dias." },
+                { l: 'Médio', q: "No Fluxo Circular da Renda, as Famílias:", opts: ["Arrecadam impostos", "Ofertam trabalho e consomem", "Emitem moeda", "Fiscalizam bancos"], a: 1, exp: "As famílias fornecem mão de obra e consomem bens/serviços das empresas." },
+                { l: 'Médio', q: "A Taxa PTAX, calculada pelo Bacen, representa:", opts: ["A inflação do dólar", "A média das taxas de câmbio do mercado", "O juro americano", "O custo do turismo"], a: 1, exp: "PTAX é a média ponderada das taxas de câmbio praticadas no mercado interbancário." },
+                { l: 'Médio', q: "O que acontece com o preço de um título pré-fixado se o juro sobe?", opts: ["Sobe", "Cai", "Fica igual", "Zera"], a: 1, exp: "Na Marcação a Mercado, se o juro sobe, o Preço Unitário (PU) do título cai." },
+                { l: 'Difícil', q: "A Duration de Macaulay mede:", opts: ["O vencimento do título", "O risco de crédito", "A sensibilidade do preço aos juros (prazo médio)", "A liquidez"], a: 2, exp: "Duration é o prazo médio ponderado de recebimento dos fluxos, indicando o risco de mercado." },
+                { l: 'Difícil', q: "Sobre o Acordo de Basileia, o foco principal é:", opts: ["Regular o câmbio", "Garantir solvência via capital mínimo", "Reduzir a inflação", "Aumentar o crédito"], a: 1, exp: "Basileia exige que bancos tenham Patrimônio de Referência compatível com os riscos assumidos." }
+            ],
+            C_PRO_R: [
+                { l: 'Fácil', q: "Suitability é o processo de:", opts: ["Lavagem de dinheiro", "Verificar adequação do produto ao perfil", "Cobrança de IR", "Emissão de ações"], a: 1, exp: "É a verificação obrigatória se o investimento condiz com o perfil de risco do cliente." },
+                { l: 'Fácil', q: "Para abater 12% na declaração completa do IR, usa-se:", opts: ["VGBL", "CDB", "PGBL", "LCI"], a: 2, exp: "O PGBL permite o diferimento fiscal de até 12% da renda bruta tributável." },
+                { l: 'Médio', q: "O viés da Ancoragem ocorre quando o investidor:", opts: ["Segue a manada", "Se fixa a um preço/valor de referência passado", "Tem medo de perder", "Opera demais"], a: 1, exp: "Ancoragem é a dependência excessiva da primeira informação (preço âncora) para decidir." },
+                { l: 'Médio', q: "A alíquota mínima de 10% na Tabela Regressiva exige prazo de:", opts: ["2 anos", "5 anos", "8 anos", "10 anos ou mais"], a: 3, exp: "Na tabela regressiva, as alíquotas caem a cada 2 anos, chegando a 10% após 10 anos." },
+                { l: 'Difícil', q: "No planejamento sucessório, o VGBL é vantajoso pois:", opts: ["Não tem taxa de adm", "Geralmente não entra em inventário", "É isento de IR sempre", "Garante rentabilidade"], a: 1, exp: "Em muitos estados, o VGBL é considerado seguro de pessoa e transmitido diretamente aos beneficiários." },
+                { l: 'Difícil', q: "Um cliente com aversão à perda deve evitar:", opts: ["LFT", "CDB de grande banco", "Derivativos especulativos", "Fundo DI"], a: 2, exp: "Aversão à perda é um viés emocional; produtos voláteis como derivativos causam dor desproporcional." }
+            ],
+            C_PRO_I: [
+                { l: 'Fácil', q: "O titular de uma Opção de Compra (CALL) tem:", opts: ["A obrigação de comprar", "O direito de comprar", "A obrigação de vender", "O direito de vender"], a: 1, exp: "Quem compra a CALL (Titular) adquire o DIREITO de comprar o ativo-objeto." },
+                { l: 'Fácil', q: "O Fundo Garantidor de Crédito (FGC) não cobre:", opts: ["CDB", "LCI", "Debêntures", "Poupança"], a: 2, exp: "Debêntures são títulos de crédito corporativo (risco da empresa), sem garantia do FGC." },
+                { l: 'Médio', q: "O Índice de Sharpe calcula:", opts: ["Retorno absoluto", "Risco sistêmico", "Retorno excedente sobre volatilidade", "Correlação"], a: 2, exp: "Sharpe = (Retorno do Fundo - Risk Free) / Desvio Padrão. Mede eficiência." },
+                { l: 'Médio', q: "Em um FIDC, a cota que absorve prejuízos primeiro é a:", opts: ["Sênior", "Mezanino", "Subordinada", "Preferencial"], a: 2, exp: "A cota Subordinada funciona como um 'colchão' de proteção para as cotas Sênior." },
+                { l: 'Difícil', q: "Para proteção (Hedge) contra alta do Dólar, uma empresa deve:", opts: ["Vender Dólar Futuro", "Comprar Dólar Futuro ou Call de Dólar", "Vender Put de Dólar", "Comprar Título Público"], a: 1, exp: "Quem tem dívida em dólar (passivo) precisa comprar dólar. Para travar o preço, compra Dólar Futuro." },
+                { l: 'Difícil', q: "O VaR (Value at Risk) estima:", opts: ["O ganho médio", "A perda máxima esperada com dada confiança", "O desvio padrão", "A duration"], a: 1, exp: "VaR é uma medida estatística da perda máxima potencial em condições normais de mercado." }
+            ]
+        };
+
+        const generateExam = (cert) => {
+            const templates = QUESTION_TEMPLATES[cert];
+            const easyTpl = templates.filter(t => t.l === 'Fácil');
+            const medTpl = templates.filter(t => t.l === 'Médio');
+            const hardTpl = templates.filter(t => t.l === 'Difícil');
+
+            const generateList = (source, count) => {
+                const list = [];
+                for (let i = 0; i < count; i++) {
+                    const t = source[i % source.length];
+                    list.push({
+                        ...t,
+                        id: Math.random().toString(36).substr(2, 9),
+                        q: i >= source.length ? `${t.q} (Variação ${Math.floor(i / source.length) + 1})` : t.q
+                    });
+                }
+                return list;
+            };
+
+            const exam = [
+                ...generateList(easyTpl, 18),
+                ...generateList(medTpl, 35),
+                ...generateList(hardTpl, 17)
+            ];
+
+            return exam.sort(() => Math.random() - 0.5);
+        };
+
+        const FULL_EXAMS = {
+            CPA: generateExam('CPA'),
+            C_PRO_R: generateExam('C_PRO_R'),
+            C_PRO_I: generateExam('C_PRO_I')
+        };
+
+        const ADM_GRADE_REAL = [
+            {
+                id: 1, title: "1º Semestre", subjects: [
+                    { name: "Empreendedorismo e Inovação", concept: "Estudo da criação de novos negócios e processos inovadores.", tip: "Use o Business Model Canvas para modelar ideias.", case: "Análise da trajetória da Nubank: de startup a IPO." },
+                    { name: "Gestão de Indicadores", concept: "Definição e acompanhamento de KPIs para tomada de decisão.", tip: "Domine o BSC (Balanced Scorecard).", case: "Como o Google usa OKRs para alinhar metas globais." },
+                    { name: "Planejamento Estratégico", concept: "Definição da direção de longo prazo da organização.", tip: "Foque na Análise SWOT e nas 5 Forças de Porter.", case: "A virada estratégica da Magazine Luiza para o digital." },
+                    { name: "Sistemas de Informação Gerencial", concept: "Uso de tecnologia (ERP, CRM) para suporte à gestão.", tip: "Entenda a diferença entre dado, informação e conhecimento.", case: "Implementação do SAP em grandes indústrias." },
+                    { name: "Sociedade Brasileira e Cidadania", concept: "Contexto sociopolítico e impacto das empresas na sociedade.", tip: "Relacione com ESG e responsabilidade social.", case: "Impacto social das ações da Natura na Amazônia." }
+                ]
+            },
+            {
+                id: 2, title: "2º Semestre", subjects: [
+                    { name: "Análise de Custos", concept: "Classificação e gestão de custos (Fixos, Variáveis, Diretos).", tip: "Pratique o cálculo de Ponto de Equilíbrio.", case: "Como companhias aéreas gerenciam custos de combustível." },
+                    { name: "Gestão do Conhecimento", concept: "Criação, compartilhamento e uso do conhecimento corporativo.", tip: "Estude a Espiral do Conhecimento (SECI).", case: "Wiki interna e sistemas de lições aprendidas na Petrobras." },
+                    { name: "Legislação Empresarial Aplicada", concept: "Direito comercial, trabalhista e tributário para gestores.", tip: "Foque em Contratos e Tipos Societários (LTDA, S.A).", case: "Recuperação Judicial das Lojas Americanas." },
+                    { name: "Matemática Financeira", concept: "Valor do dinheiro no tempo, juros e amortização.", tip: "Domine a HP12c e funções financeiras do Excel.", case: "Cálculo real de financiamento imobiliário (SAC vs Price)." },
+                    { name: "Métodos Quantitativos", concept: "Estatística aplicada à administração para previsões.", tip: "Aprenda Regressão Linear e Probabilidade.", case: "Previsão de demanda de vendas no varejo." }
+                ]
+            },
+            {
+                id: 3, title: "3º Semestre", subjects: [
+                    { name: "Comunicação, Ciência e Tecnologia", concept: "Impacto da tecnologia na comunicação corporativa.", tip: "Estude a evolução da comunicação digital.", case: "Uso de IA (ChatGPT) na comunicação interna de empresas." },
+                    { name: "Contabilidade Introdutória", concept: "Balanço Patrimonial, DRE e regime de competência.", tip: "Entenda a lógica de Débito e Crédito.", case: "Leitura do Balanço da Apple: Ativos x Passivos." },
+                    { name: "Gestão da Inovação", concept: "Gerenciamento do processo de inovar (Incremental x Radical).", tip: "Leia sobre o Dilema da Inovação.", case: "A falha da Kodak em adotar a fotografia digital." },
+                    { name: "Modelos de Gestão", concept: "Evolução das escolas de administração (Clássica a Contemporânea).", tip: "Compare Taylorismo, Fayolismo e Toyotismo.", case: "Sistema Toyota de Produção (Lean Manufacturing)." },
+                    { name: "Planejamento Financeiro e Orçamentário", concept: "Elaboração de Budget, Forecast e controle orçamentário.", tip: "Pratique a criação de um Orçamento Base Zero (OBZ).", case: "Gestão orçamentária da Ambev (cultura de eficiência)." },
+                    { name: "Projeto de Extensão I", concept: "Aplicação prática dos conhecimentos na comunidade.", tip: "Foque em resolver um problema real local.", case: "Consultoria júnior para ONGs locais." }
+                ]
+            },
+            {
+                id: 4, title: "4º Semestre", subjects: [
+                    { name: "Capital de Giro e Análise Financeira", concept: "Gestão de liquidez, Ciclo Operacional e Financeiro.", tip: "Monitore a NCG (Necessidade de Capital de Giro).", case: "Como o varejo financia estoques com prazo de fornecedores." },
+                    { name: "Comportamento Organizacional e Negociação", concept: "Dinâmica de grupos, liderança e resolução de conflitos.", tip: "Estude o Método Harvard de Negociação.", case: "Negociação salarial coletiva em sindicatos." },
+                    { name: "Guia de Percurso", concept: "Orientação acadêmica e profissional.", tip: "Planeje sua carreira e certificações.", case: "Construção de um Plano de Desenvolvimento Individual (PDI)." },
+                    { name: "Gestão Mercadológica na Era Digital", concept: "Marketing tradicional adaptado ao ambiente online.", tip: "Domine os 4Ps e Marketing de Conteúdo.", case: "Estratégia Omnichannel da Centauro." },
+                    { name: "Teorias da Administração", concept: "Aprofundamento nas bases teóricas da gestão.", tip: "Relacione teorias antigas com gestão ágil moderna.", case: "Hierarquia vs Holocracia (Zappos)." }
+                ]
+            },
+            {
+                id: 5, title: "5º Semestre", subjects: [
+                    { name: "Análise de Investimentos e Fontes de Financiamento", concept: "Decisão de investimento (Capex) e estrutura de capital.", tip: "Domine VPL, TIR e WACC.", case: "Decisão da Vale de investir em uma nova mina." },
+                    { name: "Desenvolvimento de Pessoas", concept: "Treinamento, desenvolvimento e gestão de talentos.", tip: "Conheça o modelo 70:20:10 de aprendizado.", case: "Universidade Corporativa do Bradesco." },
+                    { name: "Economia para Negócios", concept: "Micro e Macroeconomia aplicada à gestão.", tip: "Acompanhe o Relatório Focus do Bacen.", case: "Impacto da alta da Selic no varejo de eletrodomésticos." },
+                    { name: "Gestão da Produção", concept: "Planejamento e Controle da Produção (PCP).", tip: "Entenda Gargalos e Teoria das Restrições.", case: "Logística de produção da Embraer." },
+                    { name: "Projeto de Extensão II", concept: "Continuidade da aplicação prática na comunidade.", tip: "Implemente melhorias baseadas no feedback do Projeto I.", case: "Workshop de finanças para microempreendedores." }
+                ]
+            },
+            {
+                id: 6, title: "6º Semestre", subjects: [
+                    { name: "Coaching e Mentoring", concept: "Ferramentas de desenvolvimento pessoal e profissional.", tip: "Diferencie Coaching (meta) de Mentoring (carreira).", case: "Programas de Mentoria para Trainees." },
+                    { name: "Design Thinking e Inovação", concept: "Abordagem centrada no ser humano para inovação.", tip: "Pratique as fases: Empatia, Definição, Ideação, Prototipagem.", case: "Redesign da experiência do paciente em hospitais." },
+                    { name: "Gestão de Operações e Serviços", concept: "Eficiência em empresas prestadoras de serviços.", tip: "Foque na gestão de filas e capacidade.", case: "Gestão operacional do Disney World." },
+                    { name: "Mercado de Capitais", concept: "Funcionamento da Bolsa, IPOs e governança.", tip: "Simule uma carteira de investimentos na B3.", case: "O IPO do Nubank na NYSE." },
+                    { name: "Pesquisa e Inteligência de Marketing", concept: "Coleta e análise de dados para decisões de mercado.", tip: "Aprenda a criar e analisar pesquisas (Survey).", case: "Pesquisas de satisfação (NPS) da Netflix." }
+                ]
+            },
+            {
+                id: 7, title: "7º Semestre", subjects: [
+                    { name: "Gestão de Projetos", concept: "Metodologias para iniciar, planejar, executar e fechar projetos.", tip: "Estude o PMBOK e Metodologias Ágeis (Scrum).", case: "Construção de uma nova fábrica ou lançamento de software." },
+                    { name: "Governança Corporativa", concept: "Sistema pelo qual empresas são dirigidas e controladas.", tip: "Entenda os princípios: Transparência, Equidade, Prestação de Contas.", case: "Escândalos corporativos (Enron) e a Lei Sarbanes-Oxley." },
+                    { name: "Pesquisa Operacional", concept: "Modelagem matemática para otimização de decisões.", tip: "Use o Solver do Excel para problemas de transporte.", case: "Otimização de rotas de entrega dos Correios." },
+                    { name: "Processos Logísticos", concept: "Fluxo de materiais, armazenagem e distribuição.", tip: "Estude Supply Chain e Logística Reversa.", case: "Logística de entrega 'Same Day' do Mercado Livre." },
+                    { name: "Projeto de Extensão III", concept: "Fase final de aplicação prática e impacto social.", tip: "Meça os resultados quantitativos do projeto.", case: "Relatório de impacto social de uma intervenção." }
+                ]
+            },
+            {
+                id: 8, title: "8º Semestre", subjects: [
+                    { name: "Análise de Crédito, Cobrança e Risco", concept: "Avaliação de risco de inadimplência e recuperação de crédito.", tip: "Conheça os 5 Cs do Crédito.", case: "Modelos de Score de Crédito do Serasa." },
+                    { name: "Avaliação de Desempenho", concept: "Métodos para medir a performance de colaboradores.", tip: "Estude a Avaliação 360 graus.", case: "Sistema de metas e bônus de bancos de investimento." },
+                    { name: "Diagnóstico e Intervenção Empresarial", concept: "Consultoria interna: identificar problemas e propor soluções.", tip: "Use o Diagrama de Ishikawa (Espinha de Peixe).", case: "Turnaround de uma empresa em crise." },
+                    { name: "Gerenciamento da Cadeia de Suprimentos", concept: "Integração de fornecedores, fabricantes e distribuidores.", tip: "Entenda o Efeito Chicote na cadeia.", case: "Gestão da cadeia global da Apple." },
+                    { name: "Responsabilidade Social e Ambiental", concept: "Práticas de sustentabilidade e impacto ético.", tip: "Aprofunde-se nos critérios ESG.", case: "Iniciativas de carbono neutro de grandes corporações." },
+                    { name: "Simulação Empresarial", concept: "Jogos de negócios para simular gestão completa.", tip: "Participe ativamente dos jogos de empresa da faculdade.", case: "Competição global de simulação de gestão." }
+                ]
+            }
+        ];
+
+        const TCC_IDEAS_GENERATOR = [
+            { area: "Finanças", title: "O Impacto da Alta da Selic na Estrutura de Capital de PMEs Industriais" },
+            { area: "Marketing", title: "Marketing de Influência: A Conversão de Vendas no Varejo de Moda via TikTok" },
+            { area: "RH", title: "Teletrabalho Híbrido: Impactos na Cultura Organizacional e Produtividade" },
+            { area: "Logística", title: "Logística Reversa de Eletroeletrônicos: Desafios na Cidade de São Paulo" },
+            { area: "Inovação", title: "Adoção de Inteligência Artificial no Atendimento ao Cliente Bancário" },
+            { area: "Estratégia", title: "Estratégias de Internacionalização de Startups Brasileiras (Born Globals)" },
+            { area: "Sustentabilidade", title: "Relatórios de Sustentabilidade (GRI) e o Desempenho Financeiro das Empresas da B3" },
+            { area: "Empreendedorismo", title: "Empreendedorismo Feminino: Barreiras de Acesso ao Crédito no Brasil" }
+        ];
+
+        // ==========================================================================================
+        // COMPONENTES
+        // ==========================================================================================
+
+        const Icon = ({ name, className }) => {
+            const icons = {
+                target: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
+                users: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
+                trending: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>,
+                briefcase: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>,
+                brain: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" /><path d="M12 5v13" /></svg>,
+                check: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>,
+                x: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>,
+                search: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>,
+                home: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
+                logOut: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>,
+                trash: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>,
+                plus: <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+            };
+            return icons[name] || null;
+        };
+
+        const QuizSystem = ({ questions, color }) => {
+            const [answers, setAnswers] = useState({});
+            const [filter, setFilter] = useState('Todos');
+
+            const handleSelect = (qId, optIdx) => {
+                if (answers[qId] !== undefined) return;
+                setAnswers(prev => ({ ...prev, [qId]: optIdx }));
+            };
+
+            const filteredQuestions = filter === 'Todos' ? questions : questions.filter(q => q.l === filter);
+
+            const getStats = () => {
+                const total = Object.keys(answers).length;
+                let correct = 0;
+                Object.keys(answers).forEach(qId => {
+                    const q = questions.find(item => item.id === qId);
+                    if (q && answers[qId] === q.a) correct++;
+                });
+                return { total, correct };
+            };
+
+            const stats = getStats();
+            const progress = (stats.total / 70) * 100;
+
+            return (
+                <div className="space-y-6 fade-in">
+                    <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 sticky top-0 z-20 shadow-lg">
+                        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-3">
+                            <div className="flex gap-2">
+                                {['Todos', 'Fácil', 'Médio', 'Difícil'].map(l => (
+                                    <button
+                                        key={l}
+                                        onClick={() => setFilter(l)}
+                                        className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${filter === l ? `bg-${color}-600 text-white` : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}
+                                    >
+                                        {l}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <span className="text-slate-400 text-xs">Respondidas: <strong>{stats.total}/70</strong></span>
+                                <div className="bg-slate-900 px-3 py-1 rounded border border-slate-700">
+                                    <span className={`text-${color}-400 font-bold`}>{stats.correct}</span>
+                                    <span className="text-slate-500 text-xs uppercase ml-1">Acertos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-700">
+                            <div className={`h-full bg-${color}-500 transition-all duration-500`} style={{ width: `${progress}%` }}></div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        {filteredQuestions.map((q, idx) => {
+                            const userAnswer = answers[q.id];
+                            const isAnswered = userAnswer !== undefined;
+                            const isCorrect = userAnswer === q.a;
+                            const options = q.opts || [];
+                            let badgeClass = "badge-facil";
+                            if (q.l === 'Médio') badgeClass = "badge-medio";
+                            if (q.l === 'Difícil') badgeClass = "badge-dificil";
+
+                            return (
+                                <div key={q.id} className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
+                                    <div className="p-4 border-b border-slate-700 flex justify-between items-start gap-4">
+                                        <div className="flex gap-3">
+                                            <span className={`text-${color}-500 font-bold min-w-[24px]`}>{idx + 1}.</span>
+                                            <h3 className="font-medium text-slate-200 text-sm md:text-base leading-snug">{q.q}</h3>
+                                        </div>
+                                        <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${badgeClass}`}>
+                                            {q.l}
+                                        </span>
+                                    </div>
+                                    <div className="p-4 space-y-2 bg-slate-800/50">
+                                        {options.map((opt, i) => {
+                                            let btnClass = "w-full text-left p-3 rounded-lg text-sm transition-all border flex justify-between items-center ";
+                                            if (isAnswered) {
+                                                if (i === q.a) btnClass += "bg-emerald-500/20 border-emerald-500 text-emerald-400 font-bold";
+                                                else if (i === userAnswer && !isCorrect) btnClass += "bg-red-500/20 border-red-500 text-red-400";
+                                                else btnClass += "border-slate-700 text-slate-600 opacity-40";
+                                            } else {
+                                                btnClass += `border-slate-700 text-slate-300 hover:border-${color}-500 hover:bg-slate-700 cursor-pointer`;
+                                            }
+                                            return (
+                                                <button key={i} onClick={() => handleSelect(q.id, i)} disabled={isAnswered} className={btnClass}>
+                                                    <span>{String.fromCharCode(65 + i)}) {opt}</span>
+                                                    {isAnswered && i === q.a && <Icon name="check" className="w-4 h-4" />}
+                                                    {isAnswered && i === userAnswer && !isCorrect && <Icon name="x" className="w-4 h-4" />}
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                    {isAnswered && (
+                                        <div className={`p-4 text-sm border-t ${isCorrect ? 'bg-emerald-900/20 border-emerald-800' : 'bg-red-900/20 border-red-800'}`}>
+                                            <p className="text-slate-300 leading-relaxed">
+                                                <span className={`font-bold ${isCorrect ? 'text-emerald-400' : 'text-red-400'}`}>
+                                                    {isCorrect ? 'CERTO! ' : 'ERRADO. '}
+                                                </span>
+                                                {q.exp}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+        const TCCGenerator = () => {
+            const [search, setSearch] = useState("");
+            const [suggestion, setSuggestion] = useState(null);
+            const generate = () => setSuggestion(TCC_IDEAS_GENERATOR[Math.floor(Math.random() * TCC_IDEAS_GENERATOR.length)]);
+            const filtered = TCC_IDEAS_GENERATOR.filter(i => i.title.toLowerCase().includes(search.toLowerCase()) || i.area.toLowerCase().includes(search.toLowerCase()));
+
+            return (
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                        <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Icon name="search" className="w-5 h-5" /> Pesquisa</h3>
+                        <input type="text" placeholder="Ex: Finanças, RH..." className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-blue-500 outline-none mb-4" value={search} onChange={(e) => setSearch(e.target.value)} />
+                        <div className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
+                            {filtered.map((item, i) => (
+                                <div key={i} onClick={() => setSuggestion(item)} className="p-3 bg-slate-900/50 rounded border border-slate-800 hover:border-blue-500 cursor-pointer text-sm text-slate-300">
+                                    <span className="text-[10px] text-blue-400 font-bold uppercase block mb-1">{item.area}</span>
+                                    {item.title}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl border border-slate-700 flex flex-col items-center justify-center text-center">
+                        {suggestion ? (
+                            <div className="fade-in">
+                                <span className="text-xs font-bold text-blue-400 uppercase tracking-widest">Tema Sugerido</span>
+                                <h2 className="text-xl font-bold text-white mt-2 mb-4">{suggestion.title}</h2>
+                                <p className="text-xs text-slate-500">Área: {suggestion.area}</p>
+                            </div>
+                        ) : <div className="text-slate-500"><p>Clique abaixo para gerar</p></div>}
+                        <button onClick={generate} className="mt-6 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-lg">Gerar Ideia</button>
+                    </div>
+                </div>
+            );
+        };
+
+        const MindMap = () => (
+            <div className="bg-slate-800 p-8 rounded-xl border border-slate-700 overflow-x-auto text-center">
+                <div className="inline-block min-w-[600px]">
+                    <div className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold mb-8 shadow-lg inline-block border border-emerald-500">Carreira 2026</div>
+                    <div className="grid grid-cols-3 gap-8">
+                        {['CPA (Base)', 'C-Pro R (Comercial)', 'C-Pro I (Técnico)'].map((t, i) => (
+                            <div key={i} className="flex flex-col items-center space-y-4">
+                                <div className="h-8 w-0.5 bg-slate-600 -mt-8"></div>
+                                <div className={`px-4 py-2 rounded-lg border font-bold ${i === 0 ? 'bg-emerald-900/50 text-emerald-300 border-emerald-700' : i === 1 ? 'bg-blue-900/50 text-blue-300 border-blue-700' : 'bg-purple-900/50 text-purple-300 border-purple-700'}`}>{t}</div>
+                                <div className="text-xs text-slate-400 bg-slate-900 p-3 rounded border border-slate-800 w-full">
+                                    {i === 0 ? 'SFN, Ética, Economia' : i === 1 ? 'Vendas, Perfil, CRM' : 'Derivativos, Risco, Estuturação'}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+
+        const RealGrade = () => {
+            const [open, setOpen] = useState(null);
+
+            return (
+                <div className="space-y-4">
+                    {ADM_GRADE_REAL.map(sem => (
+                        <div key={sem.id} className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+                            <button
+                                onClick={() => setOpen(open === sem.id ? null : sem.id)}
+                                className="w-full flex justify-between items-center p-4 bg-slate-800 hover:bg-slate-700 transition"
+                            >
+                                <h3 className="font-bold text-white text-lg">{sem.title}</h3>
+                                <span className={`text-slate-400 transition-transform ${open === sem.id ? 'rotate-180' : ''}`}>▼</span>
+                            </button>
+
+                            {open === sem.id && (
+                                <div className="p-4 grid md:grid-cols-1 gap-4 bg-slate-900/50 border-t border-slate-700 fade-in">
+                                    {sem.subjects.map((sub, idx) => (
+                                        <div key={idx} className="bg-slate-800 p-4 rounded-lg border border-slate-700 shadow-sm">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <div className="bg-blue-900/50 p-1.5 rounded text-blue-400"><Icon name="briefcase" className="w-4 h-4" /></div>
+                                                <h4 className="font-bold text-blue-200">{sub.name}</h4>
+                                            </div>
+                                            <p className="text-sm text-slate-300 mb-3 leading-relaxed">{sub.concept}</p>
+
+                                            <div className="grid md:grid-cols-2 gap-3 text-xs">
+                                                <div className="bg-emerald-900/20 border border-emerald-800 p-2 rounded text-emerald-300">
+                                                    <strong>💡 Dica de Estudo:</strong> {sub.tip}
+                                                </div>
+                                                <div className="bg-purple-900/20 border border-purple-800 p-2 rounded text-purple-300">
+                                                    <strong>📊 Estudo de Caso:</strong> {sub.case}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        // --- NOVO COMPONENT: DASHBOARD HOME (Para Login e Tarefas) ---
+        const HomeDashboard = ({ user, tasks, addTask, toggleTask, deleteTask }) => {
+            const [newTask, setNewTask] = useState("");
+            const [quote, setQuote] = useState("");
+
+            useEffect(() => {
+                setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)]);
+            }, []);
+
+            const handleAdd = (e) => {
+                e.preventDefault();
+                if (!newTask.trim()) return;
+                addTask(newTask);
+                setNewTask("");
+            };
+
+            const userTasks = tasks.filter(t => t.user === user);
+
+            return (
+                <div className="space-y-8 fade-in">
+                    {/* Welcome & Quote */}
+                    <div className="bg-gradient-to-r from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-5">
+                            <Icon name="brain" className="w-48 h-48 text-white" />
+                        </div>
+                        <h2 className="text-3xl font-bold text-white mb-2 relative z-10">Olá, <span className="text-emerald-400">{user}</span>! 👋</h2>
+                        <p className="text-slate-400 italic text-lg relative z-10">"{quote}"</p>
+                    </div>
+
+                    {/* Todo List */}
+                    <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                            <Icon name="check" className="w-6 h-6 text-emerald-500" /> Minhas Tarefas
+                        </h3>
+
+                        <form onSubmit={handleAdd} className="flex gap-2 mb-6">
+                            <input
+                                type="text"
+                                placeholder="Adicionar nova tarefa..."
+                                className="flex-1 bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:border-emerald-500 outline-none"
+                                value={newTask}
+                                onChange={(e) => setNewTask(e.target.value)}
+                            />
+                            <button type="submit" className="bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded-lg transition">
+                                <Icon name="plus" className="w-6 h-6" />
+                            </button>
+                        </form>
+
+                        <div className="space-y-3">
+                            {userTasks.length === 0 ? (
+                                <p className="text-slate-500 text-center py-4">Nenhuma tarefa pendente. Aproveite o dia! 🎉</p>
+                            ) : (
+                                userTasks.map(task => (
+                                    <div key={task.id} className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-slate-700 group hover:border-slate-600 transition">
+                                        <div className="flex items-center gap-3">
+                                            <button
+                                                onClick={() => toggleTask(task.id)}
+                                                className={`w-5 h-5 rounded border flex items-center justify-center transition ${task.completed ? 'bg-emerald-500 border-emerald-500 text-slate-900' : 'border-slate-500 hover:border-emerald-500'}`}
+                                            >
+                                                {task.completed && <Icon name="check" className="w-3 h-3 stroke-[4]" />}
+                                            </button>
+                                            <span className={`text-sm ${task.completed ? 'text-slate-500 line-through' : 'text-slate-200'}`}>{task.text}</span>
+                                        </div>
+                                        <button onClick={() => deleteTask(task.id)} className="text-slate-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition">
+                                            <Icon name="trash" className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Login = ({ onLogin }) => (
+            <div className="min-h-screen flex items-center justify-center bg-slate-900 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+                <div className="absolute w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] -top-20 -left-20"></div>
+                <div className="absolute w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] bottom-0 right-0"></div>
+
+                <div className="relative z-10 glass p-12 rounded-3xl max-w-md w-full text-center border-t border-white/10 shadow-2xl fade-in">
+                    <div className="w-20 h-20 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-8 text-emerald-500 border border-emerald-500/30">
+                        <span className="font-bold text-3xl">CI</span>
+                    </div>
+                    <h1 className="text-4xl font-bold text-white mb-2">CasalInvest</h1>
+                    <p className="text-slate-400 font-mono text-sm uppercase tracking-widest mb-10">Pro System 2026</p>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <button onClick={() => onLogin('Wesley')} className="group relative bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-blue-500 p-6 rounded-2xl transition-all duration-300">
+                            <div className="w-14 h-14 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-4 font-bold text-2xl border border-blue-500/30 group-hover:scale-110 transition-transform">W</div>
+                            <span className="text-slate-300 font-bold group-hover:text-white">Wesley</span>
+                        </button>
+                        <button onClick={() => onLogin('Sara')} className="group relative bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-pink-500 p-6 rounded-2xl transition-all duration-300">
+                            <div className="w-14 h-14 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center mx-auto mb-4 font-bold text-2xl border border-pink-500/30 group-hover:scale-110 transition-transform">S</div>
+                            <span className="text-slate-300 font-bold group-hover:text-white">Sara</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // --- APP PRINCIPAL ---
+        const App = () => {
+            const [user, setUser] = useState(null);
+            const [tab, setTab] = useState('HOME');
+            const [subTab, setSubTab] = useState('material');
+            const [admSub, setAdmSub] = useState('grade');
+            const [tasks, setTasks] = useState(() => {
+                const saved = localStorage.getItem('casalinvest_tasks');
+                return saved ? JSON.parse(saved) : [];
+            });
+
+            useEffect(() => {
+                localStorage.setItem('casalinvest_tasks', JSON.stringify(tasks));
+            }, [tasks]);
+
+            const addTask = (text) => {
+                setTasks([...tasks, { id: Date.now(), text, completed: false, user }]);
+            };
+
+            const toggleTask = (id) => {
+                setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+            };
+
+            const deleteTask = (id) => {
+                setTasks(tasks.filter(t => t.id !== id));
+            };
+
+            const handleLogin = (selectedUser) => {
+                setUser(selectedUser);
+                setTab('HOME');
+            };
+
+            const handleLogout = () => {
+                setUser(null);
+            };
+
+            if (!user) return <Login onLogin={handleLogin} />;
+
+            const renderCertTab = (key, color) => {
+                const info = key === 'CPA' ? { t: 'CPA (Base)', d: 'Obrigatória. Foco em Regulação e Produtos.' } :
+                    key === 'C_PRO_R' ? { t: 'C-Pro R (Relacionamento)', d: 'Foco Comercial, Vendas e Soft Skills.' } :
+                        { t: 'C-Pro I (Técnico)', d: 'Foco Técnico, Derivativos e Estruturação.' };
+
+                return (
+                    <div className="fade-in space-y-6">
+                        <div className={`bg-${color}-900/20 border border-${color}-500/30 p-6 rounded-xl`}>
+                            <h2 className={`text-2xl font-bold text-${color}-400 mb-2`}>{info.t}</h2>
+                            <p className="text-slate-400">{info.d}</p>
+                        </div>
+                        <div className="flex gap-4 border-b border-slate-800 pb-1">
+                            <button onClick={() => setSubTab('material')} className={`pb-2 px-4 text-sm font-bold transition ${subTab === 'material' ? `text-${color}-400 border-b-2 border-${color}-400` : 'text-slate-500 hover:text-white'}`}>Material de Apoio</button>
+                            <button onClick={() => setSubTab('quiz')} className={`pb-2 px-4 text-sm font-bold transition ${subTab === 'quiz' ? `text-${color}-400 border-b-2 border-${color}-400` : 'text-slate-500 hover:text-white'}`}>Simulado (70 Questões)</button>
+                        </div>
+                        {subTab === 'material' ? (
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {MATERIAL_DB[key].map((m, i) => (
+                                    <div key={i} className="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-slate-600 transition">
+                                        <h3 className={`text-${color}-400 font-bold mb-3`}>{m.title}</h3>
+                                        <p className="text-slate-300 text-sm leading-relaxed">{m.content}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : <QuizSystem questions={FULL_EXAMS[key]} color={color} />}
+                    </div>
+                );
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col md:flex-row">
+                    <nav className="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col sticky top-0 md:h-screen z-50">
+                        <div className="p-6 flex items-center gap-3 border-b border-slate-800">
+                            <div className="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center font-bold text-white">CI</div>
+                            <span className="font-bold text-lg">CasalInvest <span className="text-emerald-500 text-xs align-top">2026</span></span>
+                        </div>
+                        <div className="p-4 space-y-2 flex-1 overflow-y-auto">
+                            <div className="bg-slate-800 rounded-lg p-3 mb-4 flex items-center gap-3 border border-slate-700">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-white ${user === 'Wesley' ? 'bg-blue-600' : 'bg-pink-600'}`}>
+                                    {user[0]}
+                                </div>
+                                <div className="flex-1 overflow-hidden">
+                                    <p className="text-sm font-bold text-white truncate">{user}</p>
+                                    <p className="text-xs text-slate-500 truncate">Online</p>
+                                </div>
+                            </div>
+
+                            <button onClick={() => setTab('HOME')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'HOME' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
+                                <Icon name="home" className="w-4 h-4" /> Home
+                            </button>
+
+                            <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 px-2 mt-6">Certificações</div>
+                            {['CPA', 'C_PRO_R', 'C_PRO_I'].map(c => (
+                                <button key={c} onClick={() => setTab(c)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === c ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white'}`}>
+                                    <Icon name={c === 'CPA' ? 'target' : c === 'C_PRO_R' ? 'users' : 'trending'} className="w-4 h-4" /> {c.replace('_', ' ').replace('_', ' ')}
+                                </button>
+                            ))}
+
+                            <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 mt-6 px-2">Acadêmico</div>
+                            <button onClick={() => setTab('ADM')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'ADM' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="briefcase" className="w-4 h-4" /> ADM & TCC</button>
+                            <button onClick={() => setTab('MAP')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${tab === 'MAP' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`}><Icon name="brain" className="w-4 h-4" /> Mapa Mental</button>
+                        </div>
+
+                        <div className="p-4 border-t border-slate-800">
+                            <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition">
+                                <Icon name="logOut" className="w-4 h-4" /> Sair
+                            </button>
+                        </div>
+                    </nav>
+
+                    <main className="flex-1 p-8 overflow-y-auto h-screen bg-slate-900 relative">
+                        <div className="fixed inset-0 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+                        <div className="relative z-10 max-w-5xl mx-auto">
+                            {tab === 'HOME' && <HomeDashboard user={user} tasks={tasks} addTask={addTask} toggleTask={toggleTask} deleteTask={deleteTask} />}
+                            {tab === 'CPA' && renderCertTab('CPA', 'emerald')}
+                            {tab === 'C_PRO_R' && renderCertTab('C_PRO_R', 'blue')}
+                            {tab === 'C_PRO_I' && renderCertTab('C_PRO_I', 'purple')}
+                            {tab === 'ADM' && (
+                                <div className="fade-in space-y-8">
+                                    <div className="bg-slate-800 border border-slate-700 p-6 rounded-xl">
+                                        <h2 className="text-2xl font-bold text-white mb-2">Administração</h2>
+                                        <p className="text-slate-400">Grade curricular completa e laboratório de ideias para TCC.</p>
+                                    </div>
+                                    <div className="flex gap-4 border-b border-slate-800 pb-1">
+                                        <button onClick={() => setAdmSub('grade')} className={`pb-2 px-4 text-sm font-bold transition ${admSub === 'grade' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-500 hover:text-white'}`}>Grade Curricular</button>
+                                        <button onClick={() => setAdmSub('tcc')} className={`pb-2 px-4 text-sm font-bold transition ${admSub === 'tcc' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-500 hover:text-white'}`}>Gerador TCC</button>
+                                    </div>
+                                    {admSub === 'grade' ? <RealGrade /> : <TCCGenerator />}
+                                </div>
+                            )}
+                            {tab === 'MAP' && <div className="fade-in space-y-8"><h2 className="text-2xl font-bold text-white">Mapa Mental de Carreira</h2><MindMap /></div>}
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
