@@ -150,6 +150,17 @@
                 borderClass: "border-blue-600",
                 topics: [
                     {
+                        title: "Políticas Econômicas (O Tripé)",
+                        keywords: ["MONETÁRIA", "FISCAL", "CAMBIAL"],
+                        description: "Como o governo controla a economia.",
+                        practicalCase: "Para frear a inflação, o Bacen aumenta a Selic (Política Monetária Contracionista). O governo corta gastos (Política Fiscal). O câmbio flutua conforme oferta/demanda de dólares.",
+                        details: [
+                            { label: "Monetária", value: "Controle da moeda e juros (Bacen). Instrumentos: Selic, Compulsório, Redesconto." },
+                            { label: "Fiscal", value: "Controle de Gastos e Impostos (Governo/Tesouro). Déficit vs Superávit." },
+                            { label: "Cambial", value: "Regime de Câmbio Flutuante Sujo (Bacen intervém só se necessário)." }
+                        ]
+                    },
+                    {
                         title: "CMN (Conselho Monetário Nacional)",
                         keywords: ["MANDA", "NORMATIVO", "META INFLAÇÃO"],
                         description: "Órgão máximo do SFN. Ele NÃO executa, ele manda.",
@@ -172,6 +183,26 @@
                         ]
                     },
                     {
+                        title: "Acordo de Basileia",
+                        keywords: ["SOLIDEZ", "ALAVANCAGEM", "RISCO SISTÊMICO"],
+                        description: "Regras internacionais para garantir que bancos não quebrem.",
+                        practicalCase: "O Índice de Basileia exige que, para cada R$ 100 emprestados, o banco tenha um mínimo (ex: R$ 11) de capital próprio guardado. Impede que o banco empreste dinheiro que não tem.",
+                        details: [
+                            { label: "Objetivo", value: "Fortalecer a solidez do sistema financeiro e reduzir risco de crédito." },
+                            { label: "Pilar 1", value: "Requisitos mínimos de capital." }
+                        ]
+                    },
+                    {
+                        title: "Risco, Retorno e Liquidez",
+                        keywords: ["TRADE-OFF", "VOLATILIDADE", "RESGATE"],
+                        description: "O triângulo dos investimentos. Não existe produto com alto retorno, baixo risco e alta liquidez ao mesmo tempo.",
+                        practicalCase: "Imóvel: Baixa liquidez, risco médio, retorno variável. Poupança: Alta liquidez, risco baixo, retorno baixo. Ações: Alta liquidez, risco alto, retorno potencial alto.",
+                        details: [
+                            { label: "Risco", value: "Probabilidade de o retorno ser diferente do esperado (Volatilidade)." },
+                            { label: "Liquidez", value: "Velocidade e facilidade de transformar o ativo em dinheiro pelo preço justo." }
+                        ]
+                    },
+                    {
                         title: "CVM (Comissão de Valores Mobiliários)",
                         keywords: ["BOLSA", "FUNDOS", "S.A. ABERTA"],
                         description: "A 'polícia' do mercado de capitais (Bolsa, Fundos).",
@@ -182,54 +213,22 @@
                         ]
                     },
                     {
-                        title: "Seguros: CNSP e SUSEP",
-                        keywords: ["SEGUROS", "CAPITALIZAÇÃO", "PREVIDÊNCIA ABERTA"],
-                        description: "Dupla que cuida de seguros, capitalização e previdência aberta (PGBL/VGBL).",
-                        practicalCase: "Se você contrata um seguro de carro (Porto Seguro) ou um PGBL (Brasilprev), quem regula as normas é o CNSP e quem fiscaliza se a empresa tem dinheiro para te pagar é a SUSEP.",
+                        title: "Seguros e Previdência (Estrutura)",
+                        keywords: ["SUSEP", "PREVIC", "CNSP", "CNPC"],
+                        description: "Quem manda e quem fiscaliza em Seguros e Pensão.",
                         details: [
-                            { label: "CNSP (Normativo)", value: "Conselho Nacional de Seguros Privados. Manda/Cria normas." },
-                            { label: "SUSEP (Executor)", value: "Superintendência de Seguros Privados. Fiscaliza." }
+                            { label: "Seguros/Aberta (SUSEP)", value: "Normativo: CNSP. Fiscalizador: SUSEP (Seguros, Capitalização, PGBL/VGBL)." },
+                            { label: "Fechada (PREVIC)", value: "Normativo: CNPC. Fiscalizador: PREVIC (Fundos de Pensão de empresas)." }
                         ]
                     },
                     {
-                        title: "Previdência Fechada: CNPC e PREVIC",
-                        keywords: ["FUNDOS DE PENSÃO", "PREVI", "PETROS"],
-                        description: "Dupla que cuida dos Fundos de Pensão (Previdência Fechada - só para funcionários).",
-                        practicalCase: "A Previ (fundo dos funcionários do BB) ou a Petros (Petrobras) são fiscalizadas pela PREVIC.",
+                        title: "Indicadores: PIB, IPCA e IGP-M",
+                        keywords: ["ATIVIDADE", "INFLAÇÃO", "ALUGUEL"],
+                        description: "Termômetros da economia.",
                         details: [
-                            { label: "CNPC (Normativo)", value: "Conselho Nacional de Previdência Complementar. Cria regras." },
-                            { label: "PREVIC (Executor)", value: "Superintendência Nacional de Previdência Complementar. Fiscaliza." }
-                        ]
-                    },
-                    {
-                        title: "PIB (Produto Interno Bruto)",
-                        keywords: ["SOMA DE RIQUEZAS", "FLUXO", "C+I+G+X-M"],
-                        description: "A soma de todos os bens e serviços finais produzidos no país.",
-                        practicalCase: "A padaria vender pão conta para o PIB. A padaria vender um forno usado NÃO conta (já foi contado quando era novo). Trabalho voluntário e dona de casa não contam.",
-                        details: [
-                            { label: "Fórmula (Ótica da Despesa)", value: "PIB = C (Consumo Famílias) + I (Investimento Empresas) + G (Gastos Governo) + NX (Exportações - Importações)." },
-                            { label: "Conceito", value: "Mede o fluxo de produção, não o estoque de riqueza." }
-                        ]
-                    },
-                    {
-                        title: "IPCA (Índice Nacional de Preços ao Consumidor Amplo)",
-                        keywords: ["INFLAÇÃO OFICIAL", "IBGE", "META"],
-                        description: "Índice oficial de inflação usado para a meta.",
-                        practicalCase: "O IBGE pesquisa o preço da cesta de compras (arroz, gasolina, escola, médico) de famílias que ganham de 1 a 40 salários mínimos.",
-                        details: [
-                            { label: "Calculado por", value: "IBGE." },
-                            { label: "Período", value: "Do dia 01 ao dia 30/31 do mês." },
-                            { label: "Abrangência", value: "9 regiões metropolitanas + DF + Goiânia + Outros." }
-                        ]
-                    },
-                    {
-                        title: "IGP-M (Índice Geral de Preços - Mercado)",
-                        keywords: ["ALUGUEL", "FGV", "60-30-10"],
-                        description: "Calculado pela FGV. Muito afetado pelo Dólar (atacado).",
-                        practicalCase: "Usado para reajustar contratos de aluguel. Se o dólar dispara, o IGP-M sobe muito mais que o IPCA, encarecendo o aluguel.",
-                        details: [
-                            { label: "Composição (Decoreba!)", value: "60% IPA (Atacado) + 30% IPC (Consumidor) + 10% INCC (Construção Civil)." },
-                            { label: "Apelido", value: "'Inflação do Aluguel'." }
+                            { label: "PIB (Ótica Despesa)", value: "C (Consumo) + I (Investimento) + G (Governo) + (X - M) (Saldo Comercial)." },
+                            { label: "IPCA (IBGE)", value: "Inflação oficial (Meta). Cesta de consumo de famílias de 1 a 40 salários." },
+                            { label: "IGP-M (FGV)", value: "Inflação do aluguel. 60% Atacado (IPA), 30% Consumidor (IPC), 10% Construção (INCC)." }
                         ]
                     }
                 ]
@@ -243,68 +242,75 @@
                 borderClass: "border-purple-600",
                 topics: [
                     {
-                        title: "CDB (Certificado de Depósito Bancário)",
-                        keywords: ["CRÉDITO PRIVADO", "FGC", "REGRESSIVO"],
-                        description: "Título onde você empresta dinheiro para o banco financiar suas operações.",
-                        practicalCase: "Você aplica R$ 10.000 num CDB do Banco X que paga 110% do CDI. O Banco X pega esse dinheiro e empresta para o João no Cheque Especial cobrando 8% ao mês. O spread é o lucro do banco.",
+                        title: "Fundos de Investimento (2.1)",
+                        keywords: ["COTAS", "MARCAÇÃO A MERCADO", "CONDOMÍNIO"],
+                        description: "Veículo de investimento coletivo. Pode ser Aberto (resgata quando quer) ou Fechado (só no fim ou venda no secundário).",
+                        practicalCase: "Marcação a Mercado (MaM): O valor da cota é atualizado diariamente pelo preço real de venda dos ativos. Se o mercado cai, a cota cai no mesmo dia, garantindo que quem sai não prejudique quem fica.",
                         details: [
-                            { label: "Risco", value: "Crédito da instituição (Coberto pelo FGC até R$ 250k)." },
-                            { label: "Tributação", value: "IR Tabela Regressiva (22,5% a 15%)." }
+                            { label: "Tipos (CVM 175)", value: "Renda Fixa, Ações, Multimercado, Cambial." },
+                            { label: "Gestão", value: "Ativa (Tenta bater benchmark) ou Passiva (Segue índice, ex: Fundo DI)." },
+                            { label: "Tributação", value: "Curto Prazo (22,5% a 20%) ou Longo Prazo (22,5% a 15%). Ações é 15% fixo." }
                         ]
                     },
                     {
-                        title: "LCI & LCA (Letras de Crédito)",
-                        keywords: ["ISENÇÃO IR", "IMOBILIÁRIO", "AGRONEGÓCIO"],
-                        description: "LCI (Letra de Crédito Imobiliário) e LCA (Letra de Crédito do Agronegócio).",
-                        practicalCase: "O banco emite uma LCA para captar dinheiro e emprestar para um produtor de soja comprar tratores. Por ajudar o agro, o governo isenta você (PF) de IR.",
+                        title: "Renda Fixa (2.2) - Títulos Privados",
+                        keywords: ["CDB", "LCI", "LCA", "CRI", "CRA", "DEBÊNTURES"],
+                        description: "Empréstimos para bancos ou empresas.",
+                        practicalCase: "CRI (Certificado de Recebíveis Imobiliários) e CRA (Agronegócio) são títulos de securitização. Uma construtora vende suas dívidas futuras para uma Securitizadora, que emite o CRI para investidores. Isento de IR para PF.",
                         details: [
-                            { label: "Vantagem", value: "ISENTO de IR para Pessoa Física." },
-                            { label: "Desvantagem", value: "Carência mínima de 90 dias (LCI) ou 9 meses (LCA)." },
-                            { label: "Risco", value: "Tem FGC." }
+                            { label: "Bancários (FGC)", value: "CDB, LCI, LCA, LC, RDB. FGC garante até R$ 250k." },
+                            { label: "Crédito Privado (Sem FGC)", value: "Debêntures, CRI, CRA. Risco da empresa emissora." },
+                            { label: "Debênture Incentivada", value: "Foca em infraestrutura. Isenta de IR." }
                         ]
                     },
                     {
-                        title: "Debêntures",
-                        keywords: ["DÍVIDA EMPRESARIAL", "SEM FGC", "INFRAESTRUTURA"],
-                        description: "Títulos de dívida emitidos por empresas S.A. (não financeiras).",
-                        practicalCase: "A Vale (mineradora) precisa construir uma ferrovia. Em vez de pedir empréstimo caro no banco, ela emite Debêntures e pega dinheiro direto com investidores.",
+                        title: "Renda Fixa (2.2) - Títulos Públicos",
+                        keywords: ["TESOURO DIRETO", "LFT", "LTN", "NTN-B"],
+                        description: "Empréstimo ao Governo Federal. Risco Soberano (o menor do país).",
                         details: [
-                            { label: "Debênture Incentivada", value: "Financia infraestrutura (estrada, energia). ISENTA de IR para PF." },
-                            { label: "Risco", value: "Crédito da empresa (SEM FGC). Se a Vale quebrar, você vai para a fila de credores." }
+                            { label: "Tesouro Selic (LFT)", value: "Pós-fixado. Baixa volatilidade. Reserva de Emergência." },
+                            { label: "Tesouro Prefixado (LTN)", value: "Taxa fixa. Risco de mercado se vender antes." },
+                            { label: "Tesouro IPCA+ (NTN-B)", value: "Juro Real (IPCA + Taxa). Proteção inflacionária longo prazo." }
                         ]
                     },
                     {
-                        title: "Tesouro Direto",
-                        keywords: ["RISCO SOBERANO", "MARCAÇÃO A MERCADO"],
-                        description: "Plataforma para PF comprar títulos públicos federais.",
-                        practicalCase: "Você empresta para o Governo Federal pagar as contas dele. É o risco mais baixo do país (Risco Soberano), pois o governo pode emitir moeda para pagar.",
-                        subTopics: [
-                            { name: "Tesouro Selic (LFT)", text: "Pós-fixado. Segue a Selic. Se a Selic sobe, ele rende mais. Ideal para Reserva." },
-                            { name: "Tesouro Prefixado (LTN)", text: "Taxa fixa (ex: 12%). Se os juros de mercado subirem para 15%, seu título desvaloriza se vender antes (Marcação a Mercado)." },
-                            { name: "Tesouro IPCA+ (NTN-B)", text: "Paga IPCA + Juro Fixo. Protege o poder de compra no longo prazo." }
-                        ],
+                        title: "Renda Variável (2.3)",
+                        keywords: ["AÇÕES", "BDR", "ETF", "FRACIONÁRIO"],
+                        description: "Não há garantia de retorno. Você vira sócio.",
+                        practicalCase: "No Mercado Fracionário (código da ação + F, ex: VALE3F), você pode comprar entre 1 e 99 ações, sem precisar comprar o lote padrão de 100. Acessível para pequenos investidores.",
                         details: [
-                             { label: "Liquidez", value: "D+1 (Solicita hoje, cai amanhã)." }
+                            { label: "Ações", value: "ON (Voto), PN (Preferência dividendos). Dividendo é isento de IR." },
+                            { label: "BDR (Brazilian Depositary Receipt)", value: "Recibo de ação estrangeira (Apple, Google) negociado no Brasil." },
+                            { label: "ETF", value: "Fundo de Índice negociado em bolsa. Gestão passiva." }
                         ]
                     },
                     {
-                        title: "Fundos de Investimento",
-                        keywords: ["CONDOMÍNIO", "COTA", "CNPJ PRÓPRIO"],
-                        description: "Comunhão de recursos sob gestão profissional. Cada investidor tem cotas.",
-                        practicalCase: "Você não sabe qual ação comprar. Você investe num Fundo de Ações. O Gestor (profissional) escolhe comprar Petrobras e Itaú. Se as ações sobem, sua cota valoriza.",
+                        title: "Derivativos (2.4)",
+                        keywords: ["HEDGE", "ALAVANCAGEM", "OPÇÕES", "FUTUROS"],
+                        description: "Contratos cujo valor deriva de outro ativo.",
+                        practicalCase: "Um produtor de café vende Contrato Futuro para garantir o preço da saca daqui a 6 meses (Hedge/Proteção). Um especulador compra achando que o preço vai subir (Alavancagem).",
                         details: [
-                            { label: "Come-cotas", value: "Antecipação semestral de IR (Maio/Nov) em fundos de Renda Fixa, Cambial e Multimercado." },
-                            { label: "Fundo de Ações", value: "NÃO tem come-cotas. IR de 15% só no resgate." }
+                            { label: "Mercados", value: "Termo, Futuro, Opções, Swap." }
                         ]
                     },
                     {
-                        title: "Previdência (PGBL x VGBL)",
-                        keywords: ["LONGO PRAZO", "DEDUÇÃO FISCAL", "SUCESSÃO"],
-                        description: "Plano Gerador de Benefício Livre (PGBL) e Vida Gerador de Benefício Livre (VGBL).",
-                        practicalCase: "João ganha R$ 200 mil/ano e declara completo. Ele faz PGBL para abater R$ 24 mil da base de cálculo e pagar menos IR hoje (difere o imposto). Maria é isenta; ela faz VGBL apenas para sucessão patrimonial.",
+                        title: "Previdência (2.5)",
+                        keywords: ["PGBL", "VGBL", "SUCESSÃO"],
+                        description: "Foco no longo prazo e aposentadoria.",
                         details: [
-                            { label: "PGBL", value: "Deduz IR na entrada (até 12%). Paga IR sobre TUDO na saída." },
-                            { label: "VGBL", value: "Não deduz. Paga IR só sobre o LUCRO na saída." }
+                            { label: "PGBL", value: "Deduz 12% na declaração completa. IR sobre o TOTAL." },
+                            { label: "VGBL", value: "Não deduz. IR apenas sobre o RENDIMENTO. Ideal para sucessão." },
+                            { label: "Tabelas", value: "Progressiva (Compensável) ou Regressiva (Definitiva 35% a 10%)." }
+                        ]
+                    },
+                    {
+                        title: "Novos Produtos: Cripto & Tokenização (2.6)",
+                        keywords: ["BITCOIN", "STABLECOIN", "TOKEN"],
+                        description: "Ativos digitais baseados em blockchain.",
+                        practicalCase: "Tokenização de ativos reais: Transformar um imóvel em 1000 tokens digitais. Quem compra o token tem direito a uma fração do aluguel.",
+                        details: [
+                            { label: "Criptoativos", value: "Ativos virtuais, sem emissor central (ex: Bitcoin). Alta volatilidade." },
+                            { label: "Stablecoins", value: "Cripto pareada em moeda forte (Dólar) para reduzir volatilidade." }
                         ]
                     }
                 ]
@@ -318,23 +324,32 @@
                 borderClass: "border-orange-600",
                 topics: [
                     {
-                        title: "Suitability (API)",
-                        keywords: ["PERFIL", "ADEQUAÇÃO", "OBRIGATÓRIO"],
-                        description: "Análise de Perfil do Investidor (API).",
-                        practicalCase: "Dona Maria tem 80 anos e precisa do dinheiro para remédios (Conservadora). O gerente não pode colocar o dinheiro dela em Ações (Risco Alto), mesmo que as ações estejam subindo.",
+                        title: "Suitability & KYC",
+                        keywords: ["PERFIL", "ADEQUAÇÃO", "CONHEÇA SEU CLIENTE"],
+                        description: "Regras para proteger o cliente e o sistema.",
+                        practicalCase: "Suitability (API): Verificar se o cliente aguenta o risco. KYC (Know Your Customer): Verificar a origem do patrimônio, capacidade financeira e atividade para evitar lavagem de dinheiro.",
                         details: [
-                            { label: "Perfis", value: "Conservador (Segurança), Moderado (Equilíbrio), Arrojado (Rentabilidade/Risco)." },
-                            { label: "Desenquadramento", value: "Se o cliente quiser investir fora do perfil, deve assinar termo específico." }
+                            { label: "Obrigatório", value: "O questionário API deve ser renovado a cada 24 meses." },
+                            { label: "Conflito", value: "Vender produto inadequado gera punição." }
                         ]
                     },
                     {
-                        title: "PLD/FT (Lavagem de Dinheiro)",
-                        keywords: ["COI", "SUSPEITA", "ESPÉCIE"],
-                        description: "Prevenção à Lavagem de Dinheiro e Financiamento ao Terrorismo.",
-                        practicalCase: "Um cliente que ganha R$ 2 mil/mês tenta depositar R$ 100 mil em dinheiro vivo na boca do caixa. Isso é uma operação suspeita e deve ser reportada ao COAF.",
+                        title: "Ética e Conduta Profissional",
+                        keywords: ["CONFIDENCIALIDADE", "PRIORIDADE", "TRANSPARÊNCIA"],
+                        description: "Deveres do profissional certificado.",
+                        practicalCase: "Front Running: É crime o operador comprar uma ação para si mesmo antes de executar uma ordem grande de um cliente que fará o preço subir.",
                         details: [
-                            { label: "Fases", value: "1. Colocação (introduz o dinheiro), 2. Ocultação (dificulta rastreio), 3. Integração (volta com aparência lícita)." },
-                            { label: "Reporte", value: "Ao COAF. Não avisar o cliente." }
+                            { label: "Princípio", value: "O interesse do cliente sempre prevalece." },
+                            { label: "Venda Casada", value: "Proibida (ex: condicionar empréstimo a seguro)." }
+                        ]
+                    },
+                    {
+                        title: "PLD/FT",
+                        keywords: ["COI", "COAF", "INTEGRAÇÃO"],
+                        description: "Prevenção à Lavagem de Dinheiro.",
+                        details: [
+                            { label: "Fases", value: "Colocação -> Ocultação -> Integração." },
+                            { label: "Pena", value: "Reclusão de 3 a 10 anos + Multa." }
                         ]
                     }
                 ]
@@ -348,21 +363,32 @@
                 borderClass: "border-teal-600",
                 topics: [
                     {
-                        title: "Open Finance",
-                        keywords: ["CONSENTIMENTO", "COMPARTILHAMENTO"],
-                        description: "Sistema financeiro aberto. O dado é do cliente.",
-                        practicalCase: "Você tem conta no Banco A há 20 anos. Quer empréstimo no Banco B. Pelo Open Finance, você autoriza o Banco B a ver seu histórico positivo do Banco A para conseguir juros menores.",
+                        title: "ESG no Mercado (4.1)",
+                        keywords: ["CVM 175", "SUSTENTABILIDADE", "GOVERNANÇA"],
+                        description: "Environmental, Social & Governance. O dinheiro seguindo propósitos.",
+                        practicalCase: "A Resolução CVM 175 obriga fundos que se dizem 'ESG' a comprovar, no regulamento e na carteira, que realmente seguem essas práticas, combatendo o Greenwashing.",
                         details: [
-                            { label: "Princípio Chave", value: "Consentimento: deve ser explícito, com finalidade e prazo determinados." }
+                            { label: "E (Ambiental)", value: "Clima, água, resíduos." },
+                            { label: "S (Social)", value: "Direitos humanos, diversidade, dados." },
+                            { label: "G (Governança)", value: "Conselho, ética, transparência." }
                         ]
                     },
                     {
-                        title: "ESG",
-                        keywords: ["SUSTENTABILIDADE", "GOVERNANÇA", "SOCIAL"],
-                        description: "Environmental (Ambiental), Social (Social) and Governance (Governança).",
-                        practicalCase: "Investidores evitam comprar ações de uma empresa que polui rios (E) ou usa trabalho escravo (S), pois isso gera risco de imagem e multas.",
+                        title: "Finanças Descentralizadas (DeFi) (4.2)",
+                        keywords: ["BLOCKCHAIN", "SEM INTERMEDIÁRIOS", "P2P"],
+                        description: "Serviços financeiros (empréstimo, troca) sem bancos, rodando em código.",
+                        practicalCase: "Numa corretora descentralizada (DEX), você troca Bitcoin por Dólar (USDC) direto com outra pessoa ou pool de liquidez, sem passar por um banco ou corretora centralizada.",
                         details: [
-                            { label: "Greenwashing", value: "Maquiagem verde. Fingir que é sustentável sem ser." }
+                            { label: "Smart Contracts", value: "Contratos Inteligentes. Códigos autoexecutáveis na blockchain ('Se X acontecer, pague Y'). Não precisa de advogado ou cartório." }
+                        ]
+                    },
+                    {
+                        title: "Open Finance e Inovação (4.3)",
+                        keywords: ["DADOS", "API", "CONSENTIMENTO"],
+                        description: "Evolução do Open Banking. Compartilhamento padronizado de dados e serviços.",
+                        details: [
+                            { label: "Foco", value: "O cliente é dono dos seus dados." },
+                            { label: "Objetivo", value: "Aumentar competição e reduzir juros." }
                         ]
                     }
                 ]
