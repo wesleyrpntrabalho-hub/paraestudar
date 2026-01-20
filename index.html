@@ -43,6 +43,13 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+        /* Estilos para o conteúdo rico */
+        .rich-content h4 { font-weight: 800; color: #1e40af; margin-top: 1rem; margin-bottom: 0.5rem; font-size: 1rem; }
+        .rich-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.5rem; }
+        .rich-content li { margin-bottom: 0.25rem; }
+        .rich-content strong { color: #374151; font-weight: 700; }
+        .rich-content .alert-box { background-color: #FEF2F2; border-left: 4px solid #EF4444; padding: 0.75rem; border-radius: 0.25rem; margin: 1rem 0; font-size: 0.9em; color: #7F1D1D; }
+        .rich-content .concept-box { background-color: #EFF6FF; border-left: 4px solid #3B82F6; padding: 0.75rem; border-radius: 0.25rem; margin: 1rem 0; font-size: 0.9em; color: #1E3A8A; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-900 selection:bg-indigo-200">
@@ -150,85 +157,200 @@
                 borderClass: "border-blue-600",
                 topics: [
                     {
-                        title: "Políticas Econômicas (O Tripé)",
-                        keywords: ["MONETÁRIA", "FISCAL", "CAMBIAL"],
-                        description: "Como o governo controla a economia.",
-                        practicalCase: "Para frear a inflação, o Bacen aumenta a Selic (Política Monetária Contracionista). O governo corta gastos (Política Fiscal). O câmbio flutua conforme oferta/demanda de dólares.",
+                        title: "CMN vs BACEN (A Grande Diferença)",
+                        keywords: ["QUEM MANDA", "QUEM FAZ", "HIERARQUIA"],
+                        description: "Distinção crucial para a prova. Um pensa, o outro age.",
+                        content: `
+                            <h4>🏛️ CMN (Conselho Monetário Nacional)</h4>
+                            <p>É o <strong>CHEFE</strong> (Órgão Normativo).</p>
+                            <ul>
+                                <li><strong>Verbos na prova:</strong> Autorizar, Regular, Fixar diretrizes, Disciplinar, Definir meta.</li>
+                                <li><strong>Composição:</strong> Ministro da Fazenda (Presidente), Ministro do Planejamento, Presidente do Bacen.</li>
+                            </ul>
+                            <h4>🏦 BACEN (Banco Central)</h4>
+                            <p>É o <strong>EXECUTOR</strong> (Órgão Supervisor).</p>
+                            <ul>
+                                <li><strong>Verbos na prova:</strong> Fiscalizar, Executar, Emitir papel-moeda, Receber compulsório, Realizar operações, Punir instituições.</li>
+                            </ul>
+                            <div class="concept-box">
+                                <strong>Dica de Ouro:</strong> O CMN não põe a mão na massa. Ele não fiscaliza ninguém, ele dita as regras. Quem suja as mãos fiscalizando é o Bacen (bancos) ou a CVM (bolsa).
+                            </div>
+                        `,
+                        practicalCase: "O CMN decide que a meta de inflação é 3%. O Bacen, para cumprir essa ordem, aumenta a Selic. O CMN não aumenta a Selic, ele só manda controlar a inflação.",
                         details: [
-                            { label: "Monetária", value: "Controle da moeda e juros (Bacen). Instrumentos: Selic, Compulsório, Redesconto." },
-                            { label: "Fiscal", value: "Controle de Gastos e Impostos (Governo/Tesouro). Déficit vs Superávit." },
-                            { label: "Cambial", value: "Regime de Câmbio Flutuante Sujo (Bacen intervém só se necessário)." }
-                        ]
-                    },
-                    {
-                        title: "CMN (Conselho Monetário Nacional)",
-                        keywords: ["MANDA", "NORMATIVO", "META INFLAÇÃO"],
-                        description: "Órgão máximo do SFN. Ele NÃO executa, ele manda.",
-                        practicalCase: "O CMN se reúne e decide que a meta de inflação para o ano que vem será de 3%. Ele não vai ao mercado comprar títulos; ele apenas dá a ordem para o Banco Central 'se virar' para atingir essa meta.",
-                        details: [
-                            { label: "Função Principal", value: "Formular a política da moeda e do crédito. Define a META de inflação." },
-                            { label: "Composição", value: "Ministro da Fazenda (Presidente), Ministro do Planejamento, Presidente do Bacen." },
-                            { label: "Dica de Prova", value: "Se o verbo for 'Autorizar', 'Regular', 'Fixar diretrizes' = CMN." }
-                        ]
-                    },
-                    {
-                        title: "BACEN (Banco Central do Brasil)",
-                        keywords: ["EXECUTA", "FISCALIZA BANCOS", "SELIC", "COMPULSÓRIO"],
-                        description: "O banco dos bancos. Garante que as ordens do CMN sejam cumpridas.",
-                        practicalCase: "Se a inflação está alta, o Bacen aumenta a taxa Selic para desestimular o consumo. Se um banco está prestes a quebrar, o Bacen decreta intervenção.",
-                        details: [
-                            { label: "Função Principal", value: "Fiscalizar instituições financeiras, emitir papel-moeda, controlar liquidez via Depósito Compulsório e Redesconto." },
-                            { label: "Autonomia", value: "Possui autonomia operacional (não subordinado hierarquicamente ao Ministério da Fazenda)." },
-                            { label: "Dica de Prova", value: "Se o verbo for 'Fiscalizar', 'Executar', 'Punir' bancos = BACEN." }
-                        ]
-                    },
-                    {
-                        title: "Acordo de Basileia",
-                        keywords: ["SOLIDEZ", "ALAVANCAGEM", "RISCO SISTÊMICO"],
-                        description: "Regras internacionais para garantir que bancos não quebrem.",
-                        practicalCase: "O Índice de Basileia exige que, para cada R$ 100 emprestados, o banco tenha um mínimo (ex: R$ 11) de capital próprio guardado. Impede que o banco empreste dinheiro que não tem.",
-                        details: [
-                            { label: "Objetivo", value: "Fortalecer a solidez do sistema financeiro e reduzir risco de crédito." },
-                            { label: "Pilar 1", value: "Requisitos mínimos de capital." }
-                        ]
-                    },
-                    {
-                        title: "Risco, Retorno e Liquidez",
-                        keywords: ["TRADE-OFF", "VOLATILIDADE", "RESGATE"],
-                        description: "O triângulo dos investimentos. Não existe produto com alto retorno, baixo risco e alta liquidez ao mesmo tempo.",
-                        practicalCase: "Imóvel: Baixa liquidez, risco médio, retorno variável. Poupança: Alta liquidez, risco baixo, retorno baixo. Ações: Alta liquidez, risco alto, retorno potencial alto.",
-                        details: [
-                            { label: "Risco", value: "Probabilidade de o retorno ser diferente do esperado (Volatilidade)." },
-                            { label: "Liquidez", value: "Velocidade e facilidade de transformar o ativo em dinheiro pelo preço justo." }
+                            { label: "Quem emite moeda?", value: "BACEN (autorizado pelo CMN)." },
+                            { label: "Quem fiscaliza banco?", value: "BACEN." }
                         ]
                     },
                     {
                         title: "CVM (Comissão de Valores Mobiliários)",
                         keywords: ["BOLSA", "FUNDOS", "S.A. ABERTA"],
                         description: "A 'polícia' do mercado de capitais (Bolsa, Fundos).",
+                        content: `
+                            <h4>🎯 Função</h4>
+                            <p>Fiscalizar, normatizar, disciplinar e desenvolver o mercado de valores mobiliários (ações, debêntures, fundos, derivativos).</p>
+                            <h4>🚫 O que NÃO é com a CVM</h4>
+                            <ul>
+                                <li>Conta Corrente, Cheque, Poupança, CDB (Isso é Bacen).</li>
+                                <li>Seguros e Previdência (Isso é Susep/Previc).</li>
+                            </ul>
+                            <h4>🛡️ Objetivo</h4>
+                            <p>Proteger o investidor contra emissões irregulares e atos ilegais, garantindo o acesso à informação.</p>
+                        `,
                         practicalCase: "Se a Petrobras divulga um balanço falso, a CVM investiga e pune. Se um Fundo de Investimento engana cotistas, a CVM atua.",
                         details: [
-                            { label: "Objetivo", value: "Proteger o investidor e garantir transparência nas S.A. e Fundos." },
-                            { label: "Não regula", value: "Não mexe com Conta Corrente, Cheque ou Crédito Bancário (isso é Bacen)." }
+                            { label: "Vinculação", value: "Autarquia vinculada ao Ministério da Fazenda, mas independente." }
                         ]
                     },
                     {
-                        title: "Seguros e Previdência (Estrutura)",
-                        keywords: ["SUSEP", "PREVIC", "CNSP", "CNPC"],
-                        description: "Quem manda e quem fiscaliza em Seguros e Pensão.",
+                        title: "Seguros e Previdência (CNSP, SUSEP, CNPC, PREVIC)",
+                        keywords: ["SEGUROS", "PREVIDÊNCIA", "NORMATIVO", "EXECUTIVO"],
+                        description: "A sopa de letrinhas dos seguros e pensões.",
+                        content: `
+                            <h4>🚗 Seguros, Capitalização e Previdência Aberta (PGBL/VGBL)</h4>
+                            <ul>
+                                <li><strong>CNSP (Conselho Nacional de Seguros Privados):</strong> Órgão Normativo (Manda). Define as regras gerais.</li>
+                                <li><strong>SUSEP (Superintendência de Seguros Privados):</strong> Órgão Executor/Fiscalizador. Fiscaliza as seguradoras e entidades de previdência aberta.</li>
+                            </ul>
+                            <h4>🏭 Previdência Fechada (Fundos de Pensão)</h4>
+                            <ul>
+                                <li><strong>CNPC (Conselho Nacional de Previdência Complementar):</strong> Órgão Normativo. Cria as regras para fundos de pensão (ex: Previ, Petros).</li>
+                                <li><strong>PREVIC (Superintendência Nacional de Previdência Complementar):</strong> Órgão Fiscalizador. Vigia os fundos de pensão.</li>
+                            </ul>
+                        `,
+                        practicalCase: "Se você contrata um seguro de carro na Porto Seguro, quem fiscaliza se ela tem dinheiro para pagar a indenização é a SUSEP. Se você trabalha no Banco do Brasil e contribui para a PREVI, quem fiscaliza é a PREVIC.",
                         details: [
-                            { label: "Seguros/Aberta (SUSEP)", value: "Normativo: CNSP. Fiscalizador: SUSEP (Seguros, Capitalização, PGBL/VGBL)." },
-                            { label: "Fechada (PREVIC)", value: "Normativo: CNPC. Fiscalizador: PREVIC (Fundos de Pensão de empresas)." }
+                            { label: "Dica", value: "Começa com C = Conselho (Manda). Começa com S ou P = Superintendência (Fiscaliza)." }
                         ]
                     },
                     {
-                        title: "Indicadores: PIB, IPCA e IGP-M",
-                        keywords: ["ATIVIDADE", "INFLAÇÃO", "ALUGUEL"],
-                        description: "Termômetros da economia.",
+                        title: "Política Monetária (O Motor dos Juros)",
+                        keywords: ["SELIC", "COMPULSÓRIO", "OPEN MARKET", "INFLAÇÃO"],
+                        description: "Conjunto de ações do Banco Central para controlar a quantidade de dinheiro e juros na economia.",
+                        content: `
+                            <div class="concept-box">
+                                🎯 <strong>Objetivo Principal:</strong> Controlar a inflação e garantir a estabilidade da moeda.
+                            </div>
+                            <h4>🛠️ Principais Instrumentos (Cai MUITO na prova)</h4>
+                            <ol class="list-decimal pl-5 space-y-2">
+                                <li><strong>Taxa Selic (Meta):</strong> Definida pelo COPOM a cada 45 dias.
+                                    <br><em>Aumenta Selic → Crédito caro → Consumo cai → Inflação cai (Política Contracionista).</em></li>
+                                <li><strong>Open Market (Mercado Aberto):</strong> Compra e venda de títulos públicos pelo Bacen.
+                                    <br><em>Bacen Vende Títulos → Tira dinheiro do mercado (Enxuga liquidez).</em>
+                                    <br><em>Bacen Compra Títulos → Dá dinheiro ao mercado (Injeta liquidez).</em></li>
+                                <li><strong>Depósito Compulsório:</strong> Dinheiro que os bancos são obrigados a deixar guardado no Bacen.
+                                    <br><em>Aumenta Compulsório → Menos dinheiro para emprestar (Contracionista).</em></li>
+                                <li><strong>Redesconto:</strong> Empréstimo do Bacen para bancos com problemas de liquidez (juro punitivo).</li>
+                            </ol>
+                        `,
+                        practicalCase: "A inflação oficial (IPCA) bateu 10% no ano (muito acima da meta). O que o Bacen faz? Na reunião do COPOM, ele decide AUMENTAR a meta da Taxa Selic para esfriar o consumo.",
                         details: [
-                            { label: "PIB (Ótica Despesa)", value: "C (Consumo) + I (Investimento) + G (Governo) + (X - M) (Saldo Comercial)." },
-                            { label: "IPCA (IBGE)", value: "Inflação oficial (Meta). Cesta de consumo de famílias de 1 a 40 salários." },
-                            { label: "IGP-M (FGV)", value: "Inflação do aluguel. 60% Atacado (IPA), 30% Consumidor (IPC), 10% Construção (INCC)." }
+                            { label: "Instrumento Mais Ágil", value: "Open Market (acontece todo dia)." }
+                        ]
+                    },
+                    {
+                        title: "Política Fiscal (O Bolso do Governo)",
+                        keywords: ["IMPOSTOS", "GASTOS PÚBLICOS", "SUPERÁVIT PRIMÁRIO"],
+                        description: "Administração das receitas (impostos) e despesas (gastos) do Governo Federal.",
+                        content: `
+                            <h4>🎯 Conceito</h4>
+                            <p>É como o governo gerencia seu orçamento para influenciar a economia.</p>
+                            <h4>📊 Resultados Fiscais</h4>
+                            <ul>
+                                <li><strong>Superávit Primário:</strong> Governo arrecadou mais do que gastou (antes de pagar juros da dívida). É a economia para pagar os juros.</li>
+                                <li><strong>Déficit Primário:</strong> Governo gastou mais do que arrecadou. Gera aumento da dívida pública.</li>
+                                <li><strong>Déficit Nominal:</strong> Resultado primário + pagamento de juros da dívida.</li>
+                            </ul>
+                            <div class="concept-box">
+                                🟢 <strong>Política Fiscal Expansionista:</strong> Governo gasta mais ou reduz impostos (estimula PIB, mas pode gerar inflação).<br>
+                                🔴 <strong>Política Fiscal Contracionista:</strong> Governo corta gastos ou aumenta impostos (freia economia e inflação).
+                            </div>
+                        `,
+                        practicalCase: "O governo quer estimular a venda de carros. Ele reduz o IPI (Imposto sobre Produtos Industrializados). Isso é uma medida de Política Fiscal Expansionista (renúncia fiscal para estimular consumo).",
+                        details: [
+                            { label: "Quem Executa", value: "Governo Federal (Tesouro Nacional / Ministério da Fazenda)." }
+                        ]
+                    },
+                    {
+                        title: "Política Cambial (O Valor da Moeda)",
+                        keywords: ["DÓLAR", "SWAP CAMBIAL", "RESERVAS"],
+                        description: "Ações para controlar a taxa de câmbio (preço da moeda estrangeira).",
+                        content: `
+                            <h4>💵 Regime Cambial Brasileiro</h4>
+                            <p><strong>Flutuação Suja (Dirty Float):</strong> O câmbio flutua conforme oferta e demanda, mas o Bacen intervém (compra/venda) para evitar oscilações muito bruscas (volatilidade excessiva).</p>
+                            <h4>🛠️ Atuação do BACEN</h4>
+                            <ul>
+                                <li><strong>Leilão de Swap Cambial:</strong> O Bacen oferece proteção contra a alta do dólar (equivale a vender dólares no futuro) para acalmar o mercado.</li>
+                                <li><strong>Reservas Internacionais:</strong> O "colchão" de dólares que o país tem para emergências.</li>
+                            </ul>
+                        `,
+                        practicalCase: "O Dólar disparou para R$ 6,00 em um dia de pânico. O Bacen entra vendendo Swap Cambial para acalmar o mercado.",
+                        details: [
+                            { label: "PTAX", value: "Média das taxas de câmbio praticadas no mercado, calculada pelo Bacen diariamente." }
+                        ]
+                    },
+                    {
+                        title: "Risco, Retorno e Liquidez (O Tripé)",
+                        keywords: ["TRADE-OFF", "VOLATILIDADE", "RESGATE"],
+                        description: "Conceitos fundamentais para qualquer investimento.",
+                        content: `
+                            <h4>⚖️ A Regra de Ouro (Trade-off)</h4>
+                            <p>Não existe mágica. Geralmente, para ganhar mais (Retorno), você precisa correr mais perigo (Risco) ou abrir mão do dinheiro por um tempo (Liquidez).</p>
+                            <ul>
+                                <li><strong>Risco:</strong> É a incerteza. A chance de o retorno ser diferente do esperado.
+                                    <br><em>Ex: Ações têm risco alto (pode cair 50% ou subir 50%).</em></li>
+                                <li><strong>Retorno:</strong> É o ganho financeiro. O prêmio por correr risco.</li>
+                                <li><strong>Liquidez:</strong> É a velocidade de transformar o ativo em dinheiro pelo preço justo.
+                                    <br><em>Ex: Poupança (Alta liquidez, saca na hora). Imóvel (Baixa liquidez, demora meses para vender).</em></li>
+                            </ul>
+                        `,
+                        practicalCase: "Um cliente quer: Alta Rentabilidade, Risco Zero e Liquidez Imediata. Esse produto NÃO EXISTE. Se alguém oferecer, é golpe.",
+                        details: [
+                            { label: "Relação", value: "Maior Risco exige Maior Retorno esperado." }
+                        ]
+                    },
+                    {
+                        title: "Acordo de Basileia (Solidez Bancária)",
+                        keywords: ["ÍNDICE DE BASILEIA", "RISCO SISTÊMICO", "CAPITAL PRÓPRIO"],
+                        description: "Regras internacionais para garantir que bancos não quebrem.",
+                        content: `
+                            <h4>🛡️ O que é?</h4>
+                            <p>Um acordo global que define quanto dinheiro próprio o banco precisa ter para cada real que ele empresta. Evita a alavancagem excessiva.</p>
+                            <div class="concept-box">
+                                <strong>Índice de Basileia:</strong> Se o índice é 11%, significa que para emprestar R$ 100,00, o banco precisa ter R$ 11,00 de capital próprio. Ele só pode usar R$ 89,00 do dinheiro dos clientes (depósitos).
+                            </div>
+                        `,
+                        practicalCase: "O Banco X quer emprestar bilhões. O Bacen barra e diz: 'Você não tem Patrimônio de Referência suficiente segundo Basileia'. Isso protege o sistema de quebras em cadeia.",
+                        details: [
+                            { label: "Objetivo", value: "Evitar risco sistêmico (efeito dominó)." }
+                        ]
+                    },
+                    {
+                        title: "Indicadores Econômicos Detalhados",
+                        keywords: ["PIB", "IPCA", "IGPM", "CDI"],
+                        description: "Como medimos a saúde da economia e o custo de vida.",
+                        content: `
+                            <h4>📈 PIB (Produto Interno Bruto)</h4>
+                            <p>Soma de todos os bens e serviços finais produzidos no país.</p>
+                            <ul>
+                                <li><strong>Fórmula (Ótica Despesa):</strong> PIB = C (Consumo) + I (Investimento) + G (Gastos Gov) + (X - M) (Exportação - Importação).</li>
+                            </ul>
+                            <h4>🛒 IPCA (Inflação Oficial)</h4>
+                            <ul>
+                                <li><strong>Calculado por:</strong> IBGE.</li>
+                                <li><strong>Público:</strong> Famílias com renda de 1 a 40 salários mínimos (varejo).</li>
+                                <li><strong>Uso:</strong> Meta de inflação do governo.</li>
+                            </ul>
+                            <h4>🏠 IGP-M (Inflação do Aluguel)</h4>
+                            <ul>
+                                <li><strong>Calculado por:</strong> FGV.</li>
+                                <li><strong>Composição (Decorar!):</strong> 60% IPA (Atacado) + 30% IPC (Consumidor) + 10% INCC (Construção).</li>
+                                <li><strong>Dica:</strong> Muito sensível ao Dólar (IPA 60%).</li>
+                            </ul>
+                        `,
+                        practicalCase: "Seu aluguel vence em julho. O contrato diz 'reajuste pelo IGP-M'. Se o dólar subiu muito no ano, o IGP-M explode (por causa do IPA 60%) e seu aluguel sobe muito mais que o seu salário (que segue o INPC/IPCA).",
+                        details: [
+                            { label: "TR", value: "Taxa Referencial. Usada na Poupança e FGTS." }
                         ]
                     }
                 ]
@@ -242,75 +364,152 @@
                 borderClass: "border-purple-600",
                 topics: [
                     {
-                        title: "Fundos de Investimento (2.1)",
-                        keywords: ["COTAS", "MARCAÇÃO A MERCADO", "CONDOMÍNIO"],
-                        description: "Veículo de investimento coletivo. Pode ser Aberto (resgata quando quer) ou Fechado (só no fim ou venda no secundário).",
-                        practicalCase: "Marcação a Mercado (MaM): O valor da cota é atualizado diariamente pelo preço real de venda dos ativos. Se o mercado cai, a cota cai no mesmo dia, garantindo que quem sai não prejudique quem fica.",
+                        title: "Renda Fixa - Títulos Públicos (Tesouro Direto)",
+                        keywords: ["TESOURO SELIC", "PREFIXADO", "IPCA+", "RISCO SOBERANO"],
+                        description: "Empréstimo ao Governo Federal. O investimento mais seguro do país (Risco Soberano).",
+                        content: `
+                            <h4>🔹 Tesouro Selic (LFT)</h4>
+                            <p><strong>Pós-fixado:</strong> Acompanha a taxa Selic. O valor do título sobe todo dia (não tem rentabilidade negativa se levar até o fim).<br>👉 <em>Ideal para:</em> Reserva de Emergência e curto prazo.</p>
+                            <h4>🔹 Tesouro Prefixado (LTN)</h4>
+                            <p><strong>Taxa Fixa:</strong> Você sabe exatamente quanto vai receber (ex: 12% a.a.) se ficar até o fim.<br>⚠️ <em>Risco:</em> Marcação a Mercado. Se vender antes e os juros subirem, você perde dinheiro.</p>
+                            <h4>🔹 Tesouro IPCA+ (NTN-B)</h4>
+                            <p><strong>Híbrido:</strong> Paga a inflação (IPCA) + uma taxa fixa (ex: IPCA + 5%).<br>👉 <em>Ideal para:</em> Longo prazo, aposentadoria (protege o poder de compra).</p>
+                        `,
+                        practicalCase: "Você comprou um Tesouro Prefixado a 10% a.a. Hoje a taxa subiu para 14% a.a. Se você vender seu título hoje, ele vale MENOS, porque o mercado prefere o título novo de 14%. Se segurar até o vencimento, recebe os 10% contratados.",
                         details: [
-                            { label: "Tipos (CVM 175)", value: "Renda Fixa, Ações, Multimercado, Cambial." },
-                            { label: "Gestão", value: "Ativa (Tenta bater benchmark) ou Passiva (Segue índice, ex: Fundo DI)." },
-                            { label: "Tributação", value: "Curto Prazo (22,5% a 20%) ou Longo Prazo (22,5% a 15%). Ações é 15% fixo." }
+                            { label: "Liquidez", value: "D+1 (Pede hoje, cai amanhã)." },
+                            { label: "IR", value: "Tabela Regressiva." }
                         ]
                     },
                     {
-                        title: "Renda Fixa (2.2) - Títulos Privados",
-                        keywords: ["CDB", "LCI", "LCA", "CRI", "CRA", "DEBÊNTURES"],
-                        description: "Empréstimos para bancos ou empresas.",
-                        practicalCase: "CRI (Certificado de Recebíveis Imobiliários) e CRA (Agronegócio) são títulos de securitização. Uma construtora vende suas dívidas futuras para uma Securitizadora, que emite o CRI para investidores. Isento de IR para PF.",
+                        title: "Renda Fixa - Títulos Privados",
+                        keywords: ["CDB", "LCI", "LCA", "DEBÊNTURES", "FGC"],
+                        description: "Empréstimos para Bancos (CDB/LCI/LCA) ou Empresas (Debêntures).",
+                        content: `
+                            <h4>🏦 Bancários (Com FGC)</h4>
+                            <ul>
+                                <li><strong>CDB (Certificado de Depósito Bancário):</strong> Empréstimo ao banco. Tributado (Regressiva).</li>
+                                <li><strong>LCI/LCA (Letras de Crédito):</strong> Empréstimo ao banco para financiar Imóveis ou Agro. <strong>ISENTO DE IR para PF.</strong></li>
+                            </ul>
+                            <h4>🏭 Crédito Privado (Sem FGC - Risco da Empresa)</h4>
+                            <ul>
+                                <li><strong>Debêntures:</strong> Títulos de dívida de empresas S.A. (não financeiras). Risco de crédito maior.</li>
+                                <li><strong>Debênture Incentivada:</strong> Financia infraestrutura (estradas, energia). <strong>ISENTA DE IR para PF.</strong></li>
+                                <li><strong>CRI/CRA:</strong> Certificados de Recebíveis (Imobiliário/Agro). Isentos para PF. Emitidos por Securitizadoras.</li>
+                            </ul>
+                        `,
+                        practicalCase: "A Vale precisa construir uma ferrovia. Ela emite uma Debênture Incentivada de Infraestrutura. Você empresta dinheiro pra Vale, recebe juros + IPCA e não paga imposto de renda.",
                         details: [
-                            { label: "Bancários (FGC)", value: "CDB, LCI, LCA, LC, RDB. FGC garante até R$ 250k." },
-                            { label: "Crédito Privado (Sem FGC)", value: "Debêntures, CRI, CRA. Risco da empresa emissora." },
-                            { label: "Debênture Incentivada", value: "Foca em infraestrutura. Isenta de IR." }
+                            { label: "FGC", value: "Garante até R$ 250 mil por CPF/Instituição em caso de quebra do banco." }
                         ]
                     },
                     {
-                        title: "Renda Fixa (2.2) - Títulos Públicos",
-                        keywords: ["TESOURO DIRETO", "LFT", "LTN", "NTN-B"],
-                        description: "Empréstimo ao Governo Federal. Risco Soberano (o menor do país).",
+                        title: "Fundos de Investimento: Tipos e Estrutura",
+                        keywords: ["ABERTO/FECHADO", "COTAS", "CNPJ PRÓPRIO"],
+                        description: "O 'Condomínio' de investidores. Recursos em comum, regras iguais.",
+                        content: `
+                            <h4>🏢 Estrutura</h4>
+                            <ul>
+                                <li><strong>Administrador:</strong> O 'dono legal', cuida da papelada e do cotista.</li>
+                                <li><strong>Gestor:</strong> O 'cérebro', decide o que comprar e vender.</li>
+                                <li><strong>Custodiante:</strong> O 'cofre', guarda os ativos.</li>
+                            </ul>
+                            <h4>🚪 Tipos de Condomínio</h4>
+                            <ul>
+                                <li><strong>Fundo Aberto:</strong> Permite aplicações e resgates a qualquer momento (maioria dos fundos).</li>
+                                <li><strong>Fundo Fechado:</strong> Cotas só são resgatadas no fim do prazo. Para sair antes, você tem que vender sua cota para outra pessoa (mercado secundário). Ex: Fundos Imobiliários (FIIs).</li>
+                            </ul>
+                        `,
+                        practicalCase: "Num fundo fechado, se muitos cotistas quiserem sair ao mesmo tempo, eles não podem pedir resgate ao fundo. Eles precisam vender as cotas na bolsa, o que pode fazer o preço da cota cair (deságio).",
                         details: [
-                            { label: "Tesouro Selic (LFT)", value: "Pós-fixado. Baixa volatilidade. Reserva de Emergência." },
-                            { label: "Tesouro Prefixado (LTN)", value: "Taxa fixa. Risco de mercado se vender antes." },
-                            { label: "Tesouro IPCA+ (NTN-B)", value: "Juro Real (IPCA + Taxa). Proteção inflacionária longo prazo." }
+                            { label: "Segregação", value: "O patrimônio do fundo não se mistura com o do banco administrador (Chinese Wall)." }
                         ]
                     },
                     {
-                        title: "Renda Variável (2.3)",
-                        keywords: ["AÇÕES", "BDR", "ETF", "FRACIONÁRIO"],
-                        description: "Não há garantia de retorno. Você vira sócio.",
-                        practicalCase: "No Mercado Fracionário (código da ação + F, ex: VALE3F), você pode comprar entre 1 e 99 ações, sem precisar comprar o lote padrão de 100. Acessível para pequenos investidores.",
+                        title: "Classificação de Fundos (CVM 175)",
+                        keywords: ["RENDA FIXA", "AÇÕES", "CAMBIAL", "MULTIMERCADO"],
+                        description: "As 4 classes principais de fundos segundo a CVM.",
+                        content: `
+                            <ul>
+                                <li><strong>Renda Fixa:</strong> Mínimo 80% em ativos de renda fixa. Foco em juros/índices de preço.
+                                    <br><em>Tributação:</em> Regressiva + Come-cotas.</li>
+                                <li><strong>Ações (FIA):</strong> Mínimo 67% em ações. Risco alto.
+                                    <br><em>Tributação:</em> 15% fixo no resgate (SEM Come-cotas).</li>
+                                <li><strong>Cambial:</strong> Mínimo 80% em ativos atrelados a moeda (Dólar/Euro). Hedge.
+                                    <br><em>Tributação:</em> Regressiva + Come-cotas.</li>
+                                <li><strong>Multimercado:</strong> "Vale tudo". Pode investir em RF, Ações, Câmbio e Derivativos.
+                                    <br><em>Tributação:</em> Regressiva + Come-cotas.</li>
+                            </ul>
+                        `,
+                        practicalCase: "Seu gerente oferece um 'Fundo Multimercado'. O gestor pode estar comprado em Dólar, vendido em Bolsa e aplicado em Juros tudo ao mesmo tempo. É fundamental ver a lâmina para entender o risco.",
                         details: [
-                            { label: "Ações", value: "ON (Voto), PN (Preferência dividendos). Dividendo é isento de IR." },
-                            { label: "BDR (Brazilian Depositary Receipt)", value: "Recibo de ação estrangeira (Apple, Google) negociado no Brasil." },
-                            { label: "ETF", value: "Fundo de Índice negociado em bolsa. Gestão passiva." }
+                            { label: "Come-cotas", value: "Antecipação de IR (Maio e Novembro). Reduz o nº de cotas." }
                         ]
                     },
                     {
-                        title: "Derivativos (2.4)",
-                        keywords: ["HEDGE", "ALAVANCAGEM", "OPÇÕES", "FUTUROS"],
-                        description: "Contratos cujo valor deriva de outro ativo.",
-                        practicalCase: "Um produtor de café vende Contrato Futuro para garantir o preço da saca daqui a 6 meses (Hedge/Proteção). Um especulador compra achando que o preço vai subir (Alavancagem).",
+                        title: "Renda Variável e Derivativos",
+                        keywords: ["AÇÕES", "BDR", "ETF", "OPÇÕES", "FUTUROS"],
+                        description: "Investimentos de risco e contratos futuros.",
+                        content: `
+                            <h4>📉 Ações</h4>
+                            <ul>
+                                <li><strong>ON (Ordinária):</strong> Direito a VOTO. (Sócio dono).</li>
+                                <li><strong>PN (Preferencial):</strong> Preferência em DIVIDENDOS. (Sócio investidor).</li>
+                            </ul>
+                            <h4>🌍 BDRs e ETFs</h4>
+                            <ul>
+                                <li><strong>BDR:</strong> Recibo de ação gringa (Apple) negociado aqui.</li>
+                                <li><strong>ETF:</strong> Fundo que copia um índice (Ibovespa) e é negociado como ação.</li>
+                            </ul>
+                            <h4>⚡ Derivativos (Para que servem?)</h4>
+                            <ul>
+                                <li><strong>Hedge (Proteção):</strong> Agricultor fixa o preço do café hoje para vender no futuro, evitando prejuízo se o preço cair.</li>
+                                <li><strong>Especulação:</strong> Apostar na direção do preço para lucrar.</li>
+                                <li><strong>Alavancagem:</strong> Movimentar muito financeiro com pouco dinheiro em garantia.</li>
+                            </ul>
+                        `,
+                        practicalCase: "No Mercado de Opções, você pode comprar o 'direito' de comprar Petrobras a R$ 30,00 daqui a um mês. Se a ação for a R$ 40,00, você exerce o direito e lucra a diferença.",
                         details: [
-                            { label: "Mercados", value: "Termo, Futuro, Opções, Swap." }
+                            { label: "Swap", value: "Troca de indexadores (ex: Trocar dívida em Dólar por dívida em CDI)." }
                         ]
                     },
                     {
-                        title: "Previdência (2.5)",
-                        keywords: ["PGBL", "VGBL", "SUCESSÃO"],
-                        description: "Foco no longo prazo e aposentadoria.",
+                        title: "Previdência Privada (Aposentadoria)",
+                        keywords: ["PGBL", "VGBL", "TABELA REGRESSIVA"],
+                        description: "Produtos focados no longo prazo e sucessão patrimonial.",
+                        content: `
+                            <h4>🆚 PGBL x VGBL (A Dúvida Clássica)</h4>
+                            <ul>
+                                <li><strong>PGBL (Plano Gerador de Benefício Livre):</strong>
+                                    <br>✅ <strong>Vantagem:</strong> Abate até 12% da renda bruta na declaração completa do IR.
+                                    <br>❌ <strong>Desvantagem:</strong> No resgate, o IR incide sobre o valor TOTAL (Capital + Juros).
+                                    <br>👉 <em>Indicado para quem faz declaração completa.</em></li>
+                                <li><strong>VGBL (Vida Gerador de Benefício Livre):</strong>
+                                    <br>✅ <strong>Vantagem:</strong> No resgate, IR incide SÓ sobre o rendimento (lucro).
+                                    <br>❌ <strong>Desvantagem:</strong> Não tem benefício fiscal na entrada.
+                                    <br>👉 <em>Indicado para isentos ou declaração simplificada.</em></li>
+                            </ul>
+                        `,
+                        practicalCase: "Dr. André é médico, renda alta, declaração completa. Ele investe em PGBL até dar 12% da renda bruta para pagar menos imposto agora. O resto do dinheiro ele põe em VGBL ou outros ativos.",
                         details: [
-                            { label: "PGBL", value: "Deduz 12% na declaração completa. IR sobre o TOTAL." },
-                            { label: "VGBL", value: "Não deduz. IR apenas sobre o RENDIMENTO. Ideal para sucessão." },
-                            { label: "Tabelas", value: "Progressiva (Compensável) ou Regressiva (Definitiva 35% a 10%)." }
+                            { label: "Sucessão", value: "VGBL não entra em inventário (vai direto para beneficiários)." }
                         ]
                     },
                     {
-                        title: "Novos Produtos: Cripto & Tokenização (2.6)",
-                        keywords: ["BITCOIN", "STABLECOIN", "TOKEN"],
-                        description: "Ativos digitais baseados em blockchain.",
-                        practicalCase: "Tokenização de ativos reais: Transformar um imóvel em 1000 tokens digitais. Quem compra o token tem direito a uma fração do aluguel.",
+                        title: "Finanças Descentralizadas (DeFi) e Cripto",
+                        keywords: ["BITCOIN", "SMART CONTRACTS", "TOKENIZAÇÃO"],
+                        description: "O futuro do mercado sem intermediários.",
+                        content: `
+                            <h4>🪙 Criptoativos</h4>
+                            <p>Ativos digitais em blockchain. Bitcoin (reserva de valor), Ethereum (plataforma).</p>
+                            <h4>🏦 DeFi (Decentralized Finance)</h4>
+                            <p>Serviços financeiros (empréstimo, troca, seguros) que rodam em código (Smart Contracts) sem banco central ou instituição no meio.</p>
+                            <h4>📜 Smart Contracts</h4>
+                            <p>Contratos autoexecutáveis. "Se o cliente depositar X, libere Y". Não precisa de advogado, o código garante a execução.</p>
+                        `,
+                        practicalCase: "Em uma plataforma DeFi, você pode emprestar suas criptomoedas para um 'pool' e receber juros pagos por quem toma emprestado, tudo gerido por um algoritmo.",
                         details: [
-                            { label: "Criptoativos", value: "Ativos virtuais, sem emissor central (ex: Bitcoin). Alta volatilidade." },
-                            { label: "Stablecoins", value: "Cripto pareada em moeda forte (Dólar) para reduzir volatilidade." }
+                            { label: "Tokenização", value: "Dividir um ativo real (imóvel) em pedaços digitais (tokens)." }
                         ]
                     }
                 ]
@@ -324,32 +523,63 @@
                 borderClass: "border-orange-600",
                 topics: [
                     {
-                        title: "Suitability & KYC",
-                        keywords: ["PERFIL", "ADEQUAÇÃO", "CONHEÇA SEU CLIENTE"],
-                        description: "Regras para proteger o cliente e o sistema.",
-                        practicalCase: "Suitability (API): Verificar se o cliente aguenta o risco. KYC (Know Your Customer): Verificar a origem do patrimônio, capacidade financeira e atividade para evitar lavagem de dinheiro.",
+                        title: "Suitability (API) e KYC",
+                        keywords: ["PERFIL DE RISCO", "LAVAGEM DE DINHEIRO", "CADASTRO"],
+                        description: "Conhecer o cliente para proteger o cliente e o banco.",
+                        content: `
+                            <h4>🧐 Suitability (Adequação)</h4>
+                            <p>Obrigação de verificar se o produto combina com o perfil do cliente (API).</p>
+                            <ul>
+                                <li><strong>Conservador:</strong> Segurança > Rentabilidade.</li>
+                                <li><strong>Moderado:</strong> Equilíbrio.</li>
+                                <li><strong>Arrojado:</strong> Foco em rentabilidade, aguenta perdas.</li>
+                            </ul>
+                            <div class="concept-box">
+                                Se o cliente quer investir fora do perfil, ele DEVE assinar uma declaração expressa de desenquadramento. O banco não pode recomendar, mas pode acatar a ordem.
+                            </div>
+                            <h4>🕵️ KYC (Know Your Customer)</h4>
+                            <p>"Conheça seu Cliente". Verificar a origem do patrimônio, capacidade financeira e atividade para evitar lavagem de dinheiro.</p>
+                        `,
+                        practicalCase: "Dona Maria, 80 anos, perfil Conservador. O gerente NÃO pode recomendar um Fundo de Ações Alavancado, mesmo que esteja rendendo muito. Viola o Suitability.",
                         details: [
-                            { label: "Obrigatório", value: "O questionário API deve ser renovado a cada 24 meses." },
-                            { label: "Conflito", value: "Vender produto inadequado gera punição." }
+                            { label: "Validade API", value: "Deve ser renovado a cada 24 meses." }
                         ]
                     },
                     {
-                        title: "Ética e Conduta Profissional",
-                        keywords: ["CONFIDENCIALIDADE", "PRIORIDADE", "TRANSPARÊNCIA"],
-                        description: "Deveres do profissional certificado.",
-                        practicalCase: "Front Running: É crime o operador comprar uma ação para si mesmo antes de executar uma ordem grande de um cliente que fará o preço subir.",
+                        title: "PLD/FT (Lavagem de Dinheiro)",
+                        keywords: ["COI", "INTEGRAÇÃO", "COAF", "PENAS"],
+                        description: "Prevenção à Lavagem de Dinheiro e Financiamento ao Terrorismo.",
+                        content: `
+                            <h4>🔄 As 3 Fases da Lavagem (Cai na Ordem!)</h4>
+                            <ol class="list-decimal pl-5 space-y-2">
+                                <li><strong>Colocação (Placement):</strong> O dinheiro sujo entra no sistema (ex: depósitos fracionados). Fase mais crítica.</li>
+                                <li><strong>Ocultação (Layering):</strong> Movimentações complexas para despistar o rastro.</li>
+                                <li><strong>Integração (Integration):</strong> O dinheiro volta para a economia com "cara" de limpo (ex: compra de imóveis).</li>
+                            </ol>
+                            <div class="alert-box">
+                                <strong>Punição:</strong> Reclusão de 3 a 10 anos + Multa. A tentativa também é punida!
+                            </div>
+                        `,
+                        practicalCase: "O gerente percebe depósitos fracionados de R$ 9.000 (logo abaixo do limite de notificação automática). Ele deve comunicar ao COAF como operação suspeita, SEM avisar o cliente.",
                         details: [
-                            { label: "Princípio", value: "O interesse do cliente sempre prevalece." },
-                            { label: "Venda Casada", value: "Proibida (ex: condicionar empréstimo a seguro)." }
+                            { label: "COAF", value: "Unidade de Inteligência Financeira. Recebe as denúncias." }
                         ]
                     },
                     {
-                        title: "PLD/FT",
-                        keywords: ["COI", "COAF", "INTEGRAÇÃO"],
-                        description: "Prevenção à Lavagem de Dinheiro.",
+                        title: "Ética e Conduta",
+                        keywords: ["FRONT RUNNING", "CHURNING", "SIGILO"],
+                        description: "Práticas proibidas e deveres fiduciários.",
+                        content: `
+                            <h4>🚫 Práticas Ilegais</h4>
+                            <ul>
+                                <li><strong>Front Running:</strong> Corretor compra uma ação para si mesmo ANTES de executar uma ordem grande de cliente. (Crime).</li>
+                                <li><strong>Churning:</strong> Girar a carteira do cliente excessivamente só para gerar corretagem para o profissional.</li>
+                                <li><strong>Venda Casada:</strong> "Só libero seu empréstimo se levar esse seguro". (Proibido).</li>
+                            </ul>
+                        `,
+                        practicalCase: "O cliente pede para comprar 1 milhão de ações da Petrobras. O corretor sabe que isso vai subir o preço. Ele compra para si mesmo antes e depois executa a ordem do cliente. Isso é Front Running.",
                         details: [
-                            { label: "Fases", value: "Colocação -> Ocultação -> Integração." },
-                            { label: "Pena", value: "Reclusão de 3 a 10 anos + Multa." }
+                            { label: "Princípio", value: "O interesse do cliente está acima do interesse da instituição." }
                         ]
                     }
                 ]
@@ -363,32 +593,40 @@
                 borderClass: "border-teal-600",
                 topics: [
                     {
-                        title: "ESG no Mercado (4.1)",
-                        keywords: ["CVM 175", "SUSTENTABILIDADE", "GOVERNANÇA"],
-                        description: "Environmental, Social & Governance. O dinheiro seguindo propósitos.",
-                        practicalCase: "A Resolução CVM 175 obriga fundos que se dizem 'ESG' a comprovar, no regulamento e na carteira, que realmente seguem essas práticas, combatendo o Greenwashing.",
+                        title: "ESG (Sustentabilidade)",
+                        keywords: ["ASG", "GREENWASHING", "CVM 175"],
+                        description: "Environmental, Social and Governance. O dinheiro seguindo propósitos.",
+                        content: `
+                            <h4>🌱 Os 3 Pilares</h4>
+                            <ul>
+                                <li><strong>E (Ambiental):</strong> Mudanças climáticas, eficiência energética, gestão de resíduos.</li>
+                                <li><strong>S (Social):</strong> Direitos humanos, relações de trabalho, diversidade.</li>
+                                <li><strong>G (Governança):</strong> Transparência, ética, independência do conselho.</li>
+                            </ul>
+                            <h4>🎭 Greenwashing</h4>
+                            <p>Fingir que é sustentável (marketing enganoso). A <strong>Resolução CVM 175</strong> exige regras claras para fundos 'ESG' para combater isso.</p>
+                        `,
+                        practicalCase: "Um fundo se diz 'Verde' mas investe em carvoarias ilegais. Isso é Greenwashing e gera risco de imagem e legal.",
                         details: [
-                            { label: "E (Ambiental)", value: "Clima, água, resíduos." },
-                            { label: "S (Social)", value: "Direitos humanos, diversidade, dados." },
-                            { label: "G (Governança)", value: "Conselho, ética, transparência." }
+                            { label: "Tendência", value: "Investidores estrangeiros exigem ESG." }
                         ]
                     },
                     {
-                        title: "Finanças Descentralizadas (DeFi) (4.2)",
-                        keywords: ["BLOCKCHAIN", "SEM INTERMEDIÁRIOS", "P2P"],
-                        description: "Serviços financeiros (empréstimo, troca) sem bancos, rodando em código.",
-                        practicalCase: "Numa corretora descentralizada (DEX), você troca Bitcoin por Dólar (USDC) direto com outra pessoa ou pool de liquidez, sem passar por um banco ou corretora centralizada.",
+                        title: "Open Finance (Sistema Aberto)",
+                        keywords: ["COMPARTILHAMENTO", "CONSENTIMENTO", "API"],
+                        description: "O cliente é dono dos seus dados bancários.",
+                        content: `
+                            <h4>🔓 O Conceito</h4>
+                            <p>Com autorização (Consentimento), você pode levar seu histórico bancário para outro banco para conseguir taxas melhores.</p>
+                            <h4>🔑 Princípios</h4>
+                            <ul>
+                                <li><strong>Consentimento:</strong> O cliente precisa autorizar ativamente.</li>
+                                <li><strong>Reciprocidade:</strong> Instituições devem trocar dados de forma padronizada (APIs).</li>
+                            </ul>
+                        `,
+                        practicalCase: "Você tem conta no Banco A há 10 anos. Vai pedir crédito no Banco B. Pelo Open Finance, o Banco B vê seu histórico de bom pagador no Banco A e te dá juros menores.",
                         details: [
-                            { label: "Smart Contracts", value: "Contratos Inteligentes. Códigos autoexecutáveis na blockchain ('Se X acontecer, pague Y'). Não precisa de advogado ou cartório." }
-                        ]
-                    },
-                    {
-                        title: "Open Finance e Inovação (4.3)",
-                        keywords: ["DADOS", "API", "CONSENTIMENTO"],
-                        description: "Evolução do Open Banking. Compartilhamento padronizado de dados e serviços.",
-                        details: [
-                            { label: "Foco", value: "O cliente é dono dos seus dados." },
-                            { label: "Objetivo", value: "Aumentar competição e reduzir juros." }
+                            { label: "Objetivo", value: "Aumentar a competição e baixar o custo do crédito." }
                         ]
                     }
                 ]
@@ -396,8 +634,9 @@
         };
 
         // --- BANCO DE QUESTÕES (100 Itens) ---
+        // Mantido exatamente como estava, com as 100 questões.
         const quizQuestions = [
-            // MÓDULO 1 (Existentes)
+            // ... (Todas as 100 questões anteriores permanecem aqui - código suprimido visualmente para brevidade, mas está no arquivo completo) ...
             { m: "M1", q: "O órgão máximo do Sistema Financeiro Nacional é:", o: ["BACEN", "CVM", "ANBIMA", "CMN"], a: 3, e: "O Conselho Monetário Nacional (CMN) é o órgão NORMATIVO máximo. Ele manda, o Bacen executa." },
             { m: "M1", q: "A principal função do Banco Central é:", o: ["Criar leis financeiras", "Executar políticas monetárias e fiscalizar", "Regular o mercado de capitais", "Representar investidores"], a: 1, e: "O Bacen executa as ordens do CMN e fiscaliza os bancos (guardião da moeda)." },
             { m: "M1", q: "A CVM atua principalmente no:", o: ["Sistema bancário", "Mercado de crédito", "Mercado de capitais", "Mercado cambial"], a: 2, e: "CVM (Comissão de Valores Mobiliários) regula Bolsa, Fundos e S.A." },
@@ -408,8 +647,6 @@
             { m: "M1", q: "Quem fiscaliza os Fundos de Pensão (Previdência Fechada)?", o: ["SUSEP", "PREVIC", "CVM", "CNSP"], a: 1, e: "Previdência Fechada = PREVIC. Previdência Aberta = SUSEP." },
             { m: "M1", q: "Taxa básica de juros da economia brasileira:", o: ["CDI", "IPCA", "Selic", "TR"], a: 2, e: "A Meta Selic é definida pelo COPOM (Bacen)." },
             { m: "M1", q: "O câmbio representa:", o: ["Preço de ativos", "Troca de títulos", "Preço da moeda estrangeira em reais", "Taxa de juros"], a: 2, e: "Câmbio é a relação de troca entre duas moedas." },
-            
-            // MÓDULO 1 (NOVAS)
             { m: "M1", q: "Em um cenário de alta inflação, qual medida é mais provável de ser adotada pelo BACEN?", o: ["Redução da Selic", "Aumento da Selic", "Redução do compulsório", "Expansão do crédito"], a: 1, e: "Aumentar a Selic encarece o crédito e desestimula o consumo, controlando a inflação." },
             { m: "M1", q: "Quem define as diretrizes da política monetária?", o: ["BACEN", "CVM", "Tesouro Nacional", "CMN"], a: 3, e: "O CMN define as diretrizes e metas; o BACEN executa." },
             { m: "M1", q: "A função principal da CVM é proteger:", o: ["Bancos", "O governo", "Investidores do mercado de capitais", "Instituições financeiras"], a: 2, e: "A CVM fiscaliza o mercado de valores mobiliários (ações, fundos, debêntures)." },
@@ -420,8 +657,6 @@
             { m: "M1", q: "O mercado secundário é importante porque:", o: ["Financia o governo", "Gera liquidez aos ativos", "Controla inflação", "Cria moeda"], a: 1, e: "Permite que investidores vendam seus ativos para outros, gerando liquidez." },
             { m: "M1", q: "O compulsório bancário serve para:", o: ["Aumentar o lucro dos bancos", "Controlar liquidez da economia", "Garantir rentabilidade", "Financiar empresas"], a: 1, e: "O BACEN recolhe parte dos depósitos para controlar a quantidade de dinheiro em circulação." },
             { m: "M1", q: "A política fiscal é conduzida principalmente pelo:", o: ["BACEN", "CMN", "Governo (Executivo)", "CVM"], a: 2, e: "Política fiscal refere-se a gastos e impostos do Governo." },
-
-            // MÓDULO 2 (Existentes)
             { m: "M2", q: "O CDB é um título:", o: ["Público", "De renda variável", "Bancário de renda fixa", "Isento de IR"], a: 2, e: "CDB = Certificado de Depósito Bancário. Você empresta ao banco." },
             { m: "M2", q: "Qual produto possui cobertura do FGC?", o: ["Ações", "Debêntures", "CDB", "Fundos de ações"], a: 2, e: "CDB, LCI, LCA e Poupança têm FGC. Debêntures e Fundos NÃO." },
             { m: "M2", q: "LCI e LCA são isentas de:", o: ["IOF", "IR para pessoa física", "Taxa de administração", "Risco de crédito"], a: 1, e: "Isenção de IR para PF é o grande atrativo das Letras de Crédito." },
@@ -442,8 +677,6 @@
             { m: "M2", q: "Capitalização tem como principal característica:", o: ["Investimento", "Proteção previdenciária", "Sorteios e formação de reserva", "Renda variável"], a: 2, e: "Capitalização NÃO é investimento. É um jogo de sorteio onde você guarda dinheiro (geralmente rendendo pouco)." },
             { m: "M2", q: "Maior liquidez geralmente está associada a:", o: ["Renda variável", "Longo prazo", "Menor risco", "Curto prazo"], a: 3, e: "Produtos de curto prazo ou liquidez diária permitem resgate rápido." },
             { m: "M2", q: "A diversificação tem como objetivo:", o: ["Eliminar riscos", "Aumentar impostos", "Reduzir riscos", "Garantir retorno"], a: 2, e: "Não elimina o risco sistêmico, mas reduz o risco específico da carteira." },
-
-            // MÓDULO 2 (NOVAS)
             { m: "M2", q: "João investiu em um CDB de um banco médio. O principal risco que ele corre é:", o: ["Mercado", "Liquidez", "Crédito", "Operacional"], a: 2, e: "Risco de o banco quebrar (calote). Coberto pelo FGC." },
             { m: "M2", q: "Um investimento com rentabilidade atrelada ao IPCA protege contra:", o: ["Risco cambial", "Risco de crédito", "Inflação", "Oscilação da bolsa"], a: 2, e: "Garante a manutenção do poder de compra." },
             { m: "M2", q: "Qual produto NÃO possui garantia do FGC?", o: ["CDB", "LCI", "LCA", "Debênture"], a: 3, e: "Debêntures são títulos corporativos sem garantia do Fundo Garantidor." },
@@ -464,9 +697,6 @@
             { m: "M2", q: "Previdência é indicada principalmente para:", o: ["Especulação", "Reserva imediata", "Planejamento de longo prazo", "Alta liquidez"], a: 2, e: "Foco em aposentadoria." },
             { m: "M2", q: "Título pós-fixado significa:", o: ["Taxa definida no início", "Rentabilidade atrelada a um indexador", "Sem risco", "Isento de imposto"], a: 1, e: "Segue um índice (Ex: 100% do CDI)." },
             { m: "M2", q: "Capitalização NÃO tem como objetivo principal:", o: ["Sorteios", "Formação de reserva", "Investimento", "Disciplina financeira"], a: 2, e: "Não é considerado investimento devido à baixa rentabilidade e caráter de sorteio." },
-
-
-            // MÓDULO 3 (Existentes)
             { m: "M3", q: "Suitability significa:", o: ["Venda agressiva", "Adequação ao perfil do cliente", "Rentabilidade máxima", "Livre escolha"], a: 1, e: "API (Análise de Perfil de Investidor). Vender o produto certo para a pessoa certa." },
             { m: "M3", q: "Um cliente conservador prioriza:", o: ["Alta rentabilidade", "Segurança e liquidez", "Risco elevado", "Renda variável"], a: 1, e: "Ele prefere ganhar pouco a correr risco de perder o principal." },
             { m: "M3", q: "A ética profissional exige:", o: ["Foco na comissão", "Interesse da instituição", "Interesse do cliente", "Sigilo parcial"], a: 2, e: "O interesse do cliente deve sempre prevalecer sobre o do gerente/banco." },
@@ -477,8 +707,6 @@
             { m: "M3", q: "A comunicação com o cliente deve ser:", o: ["Técnica e complexa", "Clara e transparente", "Rápida e superficial", "Apenas escrita"], a: 1, e: "O cliente deve entender exatamente o que está comprando e seus riscos." },
             { m: "M3", q: "A prevenção à lavagem de dinheiro visa:", o: ["Aumentar lucros", "Controlar impostos", "Evitar uso do sistema para crimes", "Reduzir custos"], a: 2, e: "Evitar que dinheiro de origem ilícita (tráfico, corrupção) entre na economia formal." },
             { m: "M3", q: "O relacionamento com o cliente deve ser baseado em:", o: ["Pressão comercial", "Confiança e transparência", "Rentabilidade imediata", "Volume"], a: 1, e: "Relacionamento de longo prazo se constrói com confiança." },
-
-            // MÓDULO 3 (NOVAS)
             { m: "M3", q: "Suitability exige que o profissional:", o: ["Venda o produto mais rentável", "Adeque produto ao perfil do cliente", "Priorize metas comerciais", "Ignore riscos"], a: 1, e: "Vender o produto adequado ao perfil de risco." },
             { m: "M3", q: "Um cliente conservador deve evitar:", o: ["CDB", "Tesouro Selic", "Ações", "LCI"], a: 2, e: "Ações têm alto risco de mercado." },
             { m: "M3", q: "KYC tem como objetivo:", o: ["Aumentar vendas", "Conhecer o cliente", "Reduzir custos", "Facilitar crédito"], a: 1, e: "Know Your Client: prevenir lavagem de dinheiro." },
@@ -489,31 +717,21 @@
             { m: "M3", q: "Planejamento financeiro inclui:", o: ["Apenas investimentos", "Apenas previdência", "Orçamento, objetivos e investimentos", "Crédito bancário"], a: 2, e: "Visão global das finanças." },
             { m: "M3", q: "Ética no mercado financeiro exige:", o: ["Sigilo parcial", "Informação clara sobre riscos", "Venda agressiva", "Prioridade ao banco"], a: 1, e: "Transparência total." },
             { m: "M3", q: "O perfil do cliente deve ser atualizado:", o: ["Nunca", "Apenas no primeiro atendimento", "Periodicamente", "Somente se houver prejuízo"], a: 2, e: "A vida e os objetivos mudam." },
-
-
-            // MÓDULO 4 (Existentes)
             { m: "M4", q: "Open Finance permite:", o: ["Compartilhar dados sem consentimento", "Compartilhar dados com autorização", "Uso exclusivo de bancos", "Apenas dados de investimentos"], a: 1, e: "A chave é o CONSENTIMENTO do cliente." },
             { m: "M4", q: "Fintechs são:", o: ["Bancos públicos", "Empresas tradicionais", "Empresas de tecnologia financeira", "Órgãos reguladores"], a: 2, e: "Technology + Finance. Startups que inovam no setor." },
             { m: "M4", q: "ESG refere-se a critérios:", o: ["Econômicos", "Tecnológicos", "Ambientais, Sociais e Governança", "Financeiros"], a: 2, e: "Environmental, Social, Governance." },
             { m: "M4", q: "A digitalização no mercado financeiro busca:", o: ["Reduzir concorrência", "Melhorar experiência do cliente", "Aumentar burocracia", "Eliminar atendimento"], a: 1, e: "Foco na usabilidade, agilidade e custo menor." },
             { m: "M4", q: "O uso de dados no mercado financeiro permite:", o: ["Decisões aleatórias", "Personalização de produtos", "Menos controle", "Exclusão financeira"], a: 1, e: "Com mais dados, o banco oferece exatamente o que você precisa (Hiperpersonalização)." },
-
-            // MÓDULO 4 (NOVAS)
             { m: "M4", q: "Open Finance depende de:", o: ["Decisão do banco", "Autorização do cliente", "Regulador", "Governo"], a: 1, e: "Consentimento é a base." },
             { m: "M4", q: "Fintechs se destacam por:", o: ["Burocracia", "Uso intensivo de tecnologia", "Atuação estatal", "Exclusividade bancária"], a: 1, e: "Inovação tecnológica." },
             { m: "M4", q: "ESG influencia:", o: ["Apenas rentabilidade", "Apenas risco", "Decisões de investimento", "Política monetária"], a: 2, e: "Critérios socioambientais pesam na escolha." },
             { m: "M4", q: "Investimentos sustentáveis buscam:", o: ["Lucro imediato", "Impacto positivo e retorno financeiro", "Isenção fiscal", "Segurança absoluta"], a: 1, e: "Retorno + Propósito." },
             { m: "M4", q: "Big Data no mercado financeiro permite:", o: ["Decisões genéricas", "Produtos personalizados", "Menor controle", "Exclusão digital"], a: 1, e: "Análise de dados para ofertas sob medida." },
-
-
-            // GERAIS (Existentes)
             { m: "Geral", q: "Produto mais indicado para cliente conservador:", o: ["Ações", "ETF", "CDB ou Tesouro Selic", "Fundo de ações"], a: 2, e: "Baixo risco e alta previsibilidade." },
             { m: "Geral", q: "Maior risco geralmente está associado a:", o: ["Renda fixa", "Curto prazo", "Renda variável", "FGC"], a: 2, e: "Renda Variável não tem garantia de retorno nem do principal." },
             { m: "Geral", q: "A autorregulação da ANBIMA tem como objetivo:", o: ["Substituir o BACEN", "Aumentar impostos", "Elevar padrões de mercado", "Controlar juros"], a: 2, e: "Criar um mercado mais forte, transparente e ético." },
             { m: "Geral", q: "A liquidez de um investimento representa:", o: ["Rentabilidade", "Segurança", "Facilidade de resgate", "Tributação"], a: 2, e: "Velocidade em transformar o ativo em dinheiro na conta." },
             { m: "Geral", q: "O profissional certificado deve sempre:", o: ["Priorizar metas internas", "Priorizar o cliente e agir com ética", "Oferecer o produto mais caro", "Evitar riscos"], a: 1, e: "O cliente vem em primeiro lugar. Sempre." },
-
-            // GERAIS (NOVAS)
             { m: "Geral", q: "Um cliente conservador com reserva de emergência deve priorizar:", o: ["Ações", "Multimercado", "Tesouro Selic", "Debêntures"], a: 2, e: "Segurança e liquidez." },
             { m: "Geral", q: "Quanto maior o risco, maior tende a ser:", o: ["A garantia", "A liquidez", "O retorno esperado", "A previsibilidade"], a: 2, e: "Relação Risco x Retorno." },
             { m: "Geral", q: "Autorregulação da ANBIMA visa:", o: ["Punir investidores", "Aumentar impostos", "Boas práticas de mercado", "Substituir o BACEN"], a: 2, e: "Elevar o padrão do mercado." },
@@ -668,7 +886,15 @@
                         </button>
                         <div id="${topicId}" class="hidden px-5 pb-5 border-t border-gray-100 pt-4 animate-fadeIn">
                             ${keywordsHtml}
-                            <p class="text-sm text-gray-700 italic border-l-4 ${data.borderClass} pl-3 mb-4 py-1">"${topic.description}"</p>
+                            
+                            <!-- Resumo Rápido -->
+                            <p class="text-sm text-gray-500 mb-6 italic border-l-4 ${data.borderClass} pl-3 py-1">
+                                "${topic.description}"
+                            </p>
+
+                            <!-- Conteúdo Rico (Aula Completa) -->
+                            ${topic.content ? `<div class="rich-content prose prose-sm max-w-none text-gray-700 mb-6">${topic.content}</div>` : ''}
+
                             ${caseHtml}
                             ${subTopicsHtml}
                             ${detailsHtml}
@@ -695,7 +921,7 @@
             }
         }
 
-        // --- LÓGICA DO QUIZ (ATUALIZADA) ---
+        // --- LÓGICA DO QUIZ ---
         function openQuiz() {
             document.getElementById('quiz-modal').classList.remove('hidden');
             resetQuiz();
@@ -717,7 +943,6 @@
             const body = document.getElementById('quiz-body');
             const footer = document.getElementById('quiz-footer');
             
-            // Verifica Fim
             if (currentQuestionIdx >= quizQuestions.length) {
                 renderResult();
                 return;
@@ -725,7 +950,6 @@
 
             const q = quizQuestions[currentQuestionIdx];
 
-            // Renderiza Opções
             let optionsHtml = '<div class="grid gap-3 mt-4">';
             q.o.forEach((opt, idx) => {
                 let classes = "w-full text-left p-4 rounded-xl border-2 transition-all flex items-center justify-between group relative ";
@@ -755,7 +979,6 @@
             });
             optionsHtml += '</div>';
 
-            // Explicação
             let explanationHtml = '';
             if (isAnswered) {
                 const isCorrect = selectedOptionIdx === q.a;
@@ -770,7 +993,6 @@
                     </div>`;
             }
 
-            // Corpo do Quiz
             body.innerHTML = `
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wider border border-indigo-100">${q.m}</span>
@@ -784,7 +1006,6 @@
                 ${explanationHtml}
             `;
 
-            // Footer
             if (isAnswered) {
                 footer.innerHTML = `
                     <div class="text-sm font-bold text-gray-500">Acertos: <span class="text-indigo-600">${score}</span></div>
@@ -806,7 +1027,7 @@
             isAnswered = true;
             selectedOptionIdx = idx;
             if (idx === quizQuestions[currentQuestionIdx].a) score++;
-            renderQuestion(); // Re-renderiza para mostrar feedback
+            renderQuestion();
         }
 
         function nextQuestion() {
@@ -819,7 +1040,7 @@
         function renderResult() {
             const body = document.getElementById('quiz-body');
             const footer = document.getElementById('quiz-footer');
-            footer.innerHTML = ''; // Limpa footer
+            footer.innerHTML = '';
 
             const percentage = Math.round((score / quizQuestions.length) * 100);
             let message = "";
