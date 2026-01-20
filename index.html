@@ -50,6 +50,28 @@
         .rich-content strong { color: #374151; font-weight: 700; }
         .rich-content .alert-box { background-color: #FEF2F2; border-left: 4px solid #EF4444; padding: 0.75rem; border-radius: 0.25rem; margin: 1rem 0; font-size: 0.9em; color: #7F1D1D; }
         .rich-content .concept-box { background-color: #EFF6FF; border-left: 4px solid #3B82F6; padding: 0.75rem; border-radius: 0.25rem; margin: 1rem 0; font-size: 0.9em; color: #1E3A8A; }
+        .rich-content .mnemo-box { background-color: #F0FDF4; border-left: 4px solid #22C55E; padding: 0.75rem; border-radius: 0.25rem; margin: 1rem 0; font-size: 0.9em; color: #14532D; font-family: monospace; }
+        
+        /* Tabela Customizada */
+        .custom-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1rem; }
+        .custom-table th { background-color: #1e40af; color: white; padding: 8px; text-align: left; }
+        .custom-table td { border: 1px solid #e5e7eb; padding: 8px; color: #374151; }
+        .custom-table tr:nth-child(even) { background-color: #f9fafb; }
+
+        /* Estilo Mapa Mental CSS */
+        .tree ul { padding-top: 20px; position: relative; transition: all 0.5s; }
+        .tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
+        .tree li::before, .tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 1px solid #ccc; width: 50%; height: 20px; }
+        .tree li::after { right: auto; left: 50%; border-left: 1px solid #ccc; }
+        .tree li:only-child::after, .tree li:only-child::before { display: none; }
+        .tree li:only-child { padding-top: 0; }
+        .tree li:first-child::before, .tree li:last-child::after { border: 0 none; }
+        .tree li:last-child::before { border-right: 1px solid #ccc; border-radius: 0 5px 0 0; }
+        .tree li:first-child::after { border-radius: 5px 0 0 0; }
+        .tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 1px solid #ccc; width: 0; height: 20px; }
+        .tree-node { border: 1px solid #ccc; padding: 5px 10px; text-decoration: none; color: #666; font-family: arial, verdana, tahoma; font-size: 11px; display: inline-block; border-radius: 5px; transition: all 0.5s; background: white; }
+        .tree-node.boss { background: #dbeafe; border-color: #2563eb; color: #1e40af; font-weight: bold; }
+        .tree-node.exec { background: #f3f4f6; border-color: #9ca3af; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-900 selection:bg-indigo-200">
@@ -70,7 +92,7 @@
             </div>
             <div class="hidden sm:flex items-center gap-4 text-xs font-medium text-gray-500">
                 <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 6-8 Semanas</span>
-                <span class="flex items-center gap-1"><i data-lucide="book" class="w-3 h-3"></i> 4 Módulos</span>
+                <span class="flex items-center gap-1"><i data-lucide="book" class="w-3 h-3"></i> 5 Módulos</span>
             </div>
         </div>
         
@@ -91,7 +113,7 @@
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         <div id="study-tip" class="hidden bg-white p-3 rounded-lg shadow-xl border border-gray-100 max-w-xs text-xs text-gray-600 animate-fadeIn mb-2 relative">
             <div class="absolute -bottom-2 right-6 w-4 h-4 bg-white transform rotate-45 border-b border-r border-gray-100"></div>
-            <strong>Dica:</strong> Seu banco agora tem 100 questões! Pratique.
+            <strong>Dica:</strong> Já revisou o que é Clearing House hoje?
         </div>
         <button onclick="openQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-6 py-4 shadow-lg shadow-indigo-200 transition-all active:scale-95 flex items-center gap-2 font-bold cursor-pointer group">
             <i data-lucide="brain-circuit" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
@@ -109,7 +131,12 @@
                         <i data-lucide="check-circle-2" class="w-6 h-6"></i>
                         Simulado Completo
                     </h3>
-                    <p class="text-indigo-200 text-xs mt-1">100 Questões - Estilo ANBIMA</p>
+                    <div class="flex items-center gap-3 mt-1">
+                        <span class="text-indigo-200 text-xs">100 Questões</span>
+                        <span class="bg-indigo-700 px-2 py-0.5 rounded text-[10px] flex items-center gap-1 font-mono">
+                            <i data-lucide="timer" class="w-3 h-3"></i> <span id="quiz-timer">00:00</span>
+                        </span>
+                    </div>
                 </div>
                 <button onclick="closeQuiz()" class="hover:bg-indigo-700 p-2 rounded-full transition-colors cursor-pointer bg-indigo-500/30">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -146,6 +173,230 @@
                     { week: "6", module: "Módulo 3: Clientes", focus: "Suitability, Ética, PLD/FT.", action: "Foco em interpretação de texto." },
                     { week: "7", module: "Módulo 4: Inovação", focus: "ESG, Open Finance, Fintechs.", action: "Questões conceituais." },
                     { week: "8", module: "Revisão Final", focus: "Simulados completos.", action: "Corrigir erros e reler resumos." }
+                ]
+            },
+            resumos: {
+                id: "resumos",
+                title: "Resumos & Macetes",
+                icon: "clipboard-list",
+                color: "bg-pink-600",
+                textClass: "text-pink-600",
+                borderClass: "border-pink-600",
+                topics: [
+                    {
+                        title: "Infraestrutura: Clearing Houses (Câmaras)",
+                        keywords: ["RISCO DE CONTRAPARTE", "SELIC", "B3", "GARANTIA"],
+                        description: "Quem garante que quem comprou vai pagar e quem vendeu vai entregar? A Clearing.",
+                        content: `
+                            <h4>🔐 O Conceito</h4>
+                            <p>As <strong>Clearing Houses</strong> (Câmaras de Compensação) atuam como a "Contraparte Central". Elas ficam entre o comprador e o vendedor, mitigando o <strong>Risco de Liquidação</strong> (calote na entrega).</p>
+                            <h4>🏢 As Principais no Brasil</h4>
+                            <ul>
+                                <li><strong>Sistema SELIC (do Bacen):</strong> Liquida e custodia <strong>Títulos Públicos Federais</strong> (Tesouro Direto).</li>
+                                <li><strong>B3 (Brasil, Bolsa, Balcão):</strong> Liquida e custodia ativos privados:
+                                    <ul>
+                                        <li>Ações (Mercado de Capitais).</li>
+                                        <li>Derivativos.</li>
+                                        <li>Títulos Privados (CDB, Debêntures, LCI/LCA).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="concept-box">
+                                <strong>Na prática:</strong> Quando você compra uma ação, você não transfere dinheiro para o vendedor (José). Você paga para a B3, e a B3 paga para o José. Se o José não entregar a ação, a B3 garante a entrega.
+                            </div>
+                        `,
+                        practicalCase: "Você comprou um Título Público no Tesouro Direto. Quem guarda esse registro eletrônico ('anotação em conta') é o Sistema SELIC. Se você compra uma ação da Petrobras, quem guarda é a B3."
+                    },
+                    {
+                        title: "Dicionário Financeiro (Termos em Inglês)",
+                        keywords: ["COMPLIANCE", "DISCLOSURE", "SPREAD", "BENCHMARK"],
+                        description: "O vocabulário 'falahês' que cai na prova.",
+                        content: `
+                            <ul class="space-y-3">
+                                <li><strong>Compliance (Conformidade):</strong> Estar de acordo com as leis e normas. O departamento que vigia se o banco está seguindo as regras.</li>
+                                <li><strong>Disclosure (Divulgação):</strong> Transparência. O ato de divulgar informações relevantes (balanços, fatos relevantes) ao mercado.</li>
+                                <li><strong>Spread Bancário:</strong> A diferença entre a taxa que o banco cobra de quem pede empréstimo e a taxa que ele paga para quem investe. (É o lucro bruto do banco na operação).</li>
+                                <li><strong>Benchmark (Referência):</strong> Índice usado como meta de desempenho.
+                                    <br><em>Ex: Um fundo de ações quer superar o Ibovespa (Benchmark). Um fundo de Renda Fixa quer superar o CDI.</em></li>
+                                <li><strong>Default (Calote):</strong> O não pagamento de uma obrigação financeira.</li>
+                                <li><strong>Holding:</strong> Empresa que não produz nada, apenas detém ações de outras empresas (controladora).</li>
+                                <li><strong>Joint Venture:</strong> Parceria comercial entre duas empresas.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        title: "Mapa Mental: SFN (Quem Manda em Quem)",
+                        keywords: ["HIERARQUIA", "NORMATIVO", "SUPERVISOR"],
+                        description: "Estrutura visual do sistema.",
+                        content: `
+                            <div class="overflow-x-auto pb-4">
+                                <div class="tree w-[600px] mx-auto">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="tree-node boss">CMN (Conselho Monetário)</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="#" class="tree-node exec">BACEN (Banco Central)</a>
+                                                    <ul>
+                                                        <li><span class="tree-node">Bancos</span></li>
+                                                        <li><span class="tree-node">Corretoras</span></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="tree-node exec">CVM (Valores Mobiliários)</a>
+                                                    <ul>
+                                                        <li><span class="tree-node">Bolsa (B3)</span></li>
+                                                        <li><span class="tree-node">Fundos</span></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="alert-box">
+                                <strong>Regra:</strong> Quem tem "C" no começo geralmente é Conselho (Manda/Normativo). Quem tem "S" ou "B" é Supervisor/Executor (Fiscaliza).
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Mnemônicos Poderosos",
+                        keywords: ["DECOREBA", "MACETES", "PROVA"],
+                        description: "Frases para lembrar na hora do aperto.",
+                        content: `
+                            <h4>🏛️ Órgãos do SFN</h4>
+                            <div class="mnemo-box">CMN Manda, BACEN Executa.</div>
+                            <div class="mnemo-box">Seguros Privados? SUSEP (S de Seguro).</div>
+                            <div class="mnemo-box">Previdência de Empresa? PREVIC (Fechada).</div>
+                            
+                            <h4>📉 Lavagem de Dinheiro (Fases)</h4>
+                            <div class="mnemo-box">CO - O - I (Colocação, Ocultação, Integração).</div>
+                            
+                            <h4>🏠 IGP-M (Composição)</h4>
+                            <div class="mnemo-box">60-30-10 (60% Atacado, 30% Consumidor, 10% Obra).</div>
+                            
+                            <h4>🐢 Come-cotas</h4>
+                            <div class="mnemo-box">Maio e Novembro (M.N. = Mínimo no bolso).</div>
+                        `
+                    },
+                    {
+                        title: "Conceitos Extras: Bolsa e Ética",
+                        keywords: ["CIRCUIT BREAKER", "INSIDER", "CHINESE WALL"],
+                        description: "Termos que caem e não estavam nos módulos principais.",
+                        content: `
+                            <h4>🛑 Circuit Breaker (B3)</h4>
+                            <p>Mecanismo de segurança que paralisa o pregão quando a bolsa cai muito rápido para "esfriar a cabeça" dos investidores.</p>
+                            <ul>
+                                <li><strong>Queda de 10%:</strong> Para 30 min.</li>
+                                <li><strong>Queda de 15%:</strong> Para 1 hora.</li>
+                                <li><strong>Queda de 20%:</strong> Suspende por tempo indeterminado (decisão da B3).</li>
+                            </ul>
+                            
+                            <h4>🕵️ Insider Trading vs Front Running</h4>
+                            <ul>
+                                <li><strong>Insider Trading (Informação Privilegiada):</strong> Alguém de DENTRO da empresa (diretor) usa uma informação que o mercado não sabe para lucrar. (Ex: Sabe que o lucro será recorde e compra ações antes).</li>
+                                <li><strong>Front Running (Passar na Frente):</strong> O CORRETOR sabe que um cliente vai fazer uma ordem gigante e compra antes dele para pegar a alta.</li>
+                            </ul>
+
+                            <h4>🧱 Chinese Wall (Muralha da China)</h4>
+                            <p>Segregação total de funções dentro de um banco. Quem gere o dinheiro dos clientes (Asset) não pode falar com quem gere o dinheiro do próprio banco (Tesouraria) para evitar conflito de interesses.</p>
+                        `
+                    },
+                    {
+                        title: "Tabela Mestra de Tributação (IR)",
+                        keywords: ["REGRESSIVA", "AÇÕES", "ISENTOS", "COME-COTAS"],
+                        description: "O guia definitivo para não errar imposto na prova.",
+                        content: `
+                            <h4>📉 Renda Fixa e Fundos (Regressiva)</h4>
+                            <p>CDB, Tesouro, Debênture Comum, Fundos RF/Multi/Cambial.</p>
+                            <table class="custom-table">
+                                <tr><th>Prazo</th><th>Alíquota</th></tr>
+                                <tr><td>Até 180 dias</td><td>22,5%</td></tr>
+                                <tr><td>181 a 360 dias</td><td>20%</td></tr>
+                                <tr><td>361 a 720 dias</td><td>17,5%</td></tr>
+                                <tr><td>Acima de 720 dias</td><td>15%</td></tr>
+                            </table>
+                            
+                            <h4>📊 Renda Variável (Ações/ETF)</h4>
+                            <table class="custom-table">
+                                <tr><th>Tipo</th><th>Alíquota</th><th>Retenção (Dedo-duro)</th></tr>
+                                <tr><td>Swing Trade</td><td>15% (Isento até 20k vendas/mês em ações)</td><td>0,005%</td></tr>
+                                <tr><td>Day Trade</td><td>20% (Sem isenção)</td><td>1%</td></tr>
+                                <tr><td>FII (Fundo Imob)</td><td>20% (Venda de cota)</td><td>0,005%</td></tr>
+                            </table>
+
+                            <h4>🐢 Come-cotas (Fundos Abertos)</h4>
+                            <p>Antecipação de IR em Maio e Novembro.</p>
+                            <ul>
+                                <li><strong>Curto Prazo:</strong> 20%</li>
+                                <li><strong>Longo Prazo:</strong> 15%</li>
+                                <li><strong>Fundo de Ações:</strong> NÃO TEM.</li>
+                            </ul>
+                        `,
+                        details: [
+                            { label: "IOF", value: "Cobrado apenas em resgates com menos de 30 dias (Tabela regressiva rápida de 96% a 0%)." }
+                        ]
+                    },
+                    {
+                        title: "SPB (Sistema de Pagamentos Brasileiro)",
+                        keywords: ["RISCO SISTÊMICO", "TED", "PIX", "STR"],
+                        description: "A infraestrutura invisível que move o dinheiro.",
+                        content: `
+                            <h4>🏦 O que é?</h4>
+                            <p>Conjunto de regras e sistemas que garantem que, quando você faz uma transferência, o dinheiro realmente saia do banco A e vá para o banco B.</p>
+                            <h4>🛠️ Principais Sistemas</h4>
+                            <ul>
+                                <li><strong>STR (Sistema de Transferência de Reservas):</strong> É o coração do sistema. Onde os bancos transferem dinheiro entre si (nas contas que eles têm no Bacen). Liquidação em Tempo Real (LBTR).</li>
+                                <li><strong>SPI (Sistema de Pagamentos Instantâneos):</strong> A infraestrutura do <strong>PIX</strong>. Funciona 24/7.</li>
+                                <li><strong>CIP (Câmara Interbancária de Pagamentos):</strong> Processa boletos, cartões e TEDs antigos.</li>
+                            </ul>
+                            <div class="concept-box">
+                                <strong>Risco de Liquidação:</strong> O risco de um banco quebrar no meio do dia e não pagar os outros. O SPB (via LBTR) elimina isso, pois a transferência é irrevogável e instantânea.
+                            </div>
+                        `,
+                        practicalCase: "Quando você faz um PIX às 3 da manhã de domingo, o sistema SPI verifica se o seu banco tem fundos e transfere instantaneamente para o banco do recebedor. Sem o SPB, você dependeria da compensação manual no dia útil seguinte.",
+                        details: [
+                            { label: "Objetivo", value: "Reduzir o risco sistêmico e dar agilidade." }
+                        ]
+                    },
+                    {
+                        title: "Códigos ANBIMA (Regulação vs Autorregulação)",
+                        keywords: ["MELHORES PRÁTICAS", "SELO ANBIMA"],
+                        description: "Regras que o mercado cria para si mesmo (além da lei).",
+                        content: `
+                            <h4>📜 Principais Códigos</h4>
+                            <ul>
+                                <li><strong>Código de Administração de Recursos:</strong> Regras para Gestores de Fundos (Chinese Wall, marcação a mercado, rateio de ordens).</li>
+                                <li><strong>Código de Distribuição:</strong> Regras para quem vende produtos (Gerentes, Corretores). Exige Suitability, transparência e selo Anbima.</li>
+                            </ul>
+                            <h4>⚖️ Regulação vs Autorregulação</h4>
+                            <ul>
+                                <li><strong>Regulação (Estado):</strong> Leis do CMN/Bacen/CVM. Quem descumpre sofre multa ou prisão.</li>
+                                <li><strong>Autorregulação (Anbima):</strong> Regras privadas. Quem descumpre perde o Selo Anbima ou é expulso da associação (mas não vai preso).</li>
+                            </ul>
+                        `,
+                        practicalCase: "Um fundo de investimento quer ter o 'Selo Anbima' na lâmina. Para isso, ele deve seguir regras de transparência mais rígidas do que a CVM exige. Isso gera confiança no investidor.",
+                        details: [
+                            { label: "Follow the Money", value: "A Anbima foca na conduta ética e transparência." }
+                        ]
+                    },
+                    {
+                        title: "Prazos de Liquidação (A Sopa de Letrinhas)",
+                        keywords: ["D+0", "D+1", "D+2"],
+                        description: "Quando o dinheiro cai na conta ou sai dela.",
+                        content: `
+                            <table class="custom-table">
+                                <tr><th>Produto</th><th>Prazo Padrão</th></tr>
+                                <tr><td>Ações (B3)</td><td>D+2 (Dois dias úteis após a negociação)</td></tr>
+                                <tr><td>Tesouro Direto</td><td>D+1 (Dia seguinte)</td></tr>
+                                <tr><td>Fundos (Cotização)</td><td>Varia (D+0, D+1, D+30...). Ler o regulamento.</td></tr>
+                                <tr><td>Fundos (Liquidação)</td><td>Dia que o dinheiro cai (ex: D+1 após cotização).</td></tr>
+                            </table>
+                            <div class="alert-box">
+                                <strong>Cuidado:</strong> Cotização (transformar dinheiro em cota) é diferente de Liquidação (dinheiro na mão).
+                            </div>
+                        `
+                    }
                 ]
             },
             mod1: {
@@ -745,6 +996,8 @@
         let score = 0;
         let isAnswered = false;
         let selectedOptionIdx = null;
+        let timerInterval;
+        let totalSeconds = 0;
 
         // --- INICIALIZAÇÃO ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -792,7 +1045,6 @@
             const main = document.getElementById('main-content');
             const data = studyData[currentTab];
             
-            // Título da Seção
             let html = `
                 <div class="mb-8 animate-fadeIn">
                     <h2 class="text-2xl font-bold text-gray-800 mb-1 flex items-center gap-2">
@@ -803,7 +1055,6 @@
                 </div>
             `;
 
-            // Plano de Estudos
             if (data.isPlan) {
                 html += `<div class="animate-fadeIn relative border-l-2 border-gray-200 ml-4 space-y-8">`;
                 data.steps.forEach((step, idx) => {
@@ -824,7 +1075,6 @@
                 });
                 html += `</div>`;
             } else {
-                // Tópicos (Módulos)
                 html += '<div class="animate-fadeIn grid gap-4">';
                 data.topics.forEach((topic, idx) => {
                     const topicId = `topic-${idx}`;
@@ -835,7 +1085,6 @@
                         </div>`;
                     }
                     
-                    // Case Prático
                     let caseHtml = '';
                     if (topic.practicalCase) {
                         caseHtml = `
@@ -848,13 +1097,15 @@
                     }
 
                     let detailsHtml = '<div class="grid gap-3 mt-4">';
-                    topic.details.forEach(d => {
-                        detailsHtml += `
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                <span class="text-xs font-bold text-gray-500 uppercase block mb-1">${d.label}</span>
-                                <span class="text-sm text-gray-800 font-medium leading-snug">${d.value}</span>
-                            </div>`;
-                    });
+                    if (topic.details) {
+                        topic.details.forEach(d => {
+                            detailsHtml += `
+                                <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                    <span class="text-xs font-bold text-gray-500 uppercase block mb-1">${d.label}</span>
+                                    <span class="text-sm text-gray-800 font-medium leading-snug">${d.value}</span>
+                                </div>`;
+                        });
+                    }
                     detailsHtml += '</div>';
 
                     let subTopicsHtml = '';
@@ -886,15 +1137,10 @@
                         </button>
                         <div id="${topicId}" class="hidden px-5 pb-5 border-t border-gray-100 pt-4 animate-fadeIn">
                             ${keywordsHtml}
-                            
-                            <!-- Resumo Rápido -->
                             <p class="text-sm text-gray-500 mb-6 italic border-l-4 ${data.borderClass} pl-3 py-1">
                                 "${topic.description}"
                             </p>
-
-                            <!-- Conteúdo Rico (Aula Completa) -->
                             ${topic.content ? `<div class="rich-content prose prose-sm max-w-none text-gray-700 mb-6">${topic.content}</div>` : ''}
-
                             ${caseHtml}
                             ${subTopicsHtml}
                             ${detailsHtml}
@@ -908,7 +1154,6 @@
             lucide.createIcons();
         }
 
-        // --- UTILS ---
         function toggleCard(id) {
             const content = document.getElementById(id);
             const icon = document.getElementById(`icon-${id}`);
@@ -921,14 +1166,33 @@
             }
         }
 
+        // --- TIMER ---
+        function startTimer() {
+            totalSeconds = 0;
+            const timerDisplay = document.getElementById('quiz-timer');
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+                const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+                timerDisplay.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
         // --- LÓGICA DO QUIZ ---
         function openQuiz() {
             document.getElementById('quiz-modal').classList.remove('hidden');
             resetQuiz();
+            startTimer();
         }
 
         function closeQuiz() {
             document.getElementById('quiz-modal').classList.add('hidden');
+            stopTimer();
         }
 
         function resetQuiz() {
@@ -1038,11 +1302,15 @@
         }
 
         function renderResult() {
+            stopTimer();
             const body = document.getElementById('quiz-body');
             const footer = document.getElementById('quiz-footer');
             footer.innerHTML = '';
 
             const percentage = Math.round((score / quizQuestions.length) * 100);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            
             let message = "";
             let color = "";
             
@@ -1070,11 +1338,12 @@
                     </div>
                     
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Simulado Finalizado</h2>
-                    <p class="text-gray-500 mb-8">Você acertou <strong class="text-indigo-600">${score}</strong> de <strong class="text-gray-800">${quizQuestions.length}</strong> questões.</p>
+                    <p class="text-gray-500 mb-2">Você acertou <strong class="text-indigo-600">${score}</strong> de <strong class="text-gray-800">${quizQuestions.length}</strong> questões.</p>
+                    <p class="text-xs text-gray-400 mb-8 font-mono">Tempo total: ${minutes}m ${seconds}s</p>
                     
                     <p class="text-lg font-bold ${color} mb-8 bg-gray-50 px-4 py-2 rounded-lg">${message}</p>
                     
-                    <button onclick="resetQuiz()" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-xl">
+                    <button onclick="resetQuiz(); startTimer();" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-xl">
                         <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Refazer Simulado
                     </button>
                 </div>
