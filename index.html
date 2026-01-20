@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyBank ANBIMA</title>
+    <title>Nova CPA 2026 - StudyBank</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Animações e Scrollbar customizada */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -22,363 +21,482 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        .mind-map-node {
+            position: relative;
+        }
+        .mind-map-node::before {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: 50%;
+            width: 16px;
+            height: 2px;
+            background-color: #CBD5E1;
+        }
+        .keyword-tag {
+            background-color: #FEF3C7;
+            color: #92400E;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-900 selection:bg-blue-200">
+<body class="bg-gray-50 font-sans text-gray-900 selection:bg-indigo-200">
 
     <!-- Header Fixo -->
-    <header class="bg-white shadow-sm sticky top-0 z-20">
-        <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+    <header class="bg-white shadow-sm sticky top-0 z-20 border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <i data-lucide="book-open" class="w-6 h-6 text-blue-600"></i>
-                <h1 class="text-xl font-bold tracking-tight text-gray-800">
-                    StudyBank <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full ml-1 align-top">ANBIMA</span>
-                </h1>
+                <div class="bg-indigo-600 p-1.5 rounded-lg">
+                    <i data-lucide="graduation-cap" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-gray-800 leading-none">
+                        Nova CPA <span class="text-indigo-600">2026</span>
+                    </h1>
+                    <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Certificação Base</span>
+                </div>
             </div>
-            <div class="text-xs text-gray-500 hidden sm:block">Material de Estudo</div>
+            <div class="hidden sm:flex items-center gap-4 text-xs font-medium text-gray-500">
+                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 6-8 Semanas</span>
+                <span class="flex items-center gap-1"><i data-lucide="book" class="w-3 h-3"></i> 4 Módulos</span>
+            </div>
         </div>
         
         <!-- Navegação Horizontal (Scrollable) -->
-        <div class="max-w-3xl mx-auto px-4 pb-0 overflow-x-auto no-scrollbar">
-            <div class="flex space-x-4 border-b border-gray-200" id="tabs-container">
+        <div class="max-w-4xl mx-auto px-4 pb-0 overflow-x-auto no-scrollbar bg-white">
+            <div class="flex space-x-6 border-b border-gray-100" id="tabs-container">
                 <!-- Abas geradas via JS -->
             </div>
         </div>
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="max-w-3xl mx-auto p-4 pb-24" id="main-content">
+    <main class="max-w-4xl mx-auto p-4 pb-32" id="main-content">
         <!-- Conteúdo injetado via JS -->
     </main>
 
     <!-- Botão Flutuante (FAB) -->
-    <div class="fixed bottom-6 right-6 z-40">
-        <button onclick="openQuiz()" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6 py-4 shadow-lg transition-transform active:scale-95 flex items-center gap-2 font-bold cursor-pointer">
-            <i data-lucide="check-circle" class="w-5 h-5"></i>
-            <span>Praticar</span>
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+        <div id="study-tip" class="hidden bg-white p-3 rounded-lg shadow-xl border border-gray-100 max-w-xs text-xs text-gray-600 animate-fadeIn mb-2 relative">
+            <div class="absolute -bottom-2 right-6 w-4 h-4 bg-white transform rotate-45 border-b border-r border-gray-100"></div>
+            <strong>Dica:</strong> Seu banco agora tem 100 questões! Pratique.
+        </div>
+        <button onclick="openQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-6 py-4 shadow-lg shadow-indigo-200 transition-all active:scale-95 flex items-center gap-2 font-bold cursor-pointer group">
+            <i data-lucide="brain-circuit" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
+            <span>Simulado (100 Questões)</span>
         </button>
     </div>
 
     <!-- Modal do Quiz -->
-    <div id="quiz-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50 animate-fadeIn backdrop-blur-sm">
-        <div class="bg-white rounded-xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+    <div id="quiz-modal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50 animate-fadeIn backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             <!-- Header do Modal -->
-            <div class="bg-blue-600 p-4 flex justify-between items-center text-white">
-                <h3 class="font-bold text-lg flex items-center gap-2">
-                    <i data-lucide="check-circle" class="w-5 h-5"></i>
-                    Quiz Rápido
-                </h3>
-                <button onclick="closeQuiz()" class="hover:bg-blue-700 p-1 rounded-full transition-colors cursor-pointer">
+            <div class="bg-indigo-600 p-5 flex justify-between items-center text-white">
+                <div>
+                    <h3 class="font-bold text-xl flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                        Simulado Completo
+                    </h3>
+                    <p class="text-indigo-200 text-xs mt-1">100 Questões - Estilo ANBIMA</p>
+                </div>
+                <button onclick="closeQuiz()" class="hover:bg-indigo-700 p-2 rounded-full transition-colors cursor-pointer bg-indigo-500/30">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
             <!-- Corpo do Modal -->
-            <div id="quiz-body" class="p-6 overflow-y-auto">
+            <div id="quiz-body" class="p-6 overflow-y-auto bg-gray-50 flex-1">
                 <!-- Questões injetadas via JS -->
             </div>
 
             <!-- Footer do Modal -->
-            <div id="quiz-footer" class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end">
-                <!-- Botão Próximo -->
+            <div id="quiz-footer" class="p-4 border-t border-gray-100 bg-white flex justify-between items-center">
+                <!-- Botões e Progresso -->
             </div>
         </div>
     </div>
 
     <!-- Script Principal -->
     <script>
-        // --- DADOS (Conteúdo e Quiz) ---
+        // --- DADOS DO ESTUDO (NOVA CPA) ---
         const studyData = {
-            rendaFixa: {
-                id: "rendaFixa",
-                title: "Renda Fixa",
-                icon: "trending-up",
+            plano: {
+                id: "plano",
+                title: "Plano de Estudos",
+                icon: "calendar-clock",
+                color: "bg-gray-800",
+                textClass: "text-gray-800",
+                borderClass: "border-gray-800",
+                isPlan: true,
+                steps: [
+                    { week: "1-2", module: "Módulo 1: SFN", focus: "Estrutura, Órgãos (CMN, BC, CVM), Seguros (SUSEP, PREVIC) e Economia (PIB, IPCA).", action: "20-30 questões por tema." },
+                    { week: "3-5", module: "Módulo 2: Produtos", focus: "Renda Fixa, Fundos, Variável, Previdência (O mais pesado!).", action: "Comparar risco x retorno x liquidez." },
+                    { week: "6", module: "Módulo 3: Clientes", focus: "Suitability, Ética, PLD/FT.", action: "Foco em interpretação de texto." },
+                    { week: "7", module: "Módulo 4: Inovação", focus: "ESG, Open Finance, Fintechs.", action: "Questões conceituais." },
+                    { week: "8", module: "Revisão Final", focus: "Simulados completos.", action: "Corrigir erros e reler resumos." }
+                ]
+            },
+            mod1: {
+                id: "mod1",
+                title: "M1: SFN & Economia",
+                icon: "landmark",
                 color: "bg-blue-600",
                 textClass: "text-blue-600",
                 borderClass: "border-blue-600",
                 topics: [
                     {
-                        title: "Poupança",
-                        description: "A aplicação mais tradicional do brasileiro. Funciona como um empréstimo simplificado ao banco.",
-                        example: "Se você depositar R$ 1.000 hoje (dia 01), só receberá os juros se não sacar até o dia 01 do mês seguinte. Se sacar no dia 30, perde todo o rendimento do mês.",
+                        title: "CMN (Conselho Monetário Nacional)",
+                        keywords: ["MANDA", "NORMATIVO", "META INFLAÇÃO"],
+                        description: "Órgão máximo do SFN. Ele NÃO executa, ele manda.",
+                        practicalCase: "O CMN se reúne e decide que a meta de inflação para o ano que vem será de 3%. Ele não vai ao mercado comprar títulos; ele apenas dá a ordem para o Banco Central 'se virar' para atingir essa meta.",
                         details: [
-                            { label: "Rendimento (Selic > 8,5%)", value: "0,5% ao mês + TR (Taxa Referencial)" },
-                            { label: "Rendimento (Selic ≤ 8,5%)", value: "70% da Selic + TR" },
-                            { label: "Risco", value: "Baixíssimo (Garantia do FGC até R$ 250 mil/CPF)" },
-                            { label: "Liquidez", value: "Diária, mas com perda de rentabilidade se sacar antes do aniversário." },
-                            { label: "IR", value: "Isento para Pessoa Física." }
+                            { label: "Função Principal", value: "Formular a política da moeda e do crédito. Define a META de inflação." },
+                            { label: "Composição", value: "Ministro da Fazenda (Presidente), Ministro do Planejamento, Presidente do Bacen." },
+                            { label: "Dica de Prova", value: "Se o verbo for 'Autorizar', 'Regular', 'Fixar diretrizes' = CMN." }
                         ]
                     },
                     {
-                        title: "CDB (Certificado de Depósito Bancário)",
-                        description: "Você empresta dinheiro para o banco financiar as atividades dele. Em troca, recebe juros.",
-                        example: "Você investe em um CDB que paga '110% do CDI'. Se o CDI anual for 10%, seu dinheiro renderá 11% bruto naquele ano.",
+                        title: "BACEN (Banco Central do Brasil)",
+                        keywords: ["EXECUTA", "FISCALIZA BANCOS", "SELIC", "COMPULSÓRIO"],
+                        description: "O banco dos bancos. Garante que as ordens do CMN sejam cumpridas.",
+                        practicalCase: "Se a inflação está alta, o Bacen aumenta a taxa Selic para desestimular o consumo. Se um banco está prestes a quebrar, o Bacen decreta intervenção.",
                         details: [
-                            { label: "Rentabilidade", value: "Prefixada, Pós (CDI) ou Híbrida (IPCA+)" },
-                            { label: "Risco", value: "Instituição financeira (FGC)" },
-                            { label: "Liquidez", value: "Varia (Diária ou Vencimento)" },
-                            { label: "IR", value: "Tabela Regressiva (22,5% a 15%)" }
+                            { label: "Função Principal", value: "Fiscalizar instituições financeiras, emitir papel-moeda, controlar liquidez via Depósito Compulsório e Redesconto." },
+                            { label: "Autonomia", value: "Possui autonomia operacional (não subordinado hierarquicamente ao Ministério da Fazenda)." },
+                            { label: "Dica de Prova", value: "Se o verbo for 'Fiscalizar', 'Executar', 'Punir' bancos = BACEN." }
                         ]
                     },
                     {
-                        title: "RDB (Recibo de Depósito Bancário)",
-                        description: "Muito parecido com o CDB. A diferença é que é inegociável e intransferível.",
-                        example: "Você 'casa' com o título até o vencimento.",
+                        title: "CVM (Comissão de Valores Mobiliários)",
+                        keywords: ["BOLSA", "FUNDOS", "S.A. ABERTA"],
+                        description: "A 'polícia' do mercado de capitais (Bolsa, Fundos).",
+                        practicalCase: "Se a Petrobras divulga um balanço falso, a CVM investiga e pune. Se um Fundo de Investimento engana cotistas, a CVM atua.",
                         details: [
-                            { label: "Liquidez", value: "Somente no vencimento." },
-                            { label: "Risco", value: "Banco emissor (FGC)." },
-                            { label: "IR", value: "Tabela Regressiva." }
+                            { label: "Objetivo", value: "Proteger o investidor e garantir transparência nas S.A. e Fundos." },
+                            { label: "Não regula", value: "Não mexe com Conta Corrente, Cheque ou Crédito Bancário (isso é Bacen)." }
                         ]
                     },
                     {
-                        title: "LCI & LCA (Letras de Crédito)",
-                        description: "Títulos para financiar setores Imobiliário (LCI) e Agronegócio (LCA).",
-                        example: "Isento de IR para incentivar esses setores estratégicos.",
+                        title: "Seguros: CNSP e SUSEP",
+                        keywords: ["SEGUROS", "CAPITALIZAÇÃO", "PREVIDÊNCIA ABERTA"],
+                        description: "Dupla que cuida de seguros, capitalização e previdência aberta (PGBL/VGBL).",
+                        practicalCase: "Se você contrata um seguro de carro (Porto Seguro) ou um PGBL (Brasilprev), quem regula as normas é o CNSP e quem fiscaliza se a empresa tem dinheiro para te pagar é a SUSEP.",
                         details: [
-                            { label: "Risco", value: "Banco emissor (FGC)" },
-                            { label: "Carência", value: "Min 90 dias (LCI) / 9 meses (LCA)" },
-                            { label: "Destaque", value: "ISENTO de IR para Pessoa Física." }
+                            { label: "CNSP (Normativo)", value: "Conselho Nacional de Seguros Privados. Manda/Cria normas." },
+                            { label: "SUSEP (Executor)", value: "Superintendência de Seguros Privados. Fiscaliza." }
                         ]
                     },
                     {
-                        title: "Debêntures",
-                        description: "Títulos de dívida de EMPRESAS (não bancos) para financiar grandes projetos.",
-                        example: "A Vale emite debêntures para construir uma ferrovia.",
+                        title: "Previdência Fechada: CNPC e PREVIC",
+                        keywords: ["FUNDOS DE PENSÃO", "PREVI", "PETROS"],
+                        description: "Dupla que cuida dos Fundos de Pensão (Previdência Fechada - só para funcionários).",
+                        practicalCase: "A Previ (fundo dos funcionários do BB) ou a Petros (Petrobras) são fiscalizadas pela PREVIC.",
                         details: [
-                            { label: "Risco", value: "Crédito da Empresa (SEM FGC)" },
-                            { label: "Rentabilidade", value: "Maior que bancários (prêmio de risco)" },
-                            { label: "Incentivada", value: "Isenta de IR (Infraestrutura)" },
-                            { label: "Comum", value: "Tabela regressiva" }
+                            { label: "CNPC (Normativo)", value: "Conselho Nacional de Previdência Complementar. Cria regras." },
+                            { label: "PREVIC (Executor)", value: "Superintendência Nacional de Previdência Complementar. Fiscaliza." }
                         ]
                     },
                     {
-                        title: "Títulos Públicos (Tesouro Direto)",
-                        description: "Empréstimo ao Governo Federal. Investimento 'livre de risco' (soberano).",
-                        subTopics: [
-                            { name: "Tesouro Selic", text: "Pós-fixado. Baixa volatilidade. Ideal para Reserva de Emergência." },
-                            { name: "Tesouro Prefixado", text: "Taxa fixa. Risco de Marcação a Mercado se vender antes." },
-                            { name: "Tesouro IPCA+", text: "Garante juro real (acima da inflação). Longo prazo." }
-                        ],
+                        title: "PIB (Produto Interno Bruto)",
+                        keywords: ["SOMA DE RIQUEZAS", "FLUXO", "C+I+G+X-M"],
+                        description: "A soma de todos os bens e serviços finais produzidos no país.",
+                        practicalCase: "A padaria vender pão conta para o PIB. A padaria vender um forno usado NÃO conta (já foi contado quando era novo). Trabalho voluntário e dona de casa não contam.",
                         details: [
-                            { label: "Liquidez", value: "D+1" },
-                            { label: "IR", value: "Tabela Regressiva" }
+                            { label: "Fórmula (Ótica da Despesa)", value: "PIB = C (Consumo Famílias) + I (Investimento Empresas) + G (Gastos Governo) + NX (Exportações - Importações)." },
+                            { label: "Conceito", value: "Mede o fluxo de produção, não o estoque de riqueza." }
+                        ]
+                    },
+                    {
+                        title: "IPCA (Índice Nacional de Preços ao Consumidor Amplo)",
+                        keywords: ["INFLAÇÃO OFICIAL", "IBGE", "META"],
+                        description: "Índice oficial de inflação usado para a meta.",
+                        practicalCase: "O IBGE pesquisa o preço da cesta de compras (arroz, gasolina, escola, médico) de famílias que ganham de 1 a 40 salários mínimos.",
+                        details: [
+                            { label: "Calculado por", value: "IBGE." },
+                            { label: "Período", value: "Do dia 01 ao dia 30/31 do mês." },
+                            { label: "Abrangência", value: "9 regiões metropolitanas + DF + Goiânia + Outros." }
+                        ]
+                    },
+                    {
+                        title: "IGP-M (Índice Geral de Preços - Mercado)",
+                        keywords: ["ALUGUEL", "FGV", "60-30-10"],
+                        description: "Calculado pela FGV. Muito afetado pelo Dólar (atacado).",
+                        practicalCase: "Usado para reajustar contratos de aluguel. Se o dólar dispara, o IGP-M sobe muito mais que o IPCA, encarecendo o aluguel.",
+                        details: [
+                            { label: "Composição (Decoreba!)", value: "60% IPA (Atacado) + 30% IPC (Consumidor) + 10% INCC (Construção Civil)." },
+                            { label: "Apelido", value: "'Inflação do Aluguel'." }
                         ]
                     }
                 ]
             },
-            fundos: {
-                id: "fundos",
-                title: "Fundos",
-                icon: "pie-chart",
+            mod2: {
+                id: "mod2",
+                title: "M2: Produtos",
+                icon: "package",
                 color: "bg-purple-600",
                 textClass: "text-purple-600",
                 borderClass: "border-purple-600",
                 topics: [
                     {
-                        title: "Fundo de Renda Fixa",
-                        description: "Gestor compra cesta de títulos (CDBs, Tesouro).",
-                        example: "Fundo DI compra 95% de Tesouro Selic.",
+                        title: "CDB (Certificado de Depósito Bancário)",
+                        keywords: ["CRÉDITO PRIVADO", "FGC", "REGRESSIVO"],
+                        description: "Título onde você empresta dinheiro para o banco financiar suas operações.",
+                        practicalCase: "Você aplica R$ 10.000 num CDB do Banco X que paga 110% do CDI. O Banco X pega esse dinheiro e empresta para o João no Cheque Especial cobrando 8% ao mês. O spread é o lucro do banco.",
                         details: [
-                            { label: "Tributação", value: "Come-cotas (Maio/Nov) + Regressiva" }
+                            { label: "Risco", value: "Crédito da instituição (Coberto pelo FGC até R$ 250k)." },
+                            { label: "Tributação", value: "IR Tabela Regressiva (22,5% a 15%)." }
                         ]
                     },
                     {
-                        title: "Fundo Multimercado",
-                        description: "Liberdade para investir em Renda Fixa, Ações, Dólar e Derivativos.",
-                        example: "Estratégias mistas para ganhar em vários cenários.",
+                        title: "LCI & LCA (Letras de Crédito)",
+                        keywords: ["ISENÇÃO IR", "IMOBILIÁRIO", "AGRONEGÓCIO"],
+                        description: "LCI (Letra de Crédito Imobiliário) e LCA (Letra de Crédito do Agronegócio).",
+                        practicalCase: "O banco emite uma LCA para captar dinheiro e emprestar para um produtor de soja comprar tratores. Por ajudar o agro, o governo isenta você (PF) de IR.",
                         details: [
-                            { label: "Risco", value: "Médio a Alto" },
-                            { label: "IR", value: "Regressiva + Come-cotas" }
+                            { label: "Vantagem", value: "ISENTO de IR para Pessoa Física." },
+                            { label: "Desvantagem", value: "Carência mínima de 90 dias (LCI) ou 9 meses (LCA)." },
+                            { label: "Risco", value: "Tem FGC." }
                         ]
                     },
                     {
-                        title: "Fundo de Ações (FIA)",
-                        description: "Mínimo 67% em ações.",
-                        example: "Carteira com ações da Petrobras, Itaú, etc.",
+                        title: "Debêntures",
+                        keywords: ["DÍVIDA EMPRESARIAL", "SEM FGC", "INFRAESTRUTURA"],
+                        description: "Títulos de dívida emitidos por empresas S.A. (não financeiras).",
+                        practicalCase: "A Vale (mineradora) precisa construir uma ferrovia. Em vez de pedir empréstimo caro no banco, ela emite Debêntures e pega dinheiro direto com investidores.",
                         details: [
-                            { label: "IR", value: "15% no resgate (SEM Come-cotas)" }
+                            { label: "Debênture Incentivada", value: "Financia infraestrutura (estrada, energia). ISENTA de IR para PF." },
+                            { label: "Risco", value: "Crédito da empresa (SEM FGC). Se a Vale quebrar, você vai para a fila de credores." }
                         ]
                     },
                     {
-                        title: "Fundo Cambial",
-                        description: "Mínimo 80% em ativos atrelados a moeda estrangeira.",
-                        example: "Proteção (Hedge) contra alta do dólar.",
+                        title: "Tesouro Direto",
+                        keywords: ["RISCO SOBERANO", "MARCAÇÃO A MERCADO"],
+                        description: "Plataforma para PF comprar títulos públicos federais.",
+                        practicalCase: "Você empresta para o Governo Federal pagar as contas dele. É o risco mais baixo do país (Risco Soberano), pois o governo pode emitir moeda para pagar.",
+                        subTopics: [
+                            { name: "Tesouro Selic (LFT)", text: "Pós-fixado. Segue a Selic. Se a Selic sobe, ele rende mais. Ideal para Reserva." },
+                            { name: "Tesouro Prefixado (LTN)", text: "Taxa fixa (ex: 12%). Se os juros de mercado subirem para 15%, seu título desvaloriza se vender antes (Marcação a Mercado)." },
+                            { name: "Tesouro IPCA+ (NTN-B)", text: "Paga IPCA + Juro Fixo. Protege o poder de compra no longo prazo." }
+                        ],
                         details: [
-                            { label: "Risco", value: "Oscilação da moeda" },
-                            { label: "IR", value: "Regressiva + Come-cotas" }
+                             { label: "Liquidez", value: "D+1 (Solicita hoje, cai amanhã)." }
                         ]
                     },
                     {
-                        title: "Fundo Imobiliário (FII)",
-                        description: "Negociado em bolsa. Investe em imóveis ou papéis imobiliários.",
-                        example: "Recebe aluguéis mensais isentos de IR.",
+                        title: "Fundos de Investimento",
+                        keywords: ["CONDOMÍNIO", "COTA", "CNPJ PRÓPRIO"],
+                        description: "Comunhão de recursos sob gestão profissional. Cada investidor tem cotas.",
+                        practicalCase: "Você não sabe qual ação comprar. Você investe num Fundo de Ações. O Gestor (profissional) escolhe comprar Petrobras e Itaú. Se as ações sobem, sua cota valoriza.",
                         details: [
-                            { label: "Rendimentos", value: "Isentos para PF" },
-                            { label: "Venda da cota", value: "20% de IR sobre lucro" }
+                            { label: "Come-cotas", value: "Antecipação semestral de IR (Maio/Nov) em fundos de Renda Fixa, Cambial e Multimercado." },
+                            { label: "Fundo de Ações", value: "NÃO tem come-cotas. IR de 15% só no resgate." }
+                        ]
+                    },
+                    {
+                        title: "Previdência (PGBL x VGBL)",
+                        keywords: ["LONGO PRAZO", "DEDUÇÃO FISCAL", "SUCESSÃO"],
+                        description: "Plano Gerador de Benefício Livre (PGBL) e Vida Gerador de Benefício Livre (VGBL).",
+                        practicalCase: "João ganha R$ 200 mil/ano e declara completo. Ele faz PGBL para abater R$ 24 mil da base de cálculo e pagar menos IR hoje (difere o imposto). Maria é isenta; ela faz VGBL apenas para sucessão patrimonial.",
+                        details: [
+                            { label: "PGBL", value: "Deduz IR na entrada (até 12%). Paga IR sobre TUDO na saída." },
+                            { label: "VGBL", value: "Não deduz. Paga IR só sobre o LUCRO na saída." }
                         ]
                     }
                 ]
             },
-            rendaVariavel: {
-                id: "rendaVariavel",
-                title: "Variável",
-                icon: "trending-up",
-                color: "bg-green-600",
-                textClass: "text-green-600",
-                borderClass: "border-green-600",
-                topics: [
-                    {
-                        title: "Ações",
-                        description: "Menor parcela do capital de uma S.A.",
-                        example: "Sócio da empresa. Ganha com valorização e dividendos.",
-                        details: [
-                            { label: "ON", value: "Dá voto" },
-                            { label: "PN", value: "Preferência nos dividendos" },
-                            { label: "Swing Trade", value: "Isento até 20k vendas/mês" },
-                            { label: "Day Trade", value: "20% de IR (sem isenção)" }
-                        ]
-                    },
-                    {
-                        title: "ETFs (Índice)",
-                        description: "Fundos que copiam um índice (Ibovespa, S&P500).",
-                        example: "BOVA11 (Ibovespa).",
-                        details: [
-                            { label: "Gestão", value: "Passiva" },
-                            { label: "IR", value: "15% sobre ganho (SEM isenção de 20k)" }
-                        ]
-                    }
-                ]
-            },
-            previdencia: {
-                id: "previdencia",
-                title: "Previdência",
-                icon: "shield",
+            mod3: {
+                id: "mod3",
+                title: "M3: Clientes",
+                icon: "users",
                 color: "bg-orange-600",
                 textClass: "text-orange-600",
                 borderClass: "border-orange-600",
                 topics: [
                     {
-                        title: "PGBL",
-                        description: "Para quem declara IR Completo.",
-                        example: "Deduz até 12% da renda tributável anual.",
+                        title: "Suitability (API)",
+                        keywords: ["PERFIL", "ADEQUAÇÃO", "OBRIGATÓRIO"],
+                        description: "Análise de Perfil do Investidor (API).",
+                        practicalCase: "Dona Maria tem 80 anos e precisa do dinheiro para remédios (Conservadora). O gerente não pode colocar o dinheiro dela em Ações (Risco Alto), mesmo que as ações estejam subindo.",
                         details: [
-                            { label: "IR no Resgate", value: "Sobre o TOTAL (Principal + Juros)" }
+                            { label: "Perfis", value: "Conservador (Segurança), Moderado (Equilíbrio), Arrojado (Rentabilidade/Risco)." },
+                            { label: "Desenquadramento", value: "Se o cliente quiser investir fora do perfil, deve assinar termo específico." }
                         ]
                     },
                     {
-                        title: "VGBL",
-                        description: "Para declaração Simplificada/Isento.",
-                        example: "Planejamento sucessório.",
+                        title: "PLD/FT (Lavagem de Dinheiro)",
+                        keywords: ["COI", "SUSPEITA", "ESPÉCIE"],
+                        description: "Prevenção à Lavagem de Dinheiro e Financiamento ao Terrorismo.",
+                        practicalCase: "Um cliente que ganha R$ 2 mil/mês tenta depositar R$ 100 mil em dinheiro vivo na boca do caixa. Isso é uma operação suspeita e deve ser reportada ao COAF.",
                         details: [
-                            { label: "IR no Resgate", value: "Apenas sobre RENDIMENTOS" }
+                            { label: "Fases", value: "1. Colocação (introduz o dinheiro), 2. Ocultação (dificulta rastreio), 3. Integração (volta com aparência lícita)." },
+                            { label: "Reporte", value: "Ao COAF. Não avisar o cliente." }
                         ]
                     }
                 ]
             },
-            glossario: {
-                id: "glossario",
-                title: "Glossário",
-                icon: "help-circle",
+            mod4: {
+                id: "mod4",
+                title: "M4: Inovação",
+                icon: "rocket",
                 color: "bg-teal-600",
                 textClass: "text-teal-600",
                 borderClass: "border-teal-600",
                 topics: [
                     {
-                        title: "Selic",
-                        description: "Taxa básica de juros, definida pelo BC.",
-                        example: "Controla a inflação. Baliza Poupança e CDBs.",
-                        details: [{ label: "Função", value: "Controle de inflação" }]
+                        title: "Open Finance",
+                        keywords: ["CONSENTIMENTO", "COMPARTILHAMENTO"],
+                        description: "Sistema financeiro aberto. O dado é do cliente.",
+                        practicalCase: "Você tem conta no Banco A há 20 anos. Quer empréstimo no Banco B. Pelo Open Finance, você autoriza o Banco B a ver seu histórico positivo do Banco A para conseguir juros menores.",
+                        details: [
+                            { label: "Princípio Chave", value: "Consentimento: deve ser explícito, com finalidade e prazo determinados." }
+                        ]
                     },
                     {
-                        title: "CDI",
-                        description: "Taxa de empréstimos entre bancos (1 dia).",
-                        example: "Anda colado na Selic. Benchmark da Renda Fixa.",
-                        details: [{ label: "Uso", value: "Meta de rentabilidade (Ex: 100% CDI)" }]
-                    },
-                    {
-                        title: "TR (Taxa Referencial)",
-                        description: "Corrige Poupança e FGTS.",
-                        example: "Geralmente próxima de zero.",
-                        details: [{ label: "Uso", value: "Rendimento Poupança" }]
-                    },
-                    {
-                        title: "IPCA",
-                        description: "Índice oficial de inflação.",
-                        example: "Mede custo de vida.",
-                        details: [{ label: "Meta", value: "Ganho Real = Rentabilidade - IPCA" }]
-                    },
-                    {
-                        title: "FGC",
-                        description: "Seguro do investidor contra quebra de banco.",
-                        example: "Garante até R$ 250 mil por CPF/Instituição.",
-                        details: [{ label: "Cobre", value: "CDB, LCI, LCA, Poupança" }]
-                    },
-                    {
-                        title: "Come-Cotas",
-                        description: "Antecipação de IR (Maio/Nov) em fundos.",
-                        example: "Reduz o número de cotas que você possui.",
-                        details: [{ label: "Isentos", value: "Fundo de Ações, Previdência" }]
+                        title: "ESG",
+                        keywords: ["SUSTENTABILIDADE", "GOVERNANÇA", "SOCIAL"],
+                        description: "Environmental (Ambiental), Social (Social) and Governance (Governança).",
+                        practicalCase: "Investidores evitam comprar ações de uma empresa que polui rios (E) ou usa trabalho escravo (S), pois isso gera risco de imagem e multas.",
+                        details: [
+                            { label: "Greenwashing", value: "Maquiagem verde. Fingir que é sustentável sem ser." }
+                        ]
                     }
                 ]
-            },
-            novaCpa: {
-                id: "novaCpa",
-                title: "Nova CPA",
-                icon: "award",
-                color: "bg-indigo-700",
-                textClass: "text-indigo-700",
-                borderClass: "border-indigo-700",
-                isSpecial: true
             }
         };
 
+        // --- BANCO DE QUESTÕES (100 Itens) ---
         const quizQuestions = [
-            {
-                question: "Um investidor deseja isenção de IR e investir no setor imobiliário. Qual produto é o indicado?",
-                options: ["CDB", "LCI", "Tesouro IPCA+", "Debênture Comum"],
-                answer: 1,
-                explanation: "A LCI (Letra de Crédito Imobiliário) é isenta de IR para PF e financia o setor de imóveis."
-            },
-            {
-                question: "Qual o limite de cobertura do FGC por CPF e instituição?",
-                options: ["R$ 1 milhão", "R$ 500 mil", "R$ 250 mil", "Ilimitado"],
-                answer: 2,
-                explanation: "O FGC garante até R$ 250 mil por CPF e por instituição financeira."
-            },
-            {
-                question: "Qual título público é indicado para Reserva de Emergência?",
-                options: ["Tesouro Prefixado", "Tesouro IPCA+", "Tesouro Selic", "Debênture"],
-                answer: 2,
-                explanation: "O Tesouro Selic tem baixa volatilidade e liquidez diária."
-            },
-            {
-                question: "O CDI costuma andar muito próximo de qual outra taxa?",
-                options: ["IPCA", "Selic", "TR", "Dólar"],
-                answer: 1,
-                explanation: "O CDI rende aproximadamente 0,10 ponto percentual abaixo da Selic Meta."
-            },
-            {
-                question: "No PGBL, o IR no resgate incide sobre:",
-                options: ["Apenas rendimentos", "Valor total (capital + rendimento)", "Apenas capital", "Isento"],
-                answer: 1,
-                explanation: "No PGBL deduz na entrada, mas paga sobre TUDO na saída. VGBL é só sobre rendimento."
-            },
-            {
-                question: "Fundo com objetivo de proteção cambial deve ter min 80% em:",
-                options: ["Ações", "Moedas estrangeiras", "CDI", "Imóveis"],
-                answer: 1,
-                explanation: "Fundos Cambiais focam em variação de moeda (dólar/euro)."
-            },
-            {
-                question: "Fundo de Ações deve ter no mínimo quanto em ações?",
-                options: ["50%", "67%", "95%", "80%"],
-                answer: 1,
-                explanation: "Regulação exige mínimo de 67% (dois terços) em ações."
-            }
+            // MÓDULO 1 (Existentes)
+            { m: "M1", q: "O órgão máximo do Sistema Financeiro Nacional é:", o: ["BACEN", "CVM", "ANBIMA", "CMN"], a: 3, e: "O Conselho Monetário Nacional (CMN) é o órgão NORMATIVO máximo. Ele manda, o Bacen executa." },
+            { m: "M1", q: "A principal função do Banco Central é:", o: ["Criar leis financeiras", "Executar políticas monetárias e fiscalizar", "Regular o mercado de capitais", "Representar investidores"], a: 1, e: "O Bacen executa as ordens do CMN e fiscaliza os bancos (guardião da moeda)." },
+            { m: "M1", q: "A CVM atua principalmente no:", o: ["Sistema bancário", "Mercado de crédito", "Mercado de capitais", "Mercado cambial"], a: 2, e: "CVM (Comissão de Valores Mobiliários) regula Bolsa, Fundos e S.A." },
+            { m: "M1", q: "A ANBIMA é caracterizada como:", o: ["Órgão regulador estatal", "Autarquia federal", "Entidade de autorregulação", "Banco público"], a: 2, e: "ANBIMA é uma entidade privada de autorregulação (o mercado regulando a si mesmo)." },
+            { m: "M1", q: "Qual instituição pode captar depósitos à vista?", o: ["Corretora", "Banco comercial", "Distribuidora", "CVM"], a: 1, e: "Apenas Bancos Comerciais (e Múltiplos com carteira comercial) e Cooperativas podem ter conta corrente." },
+            { m: "M1", q: "O cálculo do PIB pela ótica da despesa segue a fórmula:", o: ["C + I + G + (X - M)", "C + I - G", "X - M", "C + I + G + T"], a: 0, e: "PIB = Consumo + Investimento + Gastos Gov + Exportações Líquidas (Exportação - Importação)." },
+            { m: "M1", q: "A composição do IGP-M é:", o: ["50% IPA, 50% IPC", "60% IPA, 30% IPC, 10% INCC", "40% IPA, 30% IPC, 30% INCC", "100% IPCA"], a: 1, e: "O IGP-M é 60% Atacado (IPA), 30% Consumidor (IPC) e 10% Construção (INCC)." },
+            { m: "M1", q: "Quem fiscaliza os Fundos de Pensão (Previdência Fechada)?", o: ["SUSEP", "PREVIC", "CVM", "CNSP"], a: 1, e: "Previdência Fechada = PREVIC. Previdência Aberta = SUSEP." },
+            { m: "M1", q: "Taxa básica de juros da economia brasileira:", o: ["CDI", "IPCA", "Selic", "TR"], a: 2, e: "A Meta Selic é definida pelo COPOM (Bacen)." },
+            { m: "M1", q: "O câmbio representa:", o: ["Preço de ativos", "Troca de títulos", "Preço da moeda estrangeira em reais", "Taxa de juros"], a: 2, e: "Câmbio é a relação de troca entre duas moedas." },
+            
+            // MÓDULO 1 (NOVAS)
+            { m: "M1", q: "Em um cenário de alta inflação, qual medida é mais provável de ser adotada pelo BACEN?", o: ["Redução da Selic", "Aumento da Selic", "Redução do compulsório", "Expansão do crédito"], a: 1, e: "Aumentar a Selic encarece o crédito e desestimula o consumo, controlando a inflação." },
+            { m: "M1", q: "Quem define as diretrizes da política monetária?", o: ["BACEN", "CVM", "Tesouro Nacional", "CMN"], a: 3, e: "O CMN define as diretrizes e metas; o BACEN executa." },
+            { m: "M1", q: "A função principal da CVM é proteger:", o: ["Bancos", "O governo", "Investidores do mercado de capitais", "Instituições financeiras"], a: 2, e: "A CVM fiscaliza o mercado de valores mobiliários (ações, fundos, debêntures)." },
+            { m: "M1", q: "Um banco comercial atua principalmente em:", o: ["Mercado de capitais", "Mercado de seguros", "Intermediação financeira com depósitos à vista", "Emissão de ações"], a: 2, e: "Bancos comerciais captam depósitos à vista (conta corrente) e emprestam a curto/médio prazo." },
+            { m: "M1", q: "O SFN tem como objetivo principal:", o: ["Maximizar lucros bancários", "Garantir crédito apenas ao governo", "Promover desenvolvimento econômico com estabilidade", "Eliminar riscos financeiros"], a: 2, e: "O sistema busca intermediar recursos para desenvolver o país de forma equilibrada." },
+            { m: "M1", q: "Quando o real se desvaloriza frente ao dólar, significa que:", o: ["O dólar ficou mais barato", "O real ganhou poder de compra", "É preciso mais reais para comprar dólares", "A inflação caiu automaticamente"], a: 2, e: "Desvalorização cambial encarece a moeda estrangeira." },
+            { m: "M1", q: "O mercado primário ocorre quando:", o: ["Um título é revendido", "Um ativo é negociado na bolsa", "Há emissão de novos títulos", "Há especulação de preços"], a: 2, e: "Mercado primário é a primeira venda (o recurso vai para o emissor)." },
+            { m: "M1", q: "O mercado secundário é importante porque:", o: ["Financia o governo", "Gera liquidez aos ativos", "Controla inflação", "Cria moeda"], a: 1, e: "Permite que investidores vendam seus ativos para outros, gerando liquidez." },
+            { m: "M1", q: "O compulsório bancário serve para:", o: ["Aumentar o lucro dos bancos", "Controlar liquidez da economia", "Garantir rentabilidade", "Financiar empresas"], a: 1, e: "O BACEN recolhe parte dos depósitos para controlar a quantidade de dinheiro em circulação." },
+            { m: "M1", q: "A política fiscal é conduzida principalmente pelo:", o: ["BACEN", "CMN", "Governo (Executivo)", "CVM"], a: 2, e: "Política fiscal refere-se a gastos e impostos do Governo." },
+
+            // MÓDULO 2 (Existentes)
+            { m: "M2", q: "O CDB é um título:", o: ["Público", "De renda variável", "Bancário de renda fixa", "Isento de IR"], a: 2, e: "CDB = Certificado de Depósito Bancário. Você empresta ao banco." },
+            { m: "M2", q: "Qual produto possui cobertura do FGC?", o: ["Ações", "Debêntures", "CDB", "Fundos de ações"], a: 2, e: "CDB, LCI, LCA e Poupança têm FGC. Debêntures e Fundos NÃO." },
+            { m: "M2", q: "LCI e LCA são isentas de:", o: ["IOF", "IR para pessoa física", "Taxa de administração", "Risco de crédito"], a: 1, e: "Isenção de IR para PF é o grande atrativo das Letras de Crédito." },
+            { m: "M2", q: "O Tesouro Direto é emitido por:", o: ["Bancos", "Empresas", "Governo Federal", "Corretoras"], a: 2, e: "São títulos da dívida pública federal (Risco Soberano)." },
+            { m: "M2", q: "O risco predominante da renda variável é:", o: ["Crédito", "Mercado", "Liquidez", "Operacional"], a: 1, e: "Risco de Mercado = Oscilação de preços (volatilidade)." },
+            { m: "M2", q: "Fundos de investimento são:", o: ["Aplicações individuais", "Condomínios de investidores", "Produtos bancários", "Títulos públicos"], a: 1, e: "Funcionam como um condomínio: cada um tem uma cota (pedaço) do todo." },
+            { m: "M2", q: "Taxa cobrada para gestão do fundo:", o: ["Performance", "Entrada", "Administração", "Custódia"], a: 2, e: "Taxa de Administração remunera o gestor e o administrador. Performance só se ganhar do benchmark." },
+            { m: "M2", q: "A taxa de performance incide quando:", o: ["O fundo tem prejuízo", "O fundo supera um benchmark", "O cotista resgata", "O fundo é fechado"], a: 1, e: "É um prêmio pago ao gestor por entregar resultado ACIMA da meta (benchmark)." },
+            { m: "M2", q: "Fundos de ações devem manter no mínimo:", o: ["51% em ações", "67% em ações", "80% em ações", "100% em ações"], a: 1, e: "Regra CVM: Mínimo de 67% (dois terços) em ações." },
+            { m: "M2", q: "ETF é:", o: ["Fundo exclusivo", "Fundo que replica um índice", "Ação internacional", "Título de renda fixa"], a: 1, e: "Exchange Traded Fund = Fundo de Índice negociado em bolsa." },
+            { m: "M2", q: "A principal característica da renda fixa é:", o: ["Retorno imprevisível", "Rentabilidade conhecida ou previsível", "Isenção de impostos", "Alta volatilidade"], a: 1, e: "As condições de remuneração são definidas no momento da aplicação." },
+            { m: "M2", q: "Debêntures são títulos emitidos por:", o: ["Governo", "Bancos", "Empresas", "Corretoras"], a: 2, e: "Empresas S.A. não financeiras emitem debêntures para financiar projetos." },
+            { m: "M2", q: "O risco de crédito está relacionado à:", o: ["Oscilação de preços", "Capacidade de pagamento do emissor", "Falta de liquidez", "Inflação"], a: 1, e: "Risco de Calote (Default). A empresa/banco não pagar o que deve." },
+            { m: "M2", q: "O IR na renda fixa segue a tabela:", o: ["Progressiva", "Fixa", "Regressiva", "Isenta"], a: 2, e: "Quanto mais tempo fica, menos paga (22,5% até 15%)." },
+            { m: "M2", q: "PGBL é mais indicado para quem:", o: ["Não declara IR", "Usa declaração completa", "Usa declaração simplificada", "É isento"], a: 1, e: "Permite abater até 12% da renda bruta anual tributável na declaração completa." },
+            { m: "M2", q: "No VGBL, o IR incide sobre:", o: ["Valor total", "Apenas rendimentos", "Apenas aportes", "Taxas"], a: 1, e: "No VGBL, o imposto é só sobre o LUCRO. No PGBL, é sobre TUDO." },
+            { m: "M2", q: "A previdência complementar tem foco em:", o: ["Curto prazo", "Liquidez diária", "Longo prazo", "Especulação"], a: 2, e: "Objetivo principal é aposentadoria (longuíssimo prazo)." },
+            { m: "M2", q: "Capitalização tem como principal característica:", o: ["Investimento", "Proteção previdenciária", "Sorteios e formação de reserva", "Renda variável"], a: 2, e: "Capitalização NÃO é investimento. É um jogo de sorteio onde você guarda dinheiro (geralmente rendendo pouco)." },
+            { m: "M2", q: "Maior liquidez geralmente está associada a:", o: ["Renda variável", "Longo prazo", "Menor risco", "Curto prazo"], a: 3, e: "Produtos de curto prazo ou liquidez diária permitem resgate rápido." },
+            { m: "M2", q: "A diversificação tem como objetivo:", o: ["Eliminar riscos", "Aumentar impostos", "Reduzir riscos", "Garantir retorno"], a: 2, e: "Não elimina o risco sistêmico, mas reduz o risco específico da carteira." },
+
+            // MÓDULO 2 (NOVAS)
+            { m: "M2", q: "João investiu em um CDB de um banco médio. O principal risco que ele corre é:", o: ["Mercado", "Liquidez", "Crédito", "Operacional"], a: 2, e: "Risco de o banco quebrar (calote). Coberto pelo FGC." },
+            { m: "M2", q: "Um investimento com rentabilidade atrelada ao IPCA protege contra:", o: ["Risco cambial", "Risco de crédito", "Inflação", "Oscilação da bolsa"], a: 2, e: "Garante a manutenção do poder de compra." },
+            { m: "M2", q: "Qual produto NÃO possui garantia do FGC?", o: ["CDB", "LCI", "LCA", "Debênture"], a: 3, e: "Debêntures são títulos corporativos sem garantia do Fundo Garantidor." },
+            { m: "M2", q: "Tesouro Selic é mais indicado para:", o: ["Longuíssimo prazo", "Especulação", "Reserva de emergência", "Alta rentabilidade"], a: 2, e: "Baixa volatilidade e liquidez diária." },
+            { m: "M2", q: "Um fundo que investe majoritariamente em títulos públicos é classificado como:", o: ["Fundo multimercado", "Fundo cambial", "Fundo de renda fixa", "Fundo de ações"], a: 2, e: "Fundo de Renda Fixa busca retorno em ativos de juros." },
+            { m: "M2", q: "Em um fundo, o administrador é responsável por:", o: ["Decidir investimentos", "Gestão da carteira", "Parte operacional e regulatória", "Definir benchmark"], a: 2, e: "O Administrador cuida do funcionamento legal. O Gestor decide onde investir." },
+            { m: "M2", q: "A taxa de performance só pode ser cobrada se:", o: ["O fundo tiver prejuízo", "Superar o benchmark", "O cotista resgatar", "O mercado subir"], a: 1, e: "É um prêmio por superar a meta (benchmark)." },
+            { m: "M2", q: "Um ETF é negociado:", o: ["Diretamente com o gestor", "No Tesouro Direto", "Na bolsa de valores", "Apenas no vencimento"], a: 2, e: "Cotas de ETF são compradas e vendidas na B3 como ações." },
+            { m: "M2", q: "Qual produto é mais indicado para quem busca isenção de IR e baixo risco?", o: ["Ações", "LCI/LCA", "Debêntures", "Fundos multimercado"], a: 1, e: "LCI/LCA têm FGC e isenção de IR para PF." },
+            { m: "M2", q: "A principal vantagem da diversificação é:", o: ["Garantir retorno", "Eliminar riscos", "Reduzir riscos", "Aumentar impostos"], a: 2, e: "Reduz o risco específico da carteira (não ponha todos ovos na mesma cesta)." },
+            { m: "M2", q: "Debêntures incentivadas possuem como benefício:", o: ["Garantia do FGC", "Isenção de IR para PF", "Liquidez diária", "Proteção cambial"], a: 1, e: "Governo incentiva infraestrutura com isenção fiscal." },
+            { m: "M2", q: "Risco de liquidez ocorre quando:", o: ["O emissor não paga", "O preço oscila", "Não é possível vender o ativo rapidamente", "A inflação sobe"], a: 2, e: "Dificuldade em transformar o ativo em dinheiro pelo preço justo." },
+            { m: "M2", q: "A tabela regressiva de IR favorece investimentos:", o: ["De curto prazo", "Isentos", "De longo prazo", "De renda variável"], a: 2, e: "A alíquota cai com o tempo (mínima de 15% após 2 anos)." },
+            { m: "M2", q: "Um fundo fechado significa que:", o: ["Não há taxa", "Não permite resgates antes do prazo", "É exclusivo", "Não tem risco"], a: 1, e: "Cotas só são resgatadas no encerramento do fundo (pode vender no mercado secundário)." },
+            { m: "M2", q: "A cota de um fundo é calculada com base:", o: ["No lucro do gestor", "No patrimônio líquido do fundo", "No número de cotistas", "Na taxa Selic"], a: 1, e: "Patrimônio Líquido dividido pelo número de cotas." },
+            { m: "M2", q: "PGBL permite:", o: ["Isenção total de IR", "Dedução até 12% da renda bruta tributável", "IR apenas sobre rendimento", "Resgate sem imposto"], a: 1, e: "Benefício fiscal na declaração completa." },
+            { m: "M2", q: "VGBL é mais indicado para quem:", o: ["Faz declaração completa", "Não declara IR", "Usa declaração simplificada", "Busca curto prazo"], a: 2, e: "Simplificada ou isentos." },
+            { m: "M2", q: "Previdência é indicada principalmente para:", o: ["Especulação", "Reserva imediata", "Planejamento de longo prazo", "Alta liquidez"], a: 2, e: "Foco em aposentadoria." },
+            { m: "M2", q: "Título pós-fixado significa:", o: ["Taxa definida no início", "Rentabilidade atrelada a um indexador", "Sem risco", "Isento de imposto"], a: 1, e: "Segue um índice (Ex: 100% do CDI)." },
+            { m: "M2", q: "Capitalização NÃO tem como objetivo principal:", o: ["Sorteios", "Formação de reserva", "Investimento", "Disciplina financeira"], a: 2, e: "Não é considerado investimento devido à baixa rentabilidade e caráter de sorteio." },
+
+
+            // MÓDULO 3 (Existentes)
+            { m: "M3", q: "Suitability significa:", o: ["Venda agressiva", "Adequação ao perfil do cliente", "Rentabilidade máxima", "Livre escolha"], a: 1, e: "API (Análise de Perfil de Investidor). Vender o produto certo para a pessoa certa." },
+            { m: "M3", q: "Um cliente conservador prioriza:", o: ["Alta rentabilidade", "Segurança e liquidez", "Risco elevado", "Renda variável"], a: 1, e: "Ele prefere ganhar pouco a correr risco de perder o principal." },
+            { m: "M3", q: "A ética profissional exige:", o: ["Foco na comissão", "Interesse da instituição", "Interesse do cliente", "Sigilo parcial"], a: 2, e: "O interesse do cliente deve sempre prevalecer sobre o do gerente/banco." },
+            { m: "M3", q: "KYC significa:", o: ["Know Your Client", "Keep Your Capital", "Know Your Company", "Keep Your Client"], a: 0, e: "Conheça seu Cliente. Essencial para evitar lavagem de dinheiro." },
+            { m: "M3", q: "Operações suspeitas devem ser:", o: ["Incentivadas", "Ignoradas", "Comunicadas ao COAF", "Autorizadas"], a: 2, e: "Qualquer atipicidade deve ser reportada ao COAF, sem avisar o cliente." },
+            { m: "M3", q: "Planejamento financeiro envolve:", o: ["Apenas investimentos", "Apenas crédito", "Organização das finanças pessoais", "Apenas previdência"], a: 2, e: "É uma visão 360º: orçamento, dívidas, seguros, aposentadoria e investimentos." },
+            { m: "M3", q: "Oferecer produto incompatível com o perfil:", o: ["É permitido", "Viola normas de conduta", "É recomendado", "Não gera impacto"], a: 1, e: "É proibido, a menos que o cliente assine um termo expresso de desenquadramento." },
+            { m: "M3", q: "A comunicação com o cliente deve ser:", o: ["Técnica e complexa", "Clara e transparente", "Rápida e superficial", "Apenas escrita"], a: 1, e: "O cliente deve entender exatamente o que está comprando e seus riscos." },
+            { m: "M3", q: "A prevenção à lavagem de dinheiro visa:", o: ["Aumentar lucros", "Controlar impostos", "Evitar uso do sistema para crimes", "Reduzir custos"], a: 2, e: "Evitar que dinheiro de origem ilícita (tráfico, corrupção) entre na economia formal." },
+            { m: "M3", q: "O relacionamento com o cliente deve ser baseado em:", o: ["Pressão comercial", "Confiança e transparência", "Rentabilidade imediata", "Volume"], a: 1, e: "Relacionamento de longo prazo se constrói com confiança." },
+
+            // MÓDULO 3 (NOVAS)
+            { m: "M3", q: "Suitability exige que o profissional:", o: ["Venda o produto mais rentável", "Adeque produto ao perfil do cliente", "Priorize metas comerciais", "Ignore riscos"], a: 1, e: "Vender o produto adequado ao perfil de risco." },
+            { m: "M3", q: "Um cliente conservador deve evitar:", o: ["CDB", "Tesouro Selic", "Ações", "LCI"], a: 2, e: "Ações têm alto risco de mercado." },
+            { m: "M3", q: "KYC tem como objetivo:", o: ["Aumentar vendas", "Conhecer o cliente", "Reduzir custos", "Facilitar crédito"], a: 1, e: "Know Your Client: prevenir lavagem de dinheiro." },
+            { m: "M3", q: "Detectar operações atípicas faz parte da:", o: ["Ética profissional", "Prevenção à lavagem de dinheiro", "Política monetária", "Autorregulação"], a: 1, e: "Monitoramento de PLD/FT." },
+            { m: "M3", q: "O interesse do cliente deve prevalecer sobre:", o: ["Normas", "Rentabilidade", "Comissão do profissional", "Transparência"], a: 2, e: "Conflito de interesses: cliente vem antes da comissão." },
+            { m: "M3", q: "Uma recomendação inadequada pode gerar:", o: ["Benefício ao cliente", "Penalidades ao profissional", "Maior rentabilidade", "Nenhuma consequência"], a: 1, e: "Punições administrativas e perda de credibilidade." },
+            { m: "M3", q: "Comunicação eficiente é aquela que é:", o: ["Técnica", "Complexa", "Clara e adequada", "Rápida"], a: 2, e: "O cliente precisa entender." },
+            { m: "M3", q: "Planejamento financeiro inclui:", o: ["Apenas investimentos", "Apenas previdência", "Orçamento, objetivos e investimentos", "Crédito bancário"], a: 2, e: "Visão global das finanças." },
+            { m: "M3", q: "Ética no mercado financeiro exige:", o: ["Sigilo parcial", "Informação clara sobre riscos", "Venda agressiva", "Prioridade ao banco"], a: 1, e: "Transparência total." },
+            { m: "M3", q: "O perfil do cliente deve ser atualizado:", o: ["Nunca", "Apenas no primeiro atendimento", "Periodicamente", "Somente se houver prejuízo"], a: 2, e: "A vida e os objetivos mudam." },
+
+
+            // MÓDULO 4 (Existentes)
+            { m: "M4", q: "Open Finance permite:", o: ["Compartilhar dados sem consentimento", "Compartilhar dados com autorização", "Uso exclusivo de bancos", "Apenas dados de investimentos"], a: 1, e: "A chave é o CONSENTIMENTO do cliente." },
+            { m: "M4", q: "Fintechs são:", o: ["Bancos públicos", "Empresas tradicionais", "Empresas de tecnologia financeira", "Órgãos reguladores"], a: 2, e: "Technology + Finance. Startups que inovam no setor." },
+            { m: "M4", q: "ESG refere-se a critérios:", o: ["Econômicos", "Tecnológicos", "Ambientais, Sociais e Governança", "Financeiros"], a: 2, e: "Environmental, Social, Governance." },
+            { m: "M4", q: "A digitalização no mercado financeiro busca:", o: ["Reduzir concorrência", "Melhorar experiência do cliente", "Aumentar burocracia", "Eliminar atendimento"], a: 1, e: "Foco na usabilidade, agilidade e custo menor." },
+            { m: "M4", q: "O uso de dados no mercado financeiro permite:", o: ["Decisões aleatórias", "Personalização de produtos", "Menos controle", "Exclusão financeira"], a: 1, e: "Com mais dados, o banco oferece exatamente o que você precisa (Hiperpersonalização)." },
+
+            // MÓDULO 4 (NOVAS)
+            { m: "M4", q: "Open Finance depende de:", o: ["Decisão do banco", "Autorização do cliente", "Regulador", "Governo"], a: 1, e: "Consentimento é a base." },
+            { m: "M4", q: "Fintechs se destacam por:", o: ["Burocracia", "Uso intensivo de tecnologia", "Atuação estatal", "Exclusividade bancária"], a: 1, e: "Inovação tecnológica." },
+            { m: "M4", q: "ESG influencia:", o: ["Apenas rentabilidade", "Apenas risco", "Decisões de investimento", "Política monetária"], a: 2, e: "Critérios socioambientais pesam na escolha." },
+            { m: "M4", q: "Investimentos sustentáveis buscam:", o: ["Lucro imediato", "Impacto positivo e retorno financeiro", "Isenção fiscal", "Segurança absoluta"], a: 1, e: "Retorno + Propósito." },
+            { m: "M4", q: "Big Data no mercado financeiro permite:", o: ["Decisões genéricas", "Produtos personalizados", "Menor controle", "Exclusão digital"], a: 1, e: "Análise de dados para ofertas sob medida." },
+
+
+            // GERAIS (Existentes)
+            { m: "Geral", q: "Produto mais indicado para cliente conservador:", o: ["Ações", "ETF", "CDB ou Tesouro Selic", "Fundo de ações"], a: 2, e: "Baixo risco e alta previsibilidade." },
+            { m: "Geral", q: "Maior risco geralmente está associado a:", o: ["Renda fixa", "Curto prazo", "Renda variável", "FGC"], a: 2, e: "Renda Variável não tem garantia de retorno nem do principal." },
+            { m: "Geral", q: "A autorregulação da ANBIMA tem como objetivo:", o: ["Substituir o BACEN", "Aumentar impostos", "Elevar padrões de mercado", "Controlar juros"], a: 2, e: "Criar um mercado mais forte, transparente e ético." },
+            { m: "Geral", q: "A liquidez de um investimento representa:", o: ["Rentabilidade", "Segurança", "Facilidade de resgate", "Tributação"], a: 2, e: "Velocidade em transformar o ativo em dinheiro na conta." },
+            { m: "Geral", q: "O profissional certificado deve sempre:", o: ["Priorizar metas internas", "Priorizar o cliente e agir com ética", "Oferecer o produto mais caro", "Evitar riscos"], a: 1, e: "O cliente vem em primeiro lugar. Sempre." },
+
+            // GERAIS (NOVAS)
+            { m: "Geral", q: "Um cliente conservador com reserva de emergência deve priorizar:", o: ["Ações", "Multimercado", "Tesouro Selic", "Debêntures"], a: 2, e: "Segurança e liquidez." },
+            { m: "Geral", q: "Quanto maior o risco, maior tende a ser:", o: ["A garantia", "A liquidez", "O retorno esperado", "A previsibilidade"], a: 2, e: "Relação Risco x Retorno." },
+            { m: "Geral", q: "Autorregulação da ANBIMA visa:", o: ["Punir investidores", "Aumentar impostos", "Boas práticas de mercado", "Substituir o BACEN"], a: 2, e: "Elevar o padrão do mercado." },
+            { m: "Geral", q: "Liquidez diária significa:", o: ["Rentabilidade fixa", "Resgate rápido", "Isenção de IR", "Baixo risco"], a: 1, e: "Dinheiro na mão em D+0 ou D+1." },
+            { m: "Geral", q: "O profissional CPA deve sempre agir com:", o: ["Foco em vendas", "Ética e interesse do cliente", "Pressão comercial", "Sigilo opcional"], a: 1, e: "Postura ética é fundamental." }
         ];
 
         // --- ESTADO GLOBAL ---
-        let currentTab = 'rendaFixa';
+        let currentTab = 'plano';
         let currentQuestionIdx = 0;
         let score = 0;
         let isAnswered = false;
@@ -389,6 +507,10 @@
             renderTabs();
             renderContent();
             lucide.createIcons();
+            
+            setTimeout(() => {
+                document.getElementById('study-tip').classList.remove('hidden');
+            }, 3000);
         });
 
         // --- LÓGICA DE NAVEGAÇÃO ---
@@ -399,14 +521,14 @@
             Object.values(studyData).forEach(tab => {
                 const isActive = tab.id === currentTab;
                 const btn = document.createElement('button');
-                // Estilo base
-                let classes = "pb-3 text-sm font-medium whitespace-nowrap transition-colors flex items-center gap-2 outline-none ";
-                // Estilo ativo/inativo
+                
+                let classes = "pb-3 text-sm font-bold whitespace-nowrap transition-all flex items-center gap-2 outline-none border-b-2 ";
                 if (isActive) {
-                    classes += `border-b-2 ${tab.borderClass} text-gray-900`;
+                    classes += `${tab.borderClass} ${tab.textClass}`;
                 } else {
-                    classes += "text-gray-500 hover:text-gray-700 border-b-2 border-transparent";
+                    classes += "text-gray-400 border-transparent hover:text-gray-600 hover:border-gray-200";
                 }
+                
                 btn.className = classes;
                 btn.onclick = () => switchTab(tab.id);
                 btn.innerHTML = `<i data-lucide="${tab.icon}" class="w-4 h-4"></i> ${tab.title}`;
@@ -426,106 +548,102 @@
             const main = document.getElementById('main-content');
             const data = studyData[currentTab];
             
-            // Header da seção
+            // Título da Seção
             let html = `
-                <div class="mb-6 animate-fadeIn">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-1">${data.title}</h2>
-                    <p class="text-sm text-gray-500">${data.isSpecial ? 'Informações oficiais.' : 'Toque nos cartões para ver detalhes.'}</p>
+                <div class="mb-8 animate-fadeIn">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-1 flex items-center gap-2">
+                        <span class="p-2 rounded-lg ${data.color} text-white"><i data-lucide="${data.icon}"></i></span>
+                        ${data.title}
+                    </h2>
+                    <p class="text-sm text-gray-500 ml-12">Focado na Nova Certificação Base 2026</p>
                 </div>
             `;
 
-            // Conteúdo Especial (Nova CPA)
-            if (data.isSpecial) {
-                html += `
-                <div class="animate-fadeIn space-y-6">
-                    <div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-700">
-                        <h3 class="font-bold text-lg text-indigo-900 mb-2">Resumo da Mudança (Vigência Jan/2026)</h3>
-                        <p class="text-indigo-800 text-sm">As antigas certificações (CPA-10, CPA-20 e CEA) dão lugar a uma <strong>estrutura em Y</strong>.</p>
-                    </div>
-                    <div class="grid gap-4 md:grid-cols-3">
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                            <div class="flex items-center gap-2 mb-2"><span class="w-8 h-8 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-sm">1</span><h4 class="font-bold text-gray-800">CPA</h4></div>
-                            <p class="text-sm text-gray-600">Substitui a CPA-10. Entrada.</p>
+            // Plano de Estudos
+            if (data.isPlan) {
+                html += `<div class="animate-fadeIn relative border-l-2 border-gray-200 ml-4 space-y-8">`;
+                data.steps.forEach((step, idx) => {
+                    html += `
+                    <div class="mind-map-node ml-6 bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="absolute -left-[31px] top-5 w-4 h-4 rounded-full bg-gray-800 border-4 border-white shadow-sm"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-1 rounded">Semana ${step.week}</span>
+                            <span class="text-xs text-gray-400 font-medium mt-1 sm:mt-0">Fase ${idx + 1}</span>
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                            <div class="flex items-center gap-2 mb-2"><span class="w-8 h-8 rounded-full bg-green-100 text-green-800 flex items-center justify-center font-bold text-sm">2</span><h4 class="font-bold text-gray-800">C-Pro R</h4></div>
-                            <p class="text-sm text-gray-600">Foco em <strong>Relacionamento</strong> (Antiga CPA-20).</p>
+                        <h3 class="text-lg font-bold text-gray-800 mb-1">${step.module}</h3>
+                        <p class="text-sm text-gray-600 mb-3">${step.focus}</p>
+                        <div class="text-xs bg-gray-50 p-2 rounded text-gray-500 flex items-center gap-2">
+                            <i data-lucide="check-square" class="w-3 h-3 text-green-500"></i>
+                            <strong>Prática:</strong> ${step.action}
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                            <div class="flex items-center gap-2 mb-2"><span class="w-8 h-8 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center font-bold text-sm">3</span><h4 class="font-bold text-gray-800">C-Pro I</h4></div>
-                            <p class="text-sm text-gray-600">Foco em <strong>Investimentos</strong> (Antigo CEA).</p>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-gray-800 flex items-center gap-2"><i data-lucide="alert-triangle" class="w-5 h-5 text-amber-500"></i> Regras de Transição</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                            <li><strong>Em Transição:</strong> Quem já tem certificação pode trabalhar normalmente em 2026.</li>
-                            <li><strong>Migração:</strong> Feita via cursos na ANBIMA Edu (não precisa refazer prova).</li>
-                            <li><strong>CPA-10</strong> ➝ CPA.</li>
-                            <li><strong>CPA-20</strong> ➝ CPA + C-Pro R.</li>
-                            <li><strong>CEA</strong> ➝ CPA + C-Pro R + C-Pro I.</li>
-                        </ul>
-                    </div>
-                </div>`;
+                    </div>`;
+                });
+                html += `</div>`;
             } else {
-                // Lista de Cartões
-                html += '<div class="animate-fadeIn space-y-4">';
+                // Tópicos (Módulos)
+                html += '<div class="animate-fadeIn grid gap-4">';
                 data.topics.forEach((topic, idx) => {
-                    // ID único para o acordeão
                     const topicId = `topic-${idx}`;
+                    let keywordsHtml = '';
+                    if (topic.keywords) {
+                        keywordsHtml = `<div class="flex flex-wrap gap-2 mb-3">
+                            ${topic.keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('')}
+                        </div>`;
+                    }
                     
-                    // Renderiza sub-topicos se houver
+                    // Case Prático
+                    let caseHtml = '';
+                    if (topic.practicalCase) {
+                        caseHtml = `
+                            <div class="mb-5 p-4 bg-indigo-50 rounded-xl border border-indigo-100 text-sm text-indigo-900 shadow-sm">
+                                <strong class="flex items-center gap-2 mb-2 text-indigo-700 uppercase tracking-wide text-xs">
+                                    <i data-lucide="briefcase" class="w-4 h-4"></i> Case Prático
+                                </strong>
+                                <p class="leading-relaxed">${topic.practicalCase}</p>
+                            </div>`;
+                    }
+
+                    let detailsHtml = '<div class="grid gap-3 mt-4">';
+                    topic.details.forEach(d => {
+                        detailsHtml += `
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                <span class="text-xs font-bold text-gray-500 uppercase block mb-1">${d.label}</span>
+                                <span class="text-sm text-gray-800 font-medium leading-snug">${d.value}</span>
+                            </div>`;
+                    });
+                    detailsHtml += '</div>';
+
                     let subTopicsHtml = '';
                     if (topic.subTopics) {
-                        subTopicsHtml = '<div class="mb-4 grid gap-2">';
+                        subTopicsHtml = '<div class="mt-4 space-y-2">';
                         topic.subTopics.forEach(sub => {
                             subTopicsHtml += `
-                                <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                    <span class="font-bold text-blue-900 block text-sm mb-1">${sub.name}</span>
-                                    <span class="text-xs text-blue-800 leading-snug block">${sub.text}</span>
+                                <div class="flex gap-3 items-start p-2 hover:bg-gray-50 rounded transition-colors">
+                                    <div class="mt-1 min-w-[6px] h-[6px] rounded-full ${data.color}"></div>
+                                    <div>
+                                        <strong class="text-sm text-gray-800 block">${sub.name}</strong>
+                                        <span class="text-xs text-gray-600">${sub.text}</span>
+                                    </div>
                                 </div>`;
                         });
                         subTopicsHtml += '</div>';
                     }
 
-                    // Renderiza detalhes
-                    let detailsHtml = '<div class="space-y-2 mt-2 border-t border-gray-100 pt-3">';
-                    topic.details.forEach(d => {
-                        detailsHtml += `
-                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-sm border-b border-gray-50 pb-2 last:border-0 last:pb-0 gap-1">
-                                <span class="font-semibold text-gray-700">${d.label}:</span>
-                                <span class="text-gray-600 sm:text-right">${d.value}</span>
-                            </div>`;
-                    });
-                    detailsHtml += '</div>';
-
-                    // Exemplo prático
-                    let exampleHtml = '';
-                    if (topic.example) {
-                        exampleHtml = `
-                            <div class="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-100 text-sm text-gray-700">
-                                <strong class="block text-gray-900 mb-1 flex items-center gap-1">
-                                    <i data-lucide="info" class="w-3 h-3 text-blue-500"></i> Exemplo:
-                                </strong>
-                                ${topic.example}
-                            </div>`;
-                    }
-
                     html += `
-                    <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
-                        <button onclick="toggleCard('${topicId}')" class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left group">
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-10 rounded-full ${data.color}"></div>
-                                <div>
-                                    <h3 class="font-bold text-gray-800 group-hover:text-blue-700 transition-colors">${topic.title}</h3>
-                                    <p class="text-xs text-gray-500 line-clamp-1">${topic.description}</p>
-                                </div>
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all hover:shadow-lg hover:border-indigo-100 group">
+                        <button onclick="toggleCard('${topicId}')" class="w-full text-left p-5 flex items-start justify-between cursor-pointer">
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-lg group-hover:text-indigo-600 transition-colors">${topic.title}</h3>
+                                <p class="text-sm text-gray-500 mt-1 line-clamp-2">${topic.description}</p>
                             </div>
-                            <i id="icon-${topicId}" data-lucide="chevron-right" class="text-gray-400 transition-transform duration-200"></i>
+                            <div class="bg-gray-100 p-2 rounded-full group-hover:bg-indigo-50 transition-colors mt-1">
+                                <i id="icon-${topicId}" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transition-transform"></i>
+                            </div>
                         </button>
-                        <div id="${topicId}" class="hidden p-4 bg-white">
-                            <div class="mb-4 text-sm text-gray-600 leading-relaxed">${topic.description}</div>
-                            ${exampleHtml}
+                        <div id="${topicId}" class="hidden px-5 pb-5 border-t border-gray-100 pt-4 animate-fadeIn">
+                            ${keywordsHtml}
+                            <p class="text-sm text-gray-700 italic border-l-4 ${data.borderClass} pl-3 mb-4 py-1">"${topic.description}"</p>
+                            ${caseHtml}
                             ${subTopicsHtml}
                             ${detailsHtml}
                         </div>
@@ -538,25 +656,20 @@
             lucide.createIcons();
         }
 
-        // --- LÓGICA DE ACORDEÃO ---
+        // --- UTILS ---
         function toggleCard(id) {
             const content = document.getElementById(id);
             const icon = document.getElementById(`icon-${id}`);
-            
             if (content.classList.contains('hidden')) {
                 content.classList.remove('hidden');
-                // Rotacionar icone manualmente trocando classe ou SVG, mas aqui vamos re-renderizar o ícone ou usar css transform
-                // Simplificando com classes do lucide
-                icon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>'; // Chevron Down SVG path
+                icon.style.transform = 'rotate(180deg)';
             } else {
                 content.classList.add('hidden');
-                icon.innerHTML = '<polyline points="9 18 15 12 9 6"></polyline>'; // Chevron Right SVG path
+                icon.style.transform = 'rotate(0deg)';
             }
-            // Recriar o SVG pq alteramos o innerHTML manualmente
-            lucide.createIcons();
         }
 
-        // --- LÓGICA DO QUIZ ---
+        // --- LÓGICA DO QUIZ (ATUALIZADA) ---
         function openQuiz() {
             document.getElementById('quiz-modal').classList.remove('hidden');
             resetQuiz();
@@ -569,20 +682,16 @@
         function resetQuiz() {
             currentQuestionIdx = 0;
             score = 0;
-            resetQuestionState();
+            isAnswered = false;
+            selectedOptionIdx = null;
             renderQuestion();
         }
 
-        function resetQuestionState() {
-            isAnswered = false;
-            selectedOptionIdx = null;
-        }
-
         function renderQuestion() {
-            const container = document.getElementById('quiz-body');
+            const body = document.getElementById('quiz-body');
             const footer = document.getElementById('quiz-footer');
             
-            // Verifica se acabou
+            // Verifica Fim
             if (currentQuestionIdx >= quizQuestions.length) {
                 renderResult();
                 return;
@@ -591,72 +700,78 @@
             const q = quizQuestions[currentQuestionIdx];
 
             // Renderiza Opções
-            let optionsHtml = '<div class="space-y-3 mt-6">';
-            q.options.forEach((opt, idx) => {
-                let btnClass = "w-full text-left p-4 rounded-lg border-2 transition-all flex justify-between items-center ";
-                let iconHtml = '';
+            let optionsHtml = '<div class="grid gap-3 mt-4">';
+            q.o.forEach((opt, idx) => {
+                let classes = "w-full text-left p-4 rounded-xl border-2 transition-all flex items-center justify-between group relative ";
+                let icon = '';
 
                 if (isAnswered) {
-                    if (idx === q.answer) {
-                        btnClass += "border-green-500 bg-green-50 text-green-900";
-                        iconHtml = '<i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>';
+                    if (idx === q.a) {
+                        classes += "border-green-500 bg-green-50 text-green-900";
+                        icon = '<i data-lucide="check-circle" class="text-green-600"></i>';
                     } else if (idx === selectedOptionIdx) {
-                        btnClass += "border-red-300 bg-red-50 text-red-900";
-                        iconHtml = '<i data-lucide="alert-triangle" class="w-5 h-5 text-red-500"></i>';
+                        classes += "border-red-300 bg-red-50 text-red-900";
+                        icon = '<i data-lucide="x-circle" class="text-red-500"></i>';
                     } else {
-                        btnClass += "border-gray-100 text-gray-400 opacity-50";
+                        classes += "border-gray-100 text-gray-400 opacity-50";
                     }
                 } else {
-                    btnClass += "border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-gray-700 cursor-pointer";
+                    classes += "border-gray-200 bg-white hover:border-indigo-400 hover:shadow-md text-gray-700 cursor-pointer";
                 }
 
-                // Desabilita clique se respondido
-                const onClickAttr = isAnswered ? '' : `onclick="handleAnswer(${idx})"`;
+                const clickHandler = isAnswered ? '' : `onclick="handleAnswer(${idx})"`;
 
                 optionsHtml += `
-                    <button ${onClickAttr} class="${btnClass}">
-                        <span>${opt}</span>
-                        ${iconHtml}
-                    </button>
-                `;
+                    <button ${clickHandler} class="${classes}">
+                        <span class="font-medium pr-6">${opt}</span>
+                        ${icon}
+                    </button>`;
             });
             optionsHtml += '</div>';
 
             // Explicação
             let explanationHtml = '';
             if (isAnswered) {
+                const isCorrect = selectedOptionIdx === q.a;
+                const feedbackColor = isCorrect ? "blue" : "amber";
                 explanationHtml = `
-                    <div class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 animate-fadeIn">
-                        <p class="text-sm text-gray-600"><span class="font-bold text-gray-800">Explicação:</span> ${q.explanation}</p>
+                    <div class="mt-4 p-4 bg-${feedbackColor}-50 rounded-xl border border-${feedbackColor}-100 animate-fadeIn text-sm text-${feedbackColor}-900 shadow-sm">
+                        <strong class="flex items-center gap-2 mb-1 text-${feedbackColor}-700">
+                            <i data-lucide="${isCorrect ? 'thumbs-up' : 'lightbulb'}" class="w-4 h-4"></i> 
+                            ${isCorrect ? 'Correto!' : 'Atenção!'}
+                        </strong>
+                        ${q.e}
                     </div>`;
             }
 
-            // Monta o corpo
-            container.innerHTML = `
-                <div class="mb-4 flex justify-between text-xs text-gray-500 font-medium uppercase tracking-wider">
-                    <span>Questão ${currentQuestionIdx + 1} de ${quizQuestions.length}</span>
-                    <span>Pontos: ${score}</span>
+            // Corpo do Quiz
+            body.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wider border border-indigo-100">${q.m}</span>
+                    <span class="text-xs text-gray-400 font-medium">Questão ${currentQuestionIdx + 1} de ${quizQuestions.length}</span>
                 </div>
-                <h4 class="text-lg font-bold text-gray-800">${q.question}</h4>
+                <div class="h-1 w-full bg-gray-100 rounded-full mb-6 overflow-hidden">
+                    <div class="h-full bg-indigo-500 transition-all duration-300" style="width: ${((currentQuestionIdx) / quizQuestions.length) * 100}%"></div>
+                </div>
+                <h4 class="text-lg font-bold text-gray-800 leading-snug">${q.q}</h4>
                 ${optionsHtml}
                 ${explanationHtml}
             `;
 
-            // Footer Button
+            // Footer
             if (isAnswered) {
                 footer.innerHTML = `
-                    <button onclick="nextQuestion()" class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-bold shadow-sm hover:shadow-md transition-all">
-                        ${currentQuestionIdx < quizQuestions.length - 1 ? 'Próxima' : 'Ver Resultado'} <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
-                `;
+                    <div class="text-sm font-bold text-gray-500">Acertos: <span class="text-indigo-600">${score}</span></div>
+                    <button onclick="nextQuestion()" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-lg shadow-indigo-200">
+                        Próxima <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>`;
             } else {
                 footer.innerHTML = `
-                    <button disabled class="flex items-center gap-2 px-6 py-3 bg-gray-300 text-gray-500 rounded-lg font-bold cursor-not-allowed">
-                        Próxima <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
-                `;
+                    <div class="text-sm font-bold text-gray-400">Escolha uma alternativa...</div>
+                    <button disabled class="bg-gray-100 text-gray-300 px-6 py-3 rounded-lg font-bold cursor-not-allowed">
+                        Próxima
+                    </button>`;
             }
-
             lucide.createIcons();
         }
 
@@ -664,41 +779,57 @@
             if (isAnswered) return;
             isAnswered = true;
             selectedOptionIdx = idx;
-            
-            if (idx === quizQuestions[currentQuestionIdx].answer) {
-                score++;
-            }
-            renderQuestion(); // Re-renderiza para mostrar cores e feedback
+            if (idx === quizQuestions[currentQuestionIdx].a) score++;
+            renderQuestion(); // Re-renderiza para mostrar feedback
         }
 
         function nextQuestion() {
             currentQuestionIdx++;
-            resetQuestionState();
+            isAnswered = false;
+            selectedOptionIdx = null;
             renderQuestion();
         }
 
         function renderResult() {
-            const container = document.getElementById('quiz-body');
+            const body = document.getElementById('quiz-body');
             const footer = document.getElementById('quiz-footer');
-            
             footer.innerHTML = ''; // Limpa footer
 
-            container.innerHTML = `
-                <div class="text-center py-8 animate-fadeIn">
-                    <div class="flex justify-center mb-4">
-                        <i data-lucide="award" class="w-16 h-16 text-yellow-500"></i>
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            let message = "";
+            let color = "";
+            
+            if (percentage >= 70) {
+                message = "Excelente! Você estaria APROVADO!";
+                color = "text-green-600";
+            } else if (percentage >= 50) {
+                message = "Quase lá! Revise os pontos fracos.";
+                color = "text-amber-600";
+            } else {
+                message = "Precisa estudar mais. Não desanime!";
+                color = "text-red-600";
+            }
+
+            body.innerHTML = `
+                <div class="text-center py-10 animate-fadeIn h-full flex flex-col justify-center items-center">
+                    <div class="relative mb-6">
+                        <div class="w-24 h-24 rounded-full border-8 border-gray-100 flex items-center justify-center">
+                            <i data-lucide="trophy" class="w-10 h-10 text-indigo-200"></i>
+                        </div>
+                        <div class="absolute inset-0 w-24 h-24 rounded-full border-8 border-indigo-600 border-t-transparent animate-spin" style="animation-duration: 3s;"></div>
+                        <div class="absolute inset-0 flex items-center justify-center font-black text-xl text-indigo-700">
+                            ${percentage}%
+                        </div>
                     </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Quiz Finalizado!</h2>
-                    <p class="text-gray-600 mb-8">Você acertou <strong class="text-blue-600 text-xl">${score}</strong> de <strong class="text-gray-800">${quizQuestions.length}</strong> questões.</p>
                     
-                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                        <button onclick="resetQuiz()" class="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-semibold transition-colors">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Tentar Novamente
-                        </button>
-                        <button onclick="closeQuiz()" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition-colors shadow-lg">
-                            Fechar
-                        </button>
-                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Simulado Finalizado</h2>
+                    <p class="text-gray-500 mb-8">Você acertou <strong class="text-indigo-600">${score}</strong> de <strong class="text-gray-800">${quizQuestions.length}</strong> questões.</p>
+                    
+                    <p class="text-lg font-bold ${color} mb-8 bg-gray-50 px-4 py-2 rounded-lg">${message}</p>
+                    
+                    <button onclick="resetQuiz()" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-xl">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Refazer Simulado
+                    </button>
                 </div>
             `;
             lucide.createIcons();
