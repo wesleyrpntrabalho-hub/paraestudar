@@ -119,7 +119,7 @@
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         <div id="study-tip" class="hidden bg-white p-3 rounded-lg shadow-xl border border-gray-100 max-w-xs text-xs text-gray-600 animate-fadeIn mb-2 relative">
             <div class="absolute -bottom-2 right-6 w-4 h-4 bg-white transform rotate-45 border-b border-r border-gray-100"></div>
-            <strong>Dica:</strong> Já revisou o que é Clearing House hoje?
+            <strong>Dica:</strong> Seu banco agora tem 100 questões! Pratique.
         </div>
         <button onclick="openQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-6 py-4 shadow-lg shadow-indigo-200 transition-all active:scale-95 flex items-center gap-2 font-bold cursor-pointer group">
             <i data-lucide="brain-circuit" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
@@ -145,9 +145,14 @@
                             </span>
                         </div>
                     </div>
-                    <button onclick="closeQuiz()" class="hover:bg-indigo-700 p-2 rounded-full transition-colors cursor-pointer bg-indigo-500/30">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="restartQuiz()" class="hover:bg-indigo-700 p-2 rounded-full transition-colors cursor-pointer bg-indigo-500/30" title="Reiniciar do Zero">
+                            <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="closeQuiz()" class="hover:bg-indigo-700 p-2 rounded-full transition-colors cursor-pointer bg-indigo-500/30" title="Fechar e Salvar">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- Abas do Simulado -->
@@ -171,6 +176,7 @@
     <!-- Script Principal -->
     <script>
         // --- DADOS DO ESTUDO (NOVA CPA) ---
+        // (O objeto studyData permanece o mesmo, contendo todos os módulos ricos e detalhados)
         const studyData = {
             plano: {
                 id: "plano",
@@ -898,10 +904,9 @@
         };
 
         // --- BANCO DE QUESTÕES (100 Itens) ---
+        // Mantido exatamente como estava, com as 100 questões.
         const quizQuestions = [
-            // ... (A lista completa de 100 questões que você já possui)
-            // Para brevidade do código exibido, estou usando as mesmas 100 questões anteriores.
-            // As questões estão mantidas na integra na versão final.
+            // ... (Todas as 100 questões anteriores permanecem aqui - código suprimido visualmente para brevidade, mas está no arquivo completo) ...
             { m: "M1", q: "O órgão máximo do Sistema Financeiro Nacional é:", o: ["BACEN", "CVM", "ANBIMA", "CMN"], a: 3, e: "O Conselho Monetário Nacional (CMN) é o órgão NORMATIVO máximo. Ele manda, o Bacen executa." },
             { m: "M1", q: "A principal função do Banco Central é:", o: ["Criar leis financeiras", "Executar políticas monetárias e fiscalizar", "Regular o mercado de capitais", "Representar investidores"], a: 1, e: "O Bacen executa as ordens do CMN e fiscaliza os bancos (guardião da moeda)." },
             { m: "M1", q: "A CVM atua principalmente no:", o: ["Sistema bancário", "Mercado de crédito", "Mercado de capitais", "Mercado cambial"], a: 2, e: "CVM (Comissão de Valores Mobiliários) regula Bolsa, Fundos e S.A." },
@@ -1014,6 +1019,24 @@
         let totalSeconds = 0;
         let currentQuizFilter = 'all'; // Filtro atual do quiz
         let activeQuestions = []; // Questões ativas no momento
+
+        // --- PERSISTÊNCIA ---
+        function saveQuizState() {
+            const state = {
+                filter: currentQuizFilter,
+                questions: activeQuestions,
+                idx: currentQuestionIdx,
+                score: score,
+                seconds: totalSeconds,
+                isAnswered: isAnswered,
+                selectedOptionIdx: selectedOptionIdx
+            };
+            localStorage.setItem('studyBankQuizState_v1', JSON.stringify(state));
+        }
+
+        function clearQuizState() {
+            localStorage.removeItem('studyBankQuizState_v1');
+        }
 
         // --- INICIALIZAÇÃO ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -1184,9 +1207,15 @@
 
         // --- TIMER ---
         function startTimer() {
-            totalSeconds = 0;
+            // totalSeconds mantido do estado ou 0
             const timerDisplay = document.getElementById('quiz-timer');
             clearInterval(timerInterval);
+            
+            // Renderiza o tempo inicial imediatamente para não esperar 1s
+            const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+            const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+            timerDisplay.textContent = `${minutes}:${seconds}`;
+
             timerInterval = setInterval(() => {
                 totalSeconds++;
                 const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
@@ -1202,18 +1231,48 @@
         // --- LÓGICA DO QUIZ (ATUALIZADA) ---
         function openQuiz() {
             document.getElementById('quiz-modal').classList.remove('hidden');
-            setQuizFilter('all'); // Inicia com todos por padrão
+            
+            const savedState = localStorage.getItem('studyBankQuizState_v1');
+            if (savedState) {
+                try {
+                    const state = JSON.parse(savedState);
+                    currentQuizFilter = state.filter;
+                    activeQuestions = state.questions;
+                    currentQuestionIdx = state.idx;
+                    score = state.score;
+                    totalSeconds = state.seconds;
+                    isAnswered = state.isAnswered || false;
+                    selectedOptionIdx = state.selectedOptionIdx;
+                    
+                    // Renderiza abas com o filtro ativo correto
+                    renderQuizTabs();
+                    document.getElementById('question-count-badge').textContent = `${activeQuestions.length} Questões`;
+                    
+                    renderQuestion();
+                    startTimer();
+                } catch (e) {
+                    console.error("Erro ao carregar quiz salvo", e);
+                    setQuizFilter('all');
+                }
+            } else {
+                setQuizFilter('all'); // Inicia com todos por padrão
+            }
         }
 
         function closeQuiz() {
-            document.getElementById('quiz-modal').classList.add('hidden');
             stopTimer();
+            saveQuizState(); // Salva ao fechar
+            document.getElementById('quiz-modal').classList.add('hidden');
         }
 
-        function setQuizFilter(filter) {
-            currentQuizFilter = filter;
-            
-            // Renderiza as abas
+        function restartQuiz() {
+            if(confirm("Deseja realmente reiniciar o simulado? Todo o progresso atual será perdido.")) {
+                clearQuizState();
+                setQuizFilter(currentQuizFilter);
+            }
+        }
+
+        function renderQuizTabs() {
             const tabsContainer = document.getElementById('quiz-tabs-container');
             const filters = [
                 { id: 'all', label: 'Geral' },
@@ -1224,11 +1283,27 @@
             ];
             
             tabsContainer.innerHTML = filters.map(f => `
-                <button onclick="setQuizFilter('${f.id}')" 
+                <button onclick="changeQuizFilter('${f.id}')" 
                     class="quiz-tab ${currentQuizFilter === f.id ? 'active' : 'inactive'} whitespace-nowrap">
                     ${f.label}
                 </button>
             `).join('');
+        }
+
+        function changeQuizFilter(filter) {
+            // Se mudar de aba, confirma se quer perder o progresso atual (já que é um novo filtro)
+            if (filter !== currentQuizFilter) {
+                if(confirm("Mudar o módulo irá reiniciar o simulado atual. Continuar?")) {
+                    setQuizFilter(filter);
+                }
+            }
+        }
+
+        function setQuizFilter(filter) {
+            currentQuizFilter = filter;
+            clearQuizState(); // Limpa estado anterior pois é um novo quiz
+            
+            renderQuizTabs();
 
             // Filtra as questões
             if (filter === 'all') {
@@ -1237,13 +1312,16 @@
                 activeQuestions.sort(() => Math.random() - 0.5);
             } else {
                 activeQuestions = quizQuestions.filter(q => q.m === filter);
+                // Embaralha também nos módulos
+                activeQuestions.sort(() => Math.random() - 0.5);
             }
 
             // Atualiza badge de contagem
             document.getElementById('question-count-badge').textContent = `${activeQuestions.length} Questões`;
 
-            resetQuiz();
+            resetQuiz(); // Reseta índices e score
             startTimer();
+            saveQuizState(); // Salva o estado inicial
         }
 
         function resetQuiz() {
@@ -1251,6 +1329,7 @@
             score = 0;
             isAnswered = false;
             selectedOptionIdx = null;
+            totalSeconds = 0; // Reinicia tempo
             renderQuestion();
         }
 
@@ -1345,6 +1424,8 @@
             activeQuestions[currentQuestionIdx].userCorrect = (idx === activeQuestions[currentQuestionIdx].a);
             
             if (idx === activeQuestions[currentQuestionIdx].a) score++;
+            
+            saveQuizState(); // Salva progresso
             renderQuestion();
         }
 
@@ -1352,11 +1433,13 @@
             currentQuestionIdx++;
             isAnswered = false;
             selectedOptionIdx = null;
+            saveQuizState(); // Salva nova posição
             renderQuestion();
         }
 
         function renderResult() {
             stopTimer();
+            clearQuizState(); // Limpa o save ao finalizar
             const body = document.getElementById('quiz-body');
             const footer = document.getElementById('quiz-footer');
             footer.innerHTML = '';
