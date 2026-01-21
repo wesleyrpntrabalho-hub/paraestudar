@@ -93,7 +93,12 @@
                 sections: [
                     {
                         subtitle: "1.3 Segmentos do Mercado Financeiro",
-                        content: `O mercado financeiro não é uma coisa só. Ele se divide em 4 grandes segmentos operacionais:\n\n1. Mercado Monetário: Onde ocorre o controle da liquidez da economia (curtíssimo prazo). É onde o Banco Central atua (Selic) e os bancos trocam reservas.\n2. Mercado de Crédito: Onde as instituições emprestam dinheiro para pessoas e empresas (Empréstimos, Financiamentos). O lucro vem do Spread Bancário.\n3. Mercado de Capitais: Onde as empresas captam recursos diretamente com investidores (Ações, Debêntures, IPOs). Foco no médio/longo prazo e financiamento produtivo.\n4. Mercado Cambial: Onde ocorre a troca de moedas (Real por Dólar). Envolve turismo, importação/exportação e proteção (Hedge).`,
+                        content: `O mercado financeiro é segmentado para fins operacionais e regulatórios, dividindo-se em 4 pilares principais que se retroalimentam:
+                        
+                        1. Mercado Monetário: É o mercado de curtíssimo prazo, focado no controle da liquidez da economia. É onde o Banco Central atua comprando e vendendo títulos (Open Market) para calibrar a taxa de juros (Selic) e a quantidade de moeda em circulação.
+                        2. Mercado de Crédito: É o encontro clássico entre bancos (intermediários) e tomadores (famílias/empresas). Envolve operações de empréstimo, financiamento e arrendamento. O lucro das instituições aqui vem do Spread Bancário (diferença entre juros cobrados e pagos).
+                        3. Mercado de Capitais: Focado no financiamento de médio e longo prazo e na capitalização das empresas. Envolve a Bolsa de Valores, Ações, Debêntures e Commercial Papers. Aqui, o investidor participa diretamente do risco do negócio ou empresta para a empresa crescer.
+                        4. Mercado Cambial: Envolve a troca de moedas estrangeiras por moeda nacional. É vital para o comércio exterior (importadores pagando fornecedores, exportadores recebendo) e fluxos de investimento internacional. É fiscalizado rigidamente pelo Banco Central.`,
                         cases: [
                             { title: "Mercado Monetário (Liquidez)", desc: "Um banco teve mais saques que depósitos hoje. Ele precisa de dinheiro para fechar o caixa. Ele vai ao Mercado Monetário e toma emprestado de outro banco por 1 dia (CDI). Essa troca de reservas garante que o sistema continue rodando sem travas de liquidez." },
                             { title: "Mercado de Capitais (Captação)", desc: "Uma fábrica quer construir uma nova planta. Em vez de pedir empréstimo caro no banco (Mercado de Crédito), ela emite Debêntures no Mercado de Capitais. Investidores compram esses títulos. A fábrica paga juros menores que no banco e o investidor ganha mais que na poupança." }
@@ -380,6 +385,14 @@
                 intro: "Detalhando cada produto de empréstimo.",
                 sections: [
                     {
+                        subtitle: "8.1 Riscos Específicos da Renda Fixa",
+                        content: `Embora chamada de 'Fixa', ela não é isenta de riscos. Os principais são:\n1. Risco de Crédito: O emissor (banco ou empresa) não pagar (Calote). Medido por Agências de Rating (AAA é seguro, C é perigoso). O FGC mitiga isso para emissores bancários.\n2. Risco de Mercado: A oscilação do preço do título antes do vencimento devido à variação dos juros futuros (Marcação a Mercado). Títulos longos sofrem mais.\n3. Risco de Liquidez: A dificuldade de vender o título antes do vencimento sem dar um desconto grande no preço.\n4. Risco de Reinvestimento: O risco de, ao vencer o título, as taxas de mercado estarem menores, obrigando a reaplicar com rentabilidade pior.`,
+                        cases: [
+                            { title: "Rating Rebaixado", desc: "Uma empresa emite debêntures com Rating AA. Devido a má gestão, a agência rebaixa para BB (Grau especulativo). O preço da debênture no mercado secundário despenca, pois o risco de crédito aumentou. Quem vende agora perde capital." },
+                            { title: "Spread de Liquidez", desc: "Um investidor compra um CRA (Certificado de Recebíveis do Agronegócio) pouco negociado. Precisa de dinheiro urgente. Como não há compradores no mercado secundário, ele aceita vender com 20% de deságio para uma corretora especializada. O prêmio de iliquidez cobrou seu preço." }
+                        ]
+                    },
+                    {
                         subtitle: "Tesouro Selic (LFT)",
                         content: `Título Público Pós-fixado. Rende a variação da Taxa Selic diária.\n\nCaracterísticas: Baixíssima volatilidade. Se a Selic sobe, ele rende mais; se cai, rende menos, mas sempre positivo. O valor de face no vencimento não é fixo, é corrigido.\nUso: Reserva de Emergência e objetivos de curto prazo, pois tem liquidez diária e risco de mercado quase nulo (não perde valor se juros subirem).`,
                         cases: [
@@ -427,6 +440,22 @@
                 iconName: "trending-up",
                 intro: "Ações e ETFs.",
                 sections: [
+                    {
+                        subtitle: "9.3 Mercado Primário vs Secundário",
+                        content: `Mercado Primário (IPO/Follow-on): É onde a empresa emite novas ações e vende aos investidores. O dinheiro vai para o caixa da empresa (financia projetos). É a criação do ativo.\n\nMercado Secundário (Bolsa/B3): É onde os investidores negociam as ações entre si. O dinheiro troca de mãos entre compradores e vendedores, não indo para a empresa. É aqui que se garante a LIQUIDEZ. Sem o mercado secundário, ninguém entraria no primário por medo de não conseguir sair depois.`,
+                        cases: [
+                            { title: "Entrando no IPO", desc: "A Empresa de Tecnologia X abre capital para construir data centers. O investidor compra as ações no IPO. Seu dinheiro financia a obra. Ele virou sócio fundador de capital aberto." },
+                            { title: "Saída no Secundário", desc: "O investidor do caso anterior precisa de dinheiro para comprar uma casa. Ele vende suas ações na B3. Quem compra é outro investidor (Dona Maria). A empresa X não participa dessa troca, mas o preço da ação reflete o sucesso dos data centers construídos." }
+                        ]
+                    },
+                    {
+                        subtitle: "9.4 Eventos Corporativos (Split, Inplit, Bonificação)",
+                        content: `As empresas podem alterar sua base acionária:\n1. Desdobramento (Split): A empresa divide 1 ação em 10. O preço cai 10x. O valor financeiro na carteira fica igual. Objetivo: Aumentar liquidez e acessibilidade.\n2. Grupamento (Inplit): Junta 10 ações em 1. O preço sobe 10x. Objetivo: Reduzir volatilidade ou cumprir regras de preço mínimo da B3 (Penny Stocks).\n3. Bonificação: A empresa incorpora reservas de lucro e distribui novas ações gratuitamente aos sócios. Aumenta a quantidade na carteira.`,
+                        cases: [
+                            { title: "Split da Magalu", desc: "A ação MGLU3 chegou a custar R$ 250. Ficou difícil para o pequeno investidor comprar o lote padrão (100 ações = R$ 25k). A empresa fez um split de 1 para 4. O preço foi para R$ 62,50 e quem tinha 100 ações passou a ter 400. Ficou mais fácil negociar." },
+                            { title: "Fugindo de Penny Stock", desc: "A ação da Empresa Y caiu para R$ 0,50. A B3 exige que ações sejam negociadas acima de R$ 1,00. A empresa faz um grupamento de 10 para 1. O preço vai para R$ 5,00. Quem tinha 1000 ações passa a ter 100. O patrimônio não muda, mas a ação sai da zona de risco de exclusão." }
+                        ]
+                    },
                     {
                         subtitle: "Ações: ON vs PN",
                         content: `Ação é a menor fração do capital de uma empresa. Você vira sócio.\n\nOrdinárias (ON - final 3): Dão direito a VOTO nas assembleias. Possuem Tag Along (direito de venda conjunta em caso de troca de controle). É a ação do 'dono'.\nPreferenciais (PN - final 4): Têm PREFERÊNCIA na distribuição de dividendos (recebem antes ou 10% a mais). Geralmente não têm voto. São as mais negociadas (liquidez) em empresas antigas como Petrobras e Itaú.`,
@@ -483,6 +512,22 @@
                 iconName: "umbrella",
                 intro: "PGBL, VGBL e Tabelas.",
                 sections: [
+                    {
+                        subtitle: "11.4 Portabilidade e Taxas",
+                        content: `Portabilidade: É o direito de transferir os recursos de um plano para outro (mesmo banco ou outro) SEM pagar Imposto de Renda e SEM perder o tempo de contagem da tabela Regressiva.\nRegras: PGBL só para PGBL. VGBL só para VGBL. Não pode trocar a titularidade. Se estiver na tabela Regressiva, o tempo de acumulação é preservado.\n\nTaxas Específicas:\nCarregamento: Taxa cobrada na entrada ou saída sobre o valor movimentado (cada vez mais rara/zerada no mercado competitivo).\nExcedente Financeiro: Parte do ganho da seguradora repassado ao cliente (em planos antigos/tradicionais).`,
+                        cases: [
+                            { title: "Fugindo de Taxas Altas", desc: "Julia tem um VGBL num bancão com taxa de administração de 3% a.a. Ela descobre um fundo similar numa corretora com taxa de 0,8%. Ela pede portabilidade. O dinheiro migra direto (sem passar pela conta dela, sem IR). Ela preserva o tempo de investimento e passa a ter rentabilidade líquida maior." },
+                            { title: "Migração de Tabela", desc: "Lucas tem um plano na Tabela Progressiva. Sua renda aumentou e ele quer focar no longo prazo (15 anos). Ele pede portabilidade para um plano de Tabela Regressiva. A lei permite (Progressiva -> Regressiva). O tempo começa a contar do zero para a alíquota, mas ele garante os 10% lá na frente. O inverso (Regressiva -> Progressiva) geralmente não é permitido." }
+                        ]
+                    },
+                    {
+                        subtitle: "11.5 Fase de Benefício (Tipos de Renda)",
+                        content: `Ao se aposentar, o investidor pode sacar tudo (Resgate) ou transformar o saldo em Renda Mensal (contrato atuarial com a seguradora). O saldo vira propriedade da seguradora em troca do pagamento vitalício.\n\n1. Renda Vitalícia: Paga até morrer. Se morrer cedo, o dinheiro fica com a seguradora.\n2. Renda Vitalícia com Prazo Mínimo Garantido: Se morrer cedo, paga aos herdeiros até completar o prazo (ex: 10 anos).\n3. Renda Temporária: Paga por X anos e acaba (mesmo se estiver vivo).\n4. Renda Reversível ao Cônjuge: Se o titular morrer, transfere % para o cônjuge/filhos.`,
+                        cases: [
+                            { title: "O Risco da Vitalícia Pura", desc: "Sr. Antônio acumulou R$ 2 milhões. Contratou renda vitalícia. Recebeu 2 meses e faleceu de infarto. O dinheiro restante (R$ 1,99 mi) fica para a seguradora para custear os outros que vivem muito (mutualismo). A família não recebe nada. Ele deveria ter escolhido prazo garantido ou reversível." },
+                            { title: "Planejamento Financeiro", desc: "Dona Sônia quer garantir a faculdade do neto se ela faltar. Ela contrata uma renda temporária ou com prazo certo, garantindo que o fluxo financeiro cubra exatamente o período de estudos, independente de sua sobrevida." }
+                        ]
+                    },
                     {
                         subtitle: "PGBL (Plano Gerador de Benefício Livre)",
                         content: `Indicado para quem faz a Declaração Completa do Imposto de Renda e contribui para o INSS.\nBenefício: Você pode deduzir as contribuições da base de cálculo do IR até o limite de 12% da sua Renda Bruta Anual. É um incentivo fiscal (deixa de pagar IR agora).\n\nTributação no Resgate: O IR incide sobre o VALOR TOTAL (Principal investido + Juros). Ou seja, você postergou o imposto, mas pagará sobre tudo lá na frente.`,
@@ -593,6 +638,30 @@
                         cases: [
                             { title: "Vazamento de Chave Pix", desc: "Um banco digital tem uma falha de segurança e vaza chaves Pix e CPFs de 100 mil clientes. O banco deve notificar a ANPD (Autoridade Nacional) e os clientes imediatamente. Além da multa, o dano reputacional faz muitos clientes encerrarem a conta." },
                             { title: "Uso Indevido de Dados", desc: "Você faz um cadastro para abrir conta numa corretora, mas desiste no meio. A corretora pega seu e-mail e vende para uma loja de sapatos fazer marketing. Isso é desvio de finalidade. Pela LGPD, você pode processar a corretora e exigir a exclusão dos seus dados." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "produtos_avancados",
+                title: "15. Produtos Específicos (FIIs e Derivativos)",
+                iconName: "layers",
+                intro: "Ativos populares e instrumentos de proteção.",
+                sections: [
+                    {
+                        subtitle: "Fundos Imobiliários (FIIs)",
+                        content: `Os FIIs (Fundos de Investimento Imobiliário) são condomínios de investidores focados no mercado imobiliário. Diferente dos fundos abertos, eles são 'Fundos Fechados': não é possível pedir resgate de cotas; para sair, você deve vender sua cota para outro investidor na Bolsa (B3), sujeito à liquidez de mercado e oscilação de preço.\nEles se dividem basicamente em 'Tijolo' (imóveis físicos como shoppings, galpões logísticos, lajes corporativas) e 'Papel' (títulos de dívida como CRIs e LCIs). Pela lei brasileira, os FIIs são obrigados a distribuir 95% do lucro caixa semestralmente aos cotistas, o que gera um fluxo de renda recorrente (dividendos) geralmente mensal e isento de IR para pessoa física (cumpridos certos requisitos). O benchmark do setor é o IFIX.`,
+                        cases: [
+                            { title: "Renda Passiva Mensal", desc: "Um investidor quer viver de aluguel mas não tem dinheiro para comprar um imóvel de R$ 500 mil. Ele compra R$ 50 mil em cotas de um FII de Shopping. Todo mês, cai na conta dele a parte proporcional do aluguel das lojas, isento de IR. É mais líquido e fácil que um imóvel físico." },
+                            { title: "FII de Papel na Alta de Juros", desc: "Com a Selic e inflação altas, os FIIs de Papel (que investem em CRIs indexados ao IPCA ou CDI) tendem a pagar dividendos muito 'gordos' (Ex: 1,2% ao mês), atraindo muitos investidores conservadores para a renda variável." }
+                        ]
+                    },
+                    {
+                        subtitle: "Derivativos (Hedge e Especulação)",
+                        content: `Derivativos são instrumentos financeiros cujo preço deriva (depende) do valor de outro ativo, chamado de ativo-objeto (que pode ser Dólar, Café, Ações, Juros, etc.). Eles são ferramentas poderosas usadas para duas finalidades opostas: Hedge (Proteção) e Especulação.\nNo Hedge, o objetivo é travar um preço futuro para eliminar o risco de oscilação (ex: um importador trava o dólar). Na Especulação, o objetivo é lucrar com a oscilação, muitas vezes usando Alavancagem. A alavancagem permite movimentar grandes valores depositando apenas uma pequena 'Margem de Garantia'. Isso potencializa os ganhos, mas também as perdas, podendo gerar prejuízos superiores ao capital investido. Os principais mercados são Termo, Futuro (com ajuste diário), Opções e Swaps.`,
+                        cases: [
+                            { title: "Hedge de Produtor Rural", desc: "Um produtor de soja teme que o preço da saca caia na colheita. Ele vai ao Mercado Futuro e vende contratos de soja ao preço de hoje para garantir a receita. Se o preço cair, ele perde na lavoura mas ganha no mercado financeiro. Ele travou o preço." },
+                            { title: "Seguro de Carteira (Put)", desc: "Um investidor tem muitas ações e teme um crash. Ele compra Opções de Venda (Put). Se a bolsa desabar, a ação dele perde valor, mas a Opção de Venda valoriza explosivamente, compensando o prejuízo. É como um seguro de carro." }
                         ]
                     }
                 ]
