@@ -30,6 +30,15 @@
         body {
             font-family: 'Inter', sans-serif; /* Tailwind default sans */
         }
+
+        /* Estilos para o Simulado */
+        .option-label {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-radio {
+            accent-color: #4f46e5; /* Indigo-600 */
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -67,13 +76,13 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-4 md:p-8 lg:p-12 pb-32 w-full">
+        <main class="flex-1 p-4 md:p-8 lg:p-12 pb-32 w-full relative">
             <div id="content-area">
                 <!-- Dynamic Content injected via JS -->
             </div>
 
             <!-- Navegação Footer -->
-            <div class="mt-16 pt-8 border-t border-slate-200 flex justify-center text-slate-400 text-sm">
+            <div id="footer-area" class="mt-16 pt-8 border-t border-slate-200 flex justify-center text-slate-400 text-sm">
                 <p id="module-footer-text">Fim do módulo</p>
             </div>
         </main>
@@ -83,8 +92,153 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // --- DADOS DO CONTEÚDO ---
-        // (Convertido do React state para objeto JS puro)
         const modulesData = [
+            {
+                id: "estudos_caso",
+                title: "📚 Estudos de Caso Resolvidos",
+                iconName: "book-open-check",
+                intro: "Situações práticas do dia a dia do mercado financeiro com resolução comentada. Essencial para fixação de conceitos e prova.",
+                sections: [
+                    // --- CASES ORIGINAIS DO PEDIDO ---
+                    {
+                        subtitle: "Caso 1: Políticas econômicas e renda fixa",
+                        content: `João possui um investimento em CDB pré-fixado de um banco. O Banco Central anuncia aumento na taxa Selic. João quer saber como isso afeta seu investimento e se ele deve resgatar agora.\n\n**Pergunta:** O que você explicaria a João sobre o efeito da alta da Selic em seu CDB pré-fixado?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "CDB pré-fixado tem taxa definida na aplicação. Quando a Selic sobe, novos CDBs pagam mais, tornando o título de João menos atraente (desvalorização na marcação a mercado), embora ele não perca valor nominal se levar até o vencimento. Se resgatar hoje, pode ter penalidades ou deságio." },
+                            { title: "Conceito Chave", desc: "Risco de Mercado em taxas pré-fixadas: Alta de juros = Queda do preço unitário do título." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 2: Adequação de perfil (Suitability)",
+                        content: `Maria é conservadora, tem 30 anos e quer investir para aposentadoria. Ela gosta de segurança e liquidez. O gerente oferece: 1) Fundo multimercado agressivo, 2) LCI de banco médio, 3) ETF de ações brasileiras.\n\n**Pergunta:** Qual produto é mais adequado para o perfil da Maria? Por quê?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "A LCI de banco médio é a mais adequada. É renda fixa, tem baixo risco (coberta pelo FGC), é isenta de IR e combina com o perfil conservador. Fundo agressivo e ETF de ações têm volatilidade incompatível com o perfil dela." },
+                            { title: "Conceito Chave", desc: "Suitability: O produto deve sempre respeitar a tolerância a risco do cliente, não apenas o potencial de retorno." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 3: Previdência (PGBL vs VGBL)",
+                        content: `Pedro, 40 anos, quer começar um plano de previdência. Ele pergunta a diferença entre PGBL e VGBL.\n\n**Pergunta:** Qual a principal diferença tributária que orienta a escolha?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "PGBL permite deduzir até 12% da renda bruta na declaração completa do IR (incentivo fiscal na entrada), mas o IR no resgate incide sobre o valor TOTAL. VGBL não tem dedução, mas o IR incide apenas sobre o LUCRO (Rendimentos)." },
+                            { title: "Conceito Chave", desc: "Planejamento Tributário: PGBL para quem faz declaração completa; VGBL para simplificada/isentos." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 4: Adequação de recomendação (Risco)",
+                        content: `Um cliente quer investir todo seu dinheiro em ações de uma startup de tecnologia que ele conhece. Ele tem perfil moderado e pretende usar o dinheiro para educação dos filhos em 5 anos.\n\n**Pergunta:** Como você deve orientar o cliente?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Explicar que concentrar tudo em um ativo de altíssimo risco e baixa liquidez (startup) é incompatível com o prazo de 5 anos e a necessidade vital (educação). Sugerir diversificação, mantendo a base em renda fixa ou fundos conservadores." },
+                            { title: "Conceito Chave", desc: "Gestão de Risco e Concentração de Carteira." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 5: ESG e Sustentabilidade",
+                        content: `Carla quer investir em fundos sustentáveis e pergunta a diferença entre ESG e fundos tradicionais.\n\n**Pergunta:** O que define um fundo ESG?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Fundos ESG selecionam ativos considerando critérios Ambientais (E), Sociais (S) e de Governança (G), não apenas financeiros. Eles evitam setores polêmicos e buscam empresas responsáveis. O retorno pode variar em relação aos tradicionais." },
+                            { title: "Conceito Chave", desc: "Investimento Responsável: Alinhamento de valores pessoais com alocação de capital." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 6: Open Finance e Segurança",
+                        content: `Um cliente quer transferir todos os investimentos para uma fintech que oferece gestão automatizada. Ele pergunta se é seguro compartilhar seus dados via Open Finance.\n\n**Pergunta:** Como orientar sobre a segurança?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "O Open Finance é regulado pelo Banco Central e seguro. O compartilhamento depende do consentimento expresso do cliente e pode ser revogado. Porém, deve-se avaliar a solidez da fintech e se os produtos têm garantia (ex: FGC)." },
+                            { title: "Conceito Chave", desc: "Portabilidade de Dados e Regulação do Sistema Financeiro." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 7: Situação prática (Cliente Irritado)",
+                        content: `Um cliente liga irritado porque o investimento dele caiu 5% em uma semana.\n\n**Pergunta:** Como você deve reagir?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Ouvir com empatia ('Entendo sua preocupação'), sem interromper. Explicar tecnicamente que a volatilidade é normal no curto prazo para aquele produto. Revisar se o perfil dele mudou. Registrar o atendimento." },
+                            { title: "Conceito Chave", desc: "Inteligência Emocional e Dever de Informação Pós-Venda." }
+                        ]
+                    },
+                    // --- NOVOS CASES ADICIONADOS (8 a 17) ---
+                    {
+                        subtitle: "Caso 8: Prevenção à Lavagem de Dinheiro (Smurfing)",
+                        content: `O sistema do banco alerta que um cliente realizou 15 depósitos de R$ 9.000,00 em espécie em diferentes caixas eletrônicos no mesmo dia.\n\n**Pergunta:** O que essa atitude sugere e qual a ação do profissional?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Sugere a técnica de 'Smurfing' ou estruturação, usada para evitar o reporte automático de operações acima de R$ 50 mil. O profissional deve analisar a capacidade financeira do cliente e, confirmada a suspeita, comunicar ao COAF sem avisar o cliente." },
+                            { title: "Conceito Chave", desc: "Fase de Colocação na Lavagem de Dinheiro." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 9: Garantia do FGC e Diversificação",
+                        content: `Um investidor tem R$ 800.000,00 e quer aplicar tudo em CDBs do Banco X, que paga 120% do CDI, mas é um banco pequeno.\n\n**Pergunta:** Qual o risco dessa alocação e a orientação correta?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "O risco é de crédito (quebra do banco). O FGC garante apenas até R$ 250.000,00 por CPF. Se o banco quebrar, ele perde R$ 550.000,00. A orientação é diversificar em pelo menos 4 instituições financeiras diferentes para ter cobertura total." },
+                            { title: "Conceito Chave", desc: "Limites do Fundo Garantidor de Créditos." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 10: Tributação de Fundos (Come-Cotas)",
+                        content: `Um cliente aplicou em um Fundo de Renda Fixa Longo Prazo em Janeiro. Em Maio, ele percebeu que a quantidade de cotas diminuiu, mesmo sem ele ter feito resgates.\n\n**Pergunta:** O que aconteceu?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Ocorreu o 'Come-Cotas', que é a antecipação semestral do Imposto de Renda (15% para fundos de longo prazo) cobrada em Maio e Novembro. O governo recolhe o imposto reduzindo o número de cotas, não o valor da cota." },
+                            { title: "Conceito Chave", desc: "Tributação Semestral em Fundos Abertos." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 11: Proteção Cambial (Hedge)",
+                        content: `Uma empresa importadora tem uma dívida de US$ 1 milhão para pagar daqui a 6 meses. O diretor financeiro teme que o dólar dispare até lá.\n\n**Pergunta:** Que instrumento financeiro ele pode usar para se proteger?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Ele deve fazer um Hedge (proteção) comprando contratos de Dólar Futuro ou Swap Cambial. Assim, se o dólar subir, o lucro no derivativo compensa o aumento da dívida, travando o custo em reais." },
+                            { title: "Conceito Chave", desc: "Derivativos como instrumento de proteção (não especulação)." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 12: Ética e Chinese Wall",
+                        content: `Um gestor de fundos de um banco almoça com um amigo que trabalha na área de fusões e aquisições do mesmo banco. O amigo revela que a Empresa Y será comprada amanhã com um grande prêmio.\n\n**Pergunta:** O gestor pode comprar ações da Empresa Y para o fundo hoje?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Não. Isso configura uso de Informação Privilegiada (Insider Trading). A barreira de informação (Chinese Wall) entre a gestão de recursos e a tesouraria/IB foi quebrada. O gestor deve manter sigilo e não operar o ativo." },
+                            { title: "Conceito Chave", desc: "Segregação de Funções e Crime Financeiro." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 13: Marcação a Mercado (Prejuízo aparente)",
+                        content: `Um cliente comprou Tesouro IPCA+ 2045 mês passado. Hoje ele abre o extrato e vê que o saldo está menor do que o valor aplicado, mesmo com a inflação subindo.\n\n**Pergunta:** Por que isso ocorreu e o que ele deve fazer?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Isso ocorreu devido à alta das taxas de juros futuros (Marcação a Mercado). Quando os juros sobem, o preço unitário do título cai. Se ele não precisa do dinheiro, deve manter até o vencimento para receber exatamente o contratado (IPCA + Taxa original)." },
+                            { title: "Conceito Chave", desc: "Volatilidade de títulos de Renda Fixa no curto prazo." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 14: API Vencido (Suitability)",
+                        content: `Um cliente antigo tenta fazer um novo investimento pelo aplicativo, mas o sistema bloqueia e pede atualização cadastral. Ele liga para o gerente pedindo para liberar sem responder o questionário.\n\n**Pergunta:** O gerente pode liberar?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Não. A regulação CVM exige que o perfil do investidor (API) esteja atualizado (geralmente a cada 24 meses) para garantir que a recomendação ou produto seja adequado. É uma regra de proteção ao investidor que não pode ser burlada." },
+                            { title: "Conceito Chave", desc: "Obrigatoriedade e validade do Perfil de Investidor." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 15: Risco de Debêntures",
+                        content: `O gerente oferece uma Debênture da Empresa Z pagando IPCA + 9% a.a., isenta de IR. O cliente pergunta se é tão seguro quanto a Poupança.\n\n**Pergunta:** Qual a orientação correta?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Não é tão seguro. A Poupança tem garantia do FGC. A Debênture tem risco de crédito da empresa emissora e NÃO tem garantia do FGC. O retorno maior (spread) serve justamente para compensar esse risco maior de calote." },
+                            { title: "Conceito Chave", desc: "Risco de Crédito Corporativo vs Garantia Bancária." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 16: Tributação em Ações (Day Trade)",
+                        content: `Um investidor fez sua primeira operação de Day Trade (compra e venda no mesmo dia) e lucrou R$ 1.000,00. Ele acha que é isento pois vendeu menos de R$ 20 mil no mês.\n\n**Pergunta:** Ele está certo?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Errado. Não existe isenção para Day Trade. O lucro é tributado em 20%. Ele deve gerar o DARF e pagar até o último dia útil do mês seguinte. A isenção de R$ 20 mil vale apenas para operações comuns (Swing Trade)." },
+                            { title: "Conceito Chave", desc: "Regras tributárias específicas de Renda Variável." }
+                        ]
+                    },
+                    {
+                        subtitle: "Caso 17: Front Running (Ética)",
+                        content: `Um corretor recebe uma ordem de compra gigantesca de um fundo de pensão para a ação VALE3. Antes de executar a ordem do cliente, ele compra VALE3 para sua própria carteira pessoal.\n\n**Pergunta:** Como se chama essa prática e qual a consequência?`,
+                        cases: [
+                            { title: "Resposta e Orientação", desc: "Chama-se Front Running (correr na frente). É uma prática ilegal e antiética onde o intermediário tenta lucrar com a alta de preço que a ordem do cliente vai causar. Sujeito a multas, inabilitação e processo." },
+                            { title: "Conceito Chave", desc: "Lealdade e Prioridade aos interesses do cliente." }
+                        ]
+                    }
+                ]
+            },
             {
                 id: "sfn",
                 title: "1. Sistema Financeiro Nacional (SFN)",
@@ -665,12 +819,88 @@
                         ]
                     }
                 ]
+            },
+            {
+                id: "simulado",
+                title: "🏆 Simulado ANBIMA",
+                iconName: "award",
+                intro: "Teste seus conhecimentos com 50 questões nível real de prova.",
+                isSimulado: true, // Special flag
+                sections: [] // Handled separately
             }
+        ];
+
+        // --- DADOS DO SIMULADO ---
+        // (Convertido do GABARITO OFICIAL + Questões)
+        // 0=A, 1=B, 2=C, 3=D
+        const questionsData = [
+            // CASO 1 – ATENDIMENTO, SUITABILITY E ÉTICA (Questões 1 a 5)
+            { id: 1, text: "Um cliente de 58 anos, com renda estável e patrimônio concentrado em renda fixa, informa que pretende preservar capital e complementar aposentadoria em 7 anos. Após ler notícias sobre ganhos elevados na bolsa, solicita investir parte relevante do patrimônio em ações de empresas de tecnologia. A primeira providência do profissional deve ser:", options: ["Atender o pedido do cliente", "Atualizar o perfil de investidor", "Explicar os riscos e avaliar a adequação", "Encaminhar para o gestor"], correct: 2 },
+            { id: 2, text: "Caso o perfil seja conservador, a conduta correta é:", options: ["Executar a ordem", "Negar o atendimento", "Recomendar produto adequado ao perfil", "Solicitar autorização do gerente"], correct: 2 },
+            { id: 3, text: "Se o cliente insistir em investir fora do perfil, o profissional deve:", options: ["Executar sem registro", "Registrar formalmente a decisão", "Comunicar ao regulador", "Recusar permanentemente"], correct: 1 },
+            { id: 4, text: "A situação apresentada envolve principalmente:", options: ["Risco de crédito", "Conflito de interesses", "Suitability", "Liquidez"], correct: 2 },
+            { id: 5, text: "A principal responsabilidade do profissional é:", options: ["Maximizar retorno", "Seguir ordens", "Proteger o cliente", "Reduzir impostos"], correct: 2 },
+
+            // CASO 2 – PLD / FT (Questões 6 a 9)
+            { id: 6, text: "Um cliente recém-cadastrado realiza várias aplicações de valores próximos ao limite de comunicação obrigatória, em curto período, sem relação aparente com sua renda declarada. Essa situação caracteriza:", options: ["Operação comum", "Perfil arrojado", "Operação atípica", "Erro cadastral"], correct: 2 },
+            { id: 7, text: "A obrigação do profissional é:", options: ["Informar o cliente", "Recusar todas as operações", "Comunicar ao COAF", "Atualizar o perfil de risco"], correct: 2 },
+            { id: 8, text: "A comunicação deve ser feita:", options: ["Após confirmação judicial", "De forma sigilosa", "Com autorização do cliente", "Apenas se houver prejuízo"], correct: 1 },
+            { id: 9, text: "A etapa da lavagem que tenta dificultar o rastreamento é:", options: ["Colocação", "Ocultação", "Integração", "Fragmentação"], correct: 1 },
+
+            // CASO 3 – FUNDOS DE INVESTIMENTO (Questões 10 a 15)
+            { id: 10, text: "Um cliente investe em um fundo multimercado com cobrança de taxa de performance e benchmark definido. A taxa de performance será cobrada quando:", options: ["Houver rentabilidade negativa", "O fundo superar o benchmark", "O cotista resgatar", "Houver come-cotas"], correct: 1 },
+            { id: 11, text: "O responsável pelas decisões de investimento do fundo é o:", options: ["Administrador", "Custodiante", "Gestor", "Distribuidor"], correct: 2 },
+            { id: 12, text: "O come-cotas ocorre:", options: ["No resgate", "Semestralmente", "Apenas em fundos de ações", "Apenas no prejuízo"], correct: 1 },
+            { id: 13, text: "O risco de mercado está relacionado a:", options: ["Inadimplência do emissor", "Oscilações de preços", "Falta de liquidez", "Tributação"], correct: 1 },
+            { id: 14, text: "Fundos multimercado podem investir em:", options: ["Apenas renda fixa", "Apenas ações", "Diferentes classes de ativos", "Apenas câmbio"], correct: 2 },
+            { id: 15, text: "A CVM é responsável por:", options: ["Normatizar política monetária", "Supervisionar fundos", "Autorregular o mercado", "Controlar inflação"], correct: 1 },
+
+            // CASO 4 – PREVIDÊNCIA (Questões 16 a 20)
+            { id: 16, text: "Um investidor declara IR completo, tem renda elevada e pretende investir para aposentadoria em longo prazo. O plano mais indicado é:", options: ["VGBL", "PGBL", "Fundo exclusivo", "Tesouro Prefixado"], correct: 1 },
+            { id: 17, text: "A principal vantagem do PGBL é:", options: ["Isenção de IR", "Dedução fiscal", "Liquidez diária", "Rentabilidade maior"], correct: 1 },
+            { id: 18, text: "A tabela regressiva favorece:", options: ["Curto prazo", "Resgates frequentes", "Longo prazo", "Baixa renda"], correct: 2 },
+            { id: 19, text: "A fase de benefício ocorre:", options: ["Durante aportes", "No resgate parcial", "No recebimento de renda", "Na troca de plano"], correct: 2 },
+            { id: 20, text: "Previdência complementar é indicada para:", options: ["Curto prazo", "Liquidez imediata", "Planejamento de longo prazo", "Especulação"], correct: 2 },
+
+            // CASO 5 – ECONOMIA, JUROS E PRODUTOS (Questões 21 a 30)
+            { id: 21, text: "A taxa básica da economia brasileira é a:", options: ["CDI", "Selic", "IPCA", "IGP-M"], correct: 1 },
+            { id: 22, text: "Inflação elevada impacta negativamente:", options: ["Juros nominais", "Poder de compra", "PIB", "Liquidez"], correct: 1 },
+            { id: 23, text: "Juros compostos se caracterizam por:", options: ["Incidirem apenas sobre o principal", "Capitalização dos juros", "Não variarem no tempo", "Serem lineares"], correct: 1 },
+            { id: 24, text: "A taxa real corresponde a:", options: ["Juros + inflação", "Juros – inflação", "Inflação – juros", "Juros nominais"], correct: 1 }, // Aprox
+            { id: 25, text: "O Tesouro IPCA+ protege contra:", options: ["Oscilação cambial", "Risco de crédito", "Inflação", "Liquidez"], correct: 2 },
+            { id: 26, text: "O risco de crédito está ligado à:", options: ["Oscilação de preços", "Capacidade de pagamento", "Liquidez", "Inflação"], correct: 1 },
+            { id: 27, text: "Ações representam:", options: ["Dívida", "Empréstimo", "Participação societária", "Fundo"], correct: 2 },
+            { id: 28, text: "ETFs são:", options: ["Títulos públicos", "Fundos negociados em bolsa", "Previdência", "Derivativos"], correct: 1 },
+            { id: 29, text: "A diversificação busca:", options: ["Eliminar risco", "Aumentar retorno", "Reduzir risco", "Garantir ganho"], correct: 2 },
+            { id: 30, text: "A correlação mede:", options: ["Retorno absoluto", "Risco individual", "Relação entre ativos", "Liquidez"], correct: 2 },
+
+            // CASO 6 – INOVAÇÃO, LGPD E RELACIONAMENTO (Questões 31 a 50)
+            { id: 31, text: "O Open Finance depende de:", options: ["Decisão da instituição", "Consentimento do cliente", "Autorização do BC", "Cadastro automático"], correct: 1 },
+            { id: 32, text: "A LGPD trata de:", options: ["Tributação", "Rentabilidade", "Proteção de dados", "Produtos"], correct: 2 },
+            { id: 33, text: "Atendimento digital exige:", options: ["Menor responsabilidade", "Registro adequado", "Dispensa de regras", "Menos formalidade"], correct: 1 },
+            { id: 34, text: "ESG aparece na CPA como:", options: ["Regra obrigatória", "Estratégia técnica", "Preferência do cliente", "Métrica financeira"], correct: 2 },
+            { id: 35, text: "O IOF incide principalmente em aplicações de:", options: ["Longo prazo", "Curto prazo", "Previdência", "Ações"], correct: 1 },
+            { id: 36, text: "O dever fiduciário exige que o profissional:", options: ["Priorize comissão", "Priorize instituição", "Priorize cliente", "Seja neutro"], correct: 2 },
+            { id: 37, text: "Conflito de interesses ocorre quando:", options: ["Há risco", "Há prejuízo", "Interesses se sobrepõem", "Falta liquidez"], correct: 2 },
+            { id: 38, text: "O Código ANBIMA regula:", options: ["Política monetária", "Conduta profissional", "Impostos", "Preços"], correct: 1 },
+            { id: 39, text: "A autorregulação é exercida por:", options: ["CMN", "CVM", "ANBIMA", "COAF"], correct: 2 },
+            { id: 40, text: "O Banco Central supervisiona:", options: ["Fundos", "Bancos", "Seguradoras", "Fundos de pensão"], correct: 1 },
+            { id: 41, text: "O suitability deve ser aplicado:", options: ["Apenas na abertura", "Apenas em ações", "Em todas as recomendações", "Apenas em fundos"], correct: 2 },
+            { id: 42, text: "O perfil do investidor deve ser:", options: ["Imutável", "Atualizado", "Ignorado", "Opcional"], correct: 1 },
+            { id: 43, text: "O risco de liquidez refere-se à:", options: ["Volatilidade", "Dificuldade de resgate", "Inadimplência", "Inflação"], correct: 1 },
+            { id: 44, text: "Marcação a mercado representa:", options: ["Valor histórico", "Valor contratado", "Preço de negociação", "Valor garantido"], correct: 2 },
+            { id: 45, text: "Fundos de ações possuem predominantemente:", options: ["Renda fixa", "Ações", "Câmbio", "Crédito privado"], correct: 1 },
+            { id: 46, text: "A tributação regressiva reduz a alíquota conforme:", options: ["Rentabilidade", "Valor investido", "Tempo", "Perfil"], correct: 2 },
+            { id: 47, text: "O COAF está relacionado a:", options: ["Tributação", "Fiscalização bancária", "PLD/FT", "Previdência"], correct: 2 },
+            { id: 48, text: "A política monetária é executada pelo:", options: ["CMN", "CVM", "Banco Central", "Tesouro"], correct: 2 },
+            { id: 49, text: "O registro das orientações serve para:", options: ["Marketing", "Auditoria", "Proteção do cliente e do profissional", "Controle fiscal"], correct: 2 },
+            { id: 50, text: "A CPA 2026 certifica que o profissional:", options: ["Gere carteiras", "Entenda tecnologia", "Atue corretamente com o cliente", "Maximize retorno"], correct: 2 }
         ];
 
         // --- APP STATE ---
         let activeModuleId = "sfn";
         let isMobileMenuOpen = false;
+        let userAnswers = JSON.parse(localStorage.getItem('simuladoProgress')) || {}; // { questionId: selectedOptionIndex }
 
         // --- DOM ELEMENTS ---
         const desktopMenu = document.getElementById('desktop-menu-items');
@@ -720,10 +950,128 @@
             });
         }
 
+        function renderSimulado() {
+            const answeredCount = Object.keys(userAnswers).length;
+            const correctCount = Object.keys(userAnswers).filter(id => {
+                const q = questionsData.find(q => q.id == id);
+                return q && userAnswers[id] === q.correct;
+            }).length;
+
+            let html = `
+                <div class="mb-8 relative">
+                    <div class="flex items-center gap-3 text-indigo-600 mb-2">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                        <span class="text-sm font-bold uppercase tracking-wider">Modo Simulado</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Simulado ANBIMA</h2>
+                        <div class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg font-bold text-sm shadow-sm flex items-center gap-2">
+                            <span>Progresso: ${answeredCount}/50</span>
+                            <span class="text-green-600 ml-2">Acertos: ${correctCount}</span>
+                        </div>
+                    </div>
+                    <p class="text-lg text-slate-600 leading-relaxed border-l-4 border-yellow-400 pl-4 bg-yellow-50/50 py-2 rounded-r-lg">
+                        Teste seus conhecimentos com questões reais. O progresso é salvo automaticamente.
+                        <button onclick="resetSimulado()" class="float-right text-xs bg-red-100 text-red-600 px-2 py-1 rounded hover:bg-red-200 ml-4">Reiniciar Simulado</button>
+                    </p>
+                </div>
+                <div class="space-y-8">
+            `;
+
+            questionsData.forEach((q, idx) => {
+                const userAnswer = userAnswers[q.id];
+                const isAnswered = userAnswer !== undefined;
+                const isCorrect = isAnswered && userAnswer === q.correct;
+                
+                let feedbackHtml = '';
+                let borderClass = 'border-slate-200';
+                let bgClass = 'bg-white';
+
+                if (isAnswered) {
+                    if (isCorrect) {
+                        borderClass = 'border-green-300';
+                        bgClass = 'bg-green-50/30';
+                        feedbackHtml = `<div class="mt-3 text-sm font-bold text-green-600 flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> Resposta Correta!</div>`;
+                    } else {
+                        borderClass = 'border-red-300';
+                        bgClass = 'bg-red-50/30';
+                        feedbackHtml = `
+                            <div class="mt-3 text-sm font-bold text-red-600 flex items-center gap-2"><i data-lucide="x-circle" class="w-4 h-4"></i> Incorreto.</div>
+                            <div class="text-sm text-slate-600 ml-6">A resposta correta é: <strong>${['A','B','C','D'][q.correct]}</strong></div>
+                        `;
+                    }
+                }
+
+                html += `
+                    <div class="p-6 rounded-xl border-2 shadow-sm ${borderClass} ${bgClass} transition-all">
+                        <div class="flex items-start gap-3 mb-4">
+                            <span class="bg-indigo-600 text-white font-bold w-8 h-8 flex items-center justify-center rounded-full flex-shrink-0 text-sm">${q.id}</span>
+                            <h3 class="text-lg font-medium text-slate-800 leading-snug">${q.text}</h3>
+                        </div>
+                        
+                        <div class="space-y-2 ml-11">
+                            ${q.options.map((opt, optIdx) => {
+                                const isSelected = userAnswer === optIdx;
+                                const isThisCorrect = q.correct === optIdx;
+                                
+                                let optionClass = "p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer flex items-center gap-3 transition-colors";
+                                if (isAnswered) {
+                                    if (isSelected && isCorrect) optionClass = "p-3 rounded-lg border border-green-500 bg-green-100 font-medium flex items-center gap-3";
+                                    else if (isSelected && !isCorrect) optionClass = "p-3 rounded-lg border border-red-500 bg-red-100 flex items-center gap-3";
+                                    else if (!isSelected && isThisCorrect && !isCorrect) optionClass = "p-3 rounded-lg border border-green-500 bg-green-50 flex items-center gap-3 opacity-70"; // Show correct if wrong
+                                    else optionClass = "p-3 rounded-lg border border-slate-100 opacity-50 flex items-center gap-3 pointer-events-none";
+                                }
+
+                                return `
+                                    <div class="${optionClass}" onclick="handleAnswer(${q.id}, ${optIdx})">
+                                        <div class="w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center ${isSelected ? (isCorrect ? 'border-green-600 bg-green-600' : 'border-red-600 bg-red-600') : ''}">
+                                            ${isSelected ? '<div class="w-2 h-2 bg-white rounded-full"></div>' : ''}
+                                        </div>
+                                        <span class="text-sm text-slate-700"><strong>${['A','B','C','D'][optIdx]})</strong> ${opt}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <div class="ml-11">
+                            ${feedbackHtml}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            contentArea.innerHTML = html;
+            footerText.innerText = "Simulado ANBIMA - CPA-10/20";
+            lucide.createIcons();
+        }
+
+        function handleAnswer(questionId, optionIndex) {
+            // Se já respondeu, não faz nada (trava a questão)
+            if (userAnswers[questionId] !== undefined) return;
+
+            userAnswers[questionId] = optionIndex;
+            localStorage.setItem('simuladoProgress', JSON.stringify(userAnswers));
+            renderSimulado(); // Re-render to show feedback
+        }
+
+        function resetSimulado() {
+            if(confirm("Tem certeza que deseja apagar todo o progresso do simulado?")) {
+                userAnswers = {};
+                localStorage.removeItem('simuladoProgress');
+                renderSimulado();
+            }
+        }
+
         function renderContent() {
             const activeModule = modulesData.find(m => m.id === activeModuleId);
             
             if (!activeModule) return;
+
+            // Check if it is the special Simulado module
+            if (activeModule.isSimulado) {
+                renderSimulado();
+                return;
+            }
 
             footerText.innerText = `Fim do módulo de ${activeModule.title.split('.')[1] || activeModule.title}`;
 
