@@ -26,6 +26,31 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            color: #1e293b;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: 700;
+        }
+        .markdown-content h3 {
+            font-size: 1.25rem;
+            color: #334155;
+        }
+        .markdown-content p {
+            margin-bottom: 1em;
+            line-height: 1.7;
+        }
+        .markdown-content ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-bottom: 1em;
+        }
+        .markdown-content li {
+            margin-bottom: 0.5em;
+        }
+        .markdown-content strong {
+            color: #0f172a;
+        }
     </style>
 </head>
 <body>
@@ -37,61 +62,145 @@
                 id: 'tema1',
                 title: 'Macrotema 1: Produtos de Investimentos (40%)',
                 content: `
-                    O núcleo do exame. Exige domínio sobre infraestrutura, precificação de produtos tradicionais e carga tributária de fundos, renda fixa, renda variável e derivativos.
-                    \n\n**Pontos Chave:**
-                    \n- **Resolução CVM 175:** Novo Marco Regulatório. Permite segregação de fundos em classes/subclasses (isolamento de patrimônio), limitação da responsabilidade dos cotistas ao valor subscrito e democratização de FIDCs e FIPs para o varejo.
-                    \n- **Resolução CMN 5.118:** Bloqueio sobre lastros elegíveis para emissões de CRAs, CRIs, LCAs e LCIs. Proibição do uso de títulos de dívida corporativa originados em operações entre empresas coligadas.
-                    \n- **Renda Fixa:** Cálculo de Risco de Taxa de Juro (Duration de Macaulay e Modificada), convexidade, marcação a mercado vs curva, e gestão passiva por índices (IMA-B, IRF-M, IDkA).
-                    \n- **Renda Variável:** Avaliação por múltiplos (P/L, EV/EBITDA), eventos corporativos (IPOs, OPAs, splits) e fiscalidade (Dividendos isentos vs JCP tributado).
-                    \n- **Derivativos e COE:** Hedge, especulação e arbitragem. Ajustes diários em futuros, opções (Gregas: Delta, Gamma, Theta, Vega) e Swaps.
-                    \n- **Tributação:** Come-cotas semestral, IOF regressivo nos primeiros 29 dias e regras de day-trade vs swing-trade.
-                `
+O núcleo do exame C-Pro I. Exige domínio técnico profundo sobre infraestrutura, precificação de produtos tradicionais, dinâmica de mercado e carga tributária de fundos, renda fixa, renda variável e derivativos.
+
+### 1. Resolução CVM 175 (Novo Marco Regulatório dos Fundos)
+Esta resolução unificou e modernizou as regras para Fundos de Investimento no Brasil, substituindo a antiga CVM 555.
+*   **Segregação de Patrimônio e Classes:** Permite a divisão de um fundo em "classes" e "subclasses" de cotas, com patrimônios segregados. Isso significa que se uma classe quebrar (insolvência), o patrimônio das outras classes do mesmo fundo não será afetado.
+*   **Responsabilidade Limitada do Cotista:** Os cotistas agora podem ter responsabilidade limitada ao valor de suas cotas (como numa empresa LTDA). Antes, podiam ser chamados a cobrir rombos (aportar mais dinheiro) no fundo.
+*   **Democratização:** Flexibilizou o acesso do público de varejo a FIDCs (Fundos de Investimento em Direitos Creditórios) e FIPs (Fundos de Investimento em Participações), antes restritos a investidores qualificados ou profissionais.
+*   **Taxas e Provisionamento:** Mudanças na forma como a taxa de administração e performance são calculadas e informadas (provisionamento diário, deduzido da cota, garantindo que a rentabilidade mostrada já é líquida de taxas).
+
+### 2. Renda Fixa e Títulos Públicos/Privados
+*   **Resolução CMN 5.118:** Restringiu rigorosamente os lastros elegíveis para emissão de CRAs, CRIs, LCAs e LCIs. O objetivo foi direcionar o crédito isento para o produtor rural/imobiliário real, proibindo operações estruturadas entre empresas do mesmo grupo econômico criadas apenas para obter benefício fiscal (isenção de IR).
+*   **Precificação, Volatilidade e Riscos:**
+    *   **Duration (Macaulay e Modificada):** Mede o tempo médio de recebimento dos fluxos e a sensibilidade do título a variações na taxa de juros. Quanto maior a duration (títulos longos), maior o risco (volatilidade) e o impacto da marcação a mercado.
+    *   **Convexidade:** Ajuste fino da duration, pois a relação preço vs. taxa não é linear, mas convexa. Ajuda a medir o erro da duration para grandes choques de juros.
+    *   **Marcação a Mercado (MtM) vs. Marcação na Curva:** MtM precifica o título pelo valor que ele seria vendido hoje (gera volatilidade diária na cota, mas é transparente). Marcação na curva assume que o título será levado ao vencimento (esconde a volatilidade, mas embute risco de liquidez se precisar vender antes).
+    *   **Risco de Crédito:** Mensuração via Ratings (agências de classificação), PD (Probability of Default - probabilidade de calote), LGD (Loss Given Default - perda severa após tentar recuperar garantias) e Spreads de crédito (prêmio exigido acima do título sem risco).
+*   **Índices:** IMA-B (cesta de títulos indexados ao IPCA/NTN-Bs), IRF-M (títulos prefixados/LTNs), IDkA (índice de duration constante).
+
+### 3. Renda Variável
+*   **Avaliação Fundamentalista:** Foca na saúde financeira da empresa. Uso de múltiplos como P/L (Preço/Lucro) e EV/EBITDA para encontrar o valor justo (intrínseco) da ação a longo prazo.
+*   **Eventos Corporativos:** IPO (Oferta Inicial), Follow-on (nova emissão de ações), OPA (Oferta Pública de Aquisição para fechar capital), Inplit (Grupamento - une ações para aumentar o preço unitário), Split (Desdobramento - divide ações para dar liquidez).
+*   **Análise Técnica/Gráfica:** Usada estritamente em operações de curtíssimo prazo (day trade, swing trade) para identificar tendências emocionais e padrões de preços e volume (intraday), ignorando totalmente os fundamentos contábeis da empresa.
+
+### 4. Derivativos e Operações Estruturadas (COE)
+*   **Finalidades de Uso:** Hedge (proteção contra oscilações indesejadas, ex: travar dólar), Especulação (alavancagem direcional assumindo risco) ou Arbitragem (lucro sem risco buscando distorções de preço no mesmo instante em mercados diferentes).
+*   **Instrumentos:**
+    *   *Futuros e Termos:* Acordos para compra/venda em data futura. Contratos Futuros têm ajuste diário de perdas e ganhos na B3 (mitiga drasticamente o risco de contraparte).
+    *   *Opções (As Gregas):* Call (direito de compra), Put (direito de venda). Delta (sensibilidade direcional ao preço do ativo-objeto), Gamma (aceleração/sensibilidade do Delta), Theta (sensibilidade ao tempo/vencimento), Vega (sensibilidade à volatilidade implícita).
+    *   *Swaps:* Troca de indexadores (ex: trocar taxa prefixada por variação do dólar).
+*   **COE (Certificado de Operações Estruturadas):** Combina renda fixa e derivativos em um pacote. Pode garantir Capital Protegido (o investidor não perde o principal se der errado), mas o investidor assume integralmente o risco de crédito do banco emissor do COE.
+
+### 5. Tributação de Investimentos
+*   **Come-Cotas:** Antecipação semestral (último dia útil de Maio e Novembro) do IR em Fundos de Renda Fixa e Multimercados abertos. Reduz violentamente o efeito dos juros compostos no longo prazo.
+*   **Renda Variável Pessoas Físicas:** Swing Trade (15% sobre lucro, isenção em vendas até R$20 mil no mês), Day Trade (20% sobre lucro, SEM isenção mensal), FIIs (20% sobre lucro na venda de cotas, dividendos mensais isentos).
+*   **Compensação de Prejuízos:** Prejuízos podem ser compensados com lucros futuros da *mesma natureza e mesma alíquota* (FII só abate FII, Swing Trade de Ação só abate Swing Trade de Ação, Day Trade só abate Day Trade). Não há limite de tempo para compensar, desde que declarado.
+`
             },
             {
                 id: 'tema2',
                 title: 'Macrotema 2: Investimentos Alternativos, Digitais e Exterior (15%)',
                 content: `
-                    Foco na iliquidez, baixa correlação com mercados tradicionais e mensuração do prêmio de iliquidez.
-                    \n\n**Pontos Chave:**
-                    \n- **Private Equity & Crédito Estruturado:** Fases Seed, Venture Capital, Buyout. FIDCs e Fiagros (hierarquia de subordinação: seniores, mezanino, subordinadas).
-                    \n- **Investimentos no Exterior (Lei das Offshores - 14.754/2023):** Fim do diferimento fiscal para offshores/trusts em paraísos fiscais; lucros auferidos passam a ter tributação periódica anual, exigindo modelagem para comparar com BDRs.
-                    \n- **Ativos Digitais:** Blockchain, DeFi (Finanças Descentralizadas), Staking (Proof-of-Stake), Stablecoins e CBDC (DREX brasileiro). Entender correlação de criptos com política monetária (ex: afrouxamento do Fed fomenta fluxo para ativos de risco).
-                `
+O foco deste macrotema é a iliquidez, o prêmio de risco, a baixa correlação com mercados tradicionais e a internacionalização e digitalização do portfólio.
+
+### 1. Private Equity, Venture Capital e FIPs
+*   **Estágios de Investimento:** Seed Capital (ideia inicial, alto risco), Venture Capital (empresas jovens já operacionais com alto potencial de escala e crescimento), Private Equity/Buyout (compra de controle ou grande participação de empresas maduras para reestruturação e futura venda/IPO).
+*   **FIPs (Fundos de Investimentos em Participações):** Não são fundos de gestão passiva. Exigem influência efetiva na gestão da empresa investida (melhorar governança, ter assento no conselho de administração, poder de veto). O objetivo é agregar valor operacional e vender a participação com lucro anos depois (Curva J). A CVM autoriza FIPs a usar derivativos APENAS para hedge (proteção) de suas posições, não para especulação.
+
+### 2. Crédito Estruturado (FIDCs)
+*   **FIDCs (Fundos de Investimento em Direitos Creditórios):** Compram recebíveis (contas a receber, cheques, boletos, faturas de cartão) de empresas, antecipando o dinheiro.
+*   **Hierarquia de Risco e Subordinação das Cotas:**
+    *   *Cotas Seniores:* Menor risco e menor retorno. Recebem primeiro as amortizações.
+    *   *Cotas Mezanino:* Risco e retorno intermediários.
+    *   *Cotas Subordinadas:* Maior risco. Absorvem os primeiros calotes (inadimplência) da carteira de boletos. Funcionam como o "colchão de proteção" das cotas seniores. Normalmente são detidas pela própria empresa que originou os recebíveis.
+*   **FIDC Classe Fechada com Chamada de Capital:** O investidor assina um compromisso financeiro, mas só desembolsa o dinheiro (integraliza) quando o gestor "chama" (quando encontra boletos no mercado para comprar). O retorno do capital ocorre via amortizações ao longo da vida do fundo conforme os boletos são pagos.
+
+### 3. Investimentos no Exterior
+*   **Nova Lei das Offshores (Lei 14.754/2023):** Mudou radicalmente a tributação. Acabou o "diferimento fiscal" (postergação do IR) em paraísos fiscais. Agora, os lucros auferidos (rendimentos, dividendos e juros) em trusts, offshores e aplicações financeiras diretas no exterior são tributados anualmente (alíquota fixa de 15% na DAA - Declaração de Ajuste Anual), independentemente de o dinheiro ser trazido de volta para o Brasil. Impostos pagos no exterior podem ser compensados se houver acordo de reciprocidade.
+*   **BDRs (Brazilian Depositary Receipts):** Recibos negociados na B3 (Brasil) que representam ações de empresas estrangeiras.
+    *   *Nível I:* Não patrocinados (a empresa gringa não pediu para estar aqui). Menor exigência de disclosure (transparência), balanços não precisam ser traduzidos para normas brasileiras.
+    *   *Níveis II e III:* Patrocinados (a empresa ativamente quer captar no Brasil). Exigem registro total na CVM, alta transparência. Ideais para fundos com gestão profissional e regras rígidas de compliance.
+*   **ADRs (American Depositary Receipts):** O caminho inverso, recibos de empresas brasileiras negociados nas bolsas dos EUA (sujeitos à regulação pesada da SEC americana).
+
+### 4. Ativos Digitais e Criptoeconomia
+*   **Cenário Macroeconômico vs. Cripto:** Bitcoin e Ethereum se comportam no mercado institucional como "ativos de risco". Quando o Banco Central dos EUA (Fed) reduz as taxas de juros, o custo de oportunidade cai, aumentando a liquidez global e o apetite por ativos de risco, favorecendo ralis de alta em criptomoedas. Juros altos nos EUA sugam dinheiro de cripto para Renda Fixa americana.
+*   **Volatilidade e Proteção (Stablecoins):** Para evitar a alta volatilidade do Bitcoin sem sair do ecossistema cripto, usa-se *Stablecoins* (moedas com paridade 1:1 com o Dólar).
+*   **DeFi (Finanças Descentralizadas):** Elimina intermediários tradicionais via Contratos Inteligentes. Permite gerar renda passiva ("yield") via *Staking* (travar criptos para validar a rede Proof-of-Stake) ou pools de liquidez/empréstimos. O maior risco aqui é o risco de contraparte técnica (bugs de protocolo, hacks) ao invés do risco de crédito bancário.
+`
             },
             {
                 id: 'tema3',
                 title: 'Macrotema 3: Previdência Complementar (25%)',
                 content: `
-                    Foco em planejamento sucessório, tributação e fase de desacumulação demográfica.
-                    \n\n**Pontos Chave:**
-                    \n- **PGBL vs VGBL:** PGBL permite dedução de até 12% da renda bruta tributável na declaração completa do IRPF (imposto incide sobre o total no resgate). VGBL não tem dedução, mas o imposto incide apenas sobre o rendimento. NÃO HÁ COME-COTAS em previdência.
-                    \n- **Tabelas de Tributação:** Progressiva (ajuste anual) vs Regressiva (decresce até 10% após 10 anos).
-                    \n- **Flexibilização (Resoluções CNSP 463 e 464):** Maior flexibilidade na decisão de renda, portabilidade, escolha do benefício na fase tardia e partilha de excedente financeiro.
-                    \n- **Risco de Sequência de Retornos:** Impacto de quedas iniciais na fase de desacumulação e necessidade de proteção do fluxo de renda (ex: rendas vitalícias reversíveis).
-                `
+Este módulo exige conhecimentos sobre planejamento sucessório, vantagens tributárias atuariais, fase de acumulação e cálculos da fase de desacumulação.
+
+### 1. Modalidades de Planos: PGBL vs VGBL
+*   **PGBL (Plano Gerador de Benefício Livre):** Ideal para quem usa a declaração *Completa* do IR. O aporte anual pode ser deduzido até o limite de 12% da renda bruta tributável do investidor. **O ônus:** No resgate, o imposto de renda incidirá sobre o **Valor Total** (Soma dos Aportes + Rendimentos).
+*   **VGBL (Vida Gerador de Benefício Livre):** Ideal para quem usa a declaração *Simplificada*, isentos, ou quem já estourou o limite de 12% do PGBL. Não permite dedução fiscal. **O bônus:** No resgate, o imposto de renda incidirá **Apenas sobre a Rentabilidade** (lucro), poupando o capital principal. Além disso, por ser tecnicamente um seguro de pessoas, não entra em inventário e é transmitido rapidamente aos herdeiros.
+
+### 2. Regimes de Tributação, Come-cotas e IOF
+*   **A Grande Vantagem - Ausência de Come-Cotas:** O principal diferencial atuarial da previdência (PGBL/VGBL) contra os fundos de Renda Fixa tradicionais é a ausência total da cobrança semestral do IR. Sem o governo "mordendo" o saldo duas vezes ao ano, os juros compostos trabalham com a base de capital cheia por décadas, gerando um patrimônio final muito superior.
+*   **Tabela Regressiva (Definitiva):** O imposto foca no longo prazo. Começa punitivo em 35% (resgates em menos de 2 anos) e cai a cada dois anos até atingir a alíquota mínima de 10% (para dinheiro investido há mais de 10 anos). O critério é o método PEPS (Primeiro a Entrar, Primeiro a Sair).
+*   **Tabela Progressiva (Compensável):** Baseada na tabela de salários do IRPF (de 0% a 27,5%). Retém 15% na fonte no ato do resgate e o investidor ajusta a diferença na declaração anual.
+*   **IOF no VGBL (Decreto 12.499/2025):** Para coibir o uso de VGBL apenas como manobra tributária de curto prazo para milionários, o governo instituiu IOF de 5% sobre aportes anuais gigantescos (acima de R$ 300 mil em 2025, e R$ 600 mil a partir de 2026).
+
+### 3. Estrutura de Custos
+*   **Taxa de Carregamento (Entrada/Saída):** Cobrada percentualmente sobre cada aporte (carregamento de entrada) ou sobre o resgate. Afeta apenas o montante daquela movimentação específica. É menos prejudicial no longuíssimo prazo.
+*   **Taxa de Administração:** O vilão silencioso. Cobrada continuamente (provisionada diariamente) sobre o patrimônio TOTAL do fundo (aportes + juros de todos os anos passados). Uma taxa de administração alta destrói a rentabilidade real do plano de forma exponencial com o passar do tempo.
+
+### 4. A Fase de Desacumulação e Regras Atuariais
+*   **Tipos de Renda:**
+    *   *Renda Mensal Vitalícia Simples:* Paga até a morte do titular. Se ele morrer prematuramente, o saldo restante fica para a seguradora (princípio do mutualismo).
+    *   *Renda Vitalícia Reversível ao Beneficiário:* A ÚNICA modalidade que garante, atuarial e contratualmente, que os pagamentos continuarão sendo feitos (integral ou um % definido) ao cônjuge ou filhos após a morte do titular primário, até a morte dos beneficiários.
+*   **Risco de Sequência de Retornos:** O maior perigo na aposentadoria. Se o investidor começa a fazer saques mensais para viver logo num período em que a bolsa (ações) cai severamente, ele será obrigado a liquidar um volume enorme de cotas na baixa para levantar o dinheiro da sua "mesada". O patrimônio derreterá rapidamente, gerando risco de ruína. **Mitigação (Glide Path):** Reduzir a alocação em risco/volatilidade e montar estoques de liquidez conservadora conforme a data da aposentadoria se aproxima.
+*   **Portabilidade:** Transferência de reservas entre seguradoras sem pagamento de IR ou taxas. **Atenção:** Transfere-se o contrato do plano (ex: PGBL para PGBL). As cotas do fundo de investimento antigo são liquidadas (vendidas), o dinheiro trafega entre as seguradoras e é reinvestido no fundo novo. Não existe transferência direta de cotas do mesmo fundo entre bancos diferentes.
+`
             },
             {
                 id: 'tema4',
                 title: 'Macrotema 4: Gestão de Risco, Carteiras e Indicadores (20%)',
                 content: `
-                    Matemática de portfólios, Teoria de Markowitz e modelos de precificação.
-                    \n\n**Pontos Chave:**
-                    \n- **Teoria Moderna do Portfólio (Markowitz):** Covariância e correlação para construir fronteira eficiente, eliminando risco não sistemático.
-                    \n- **CAPM (Capital Asset Pricing Model):** Taxa de retorno exigida = Taxa Livre de Risco + Beta * (Retorno de Mercado - Taxa Livre de Risco).
-                    \n- **Índices de Performance:** Sharpe (retorno / volatilidade total), Treynor (retorno / risco sistemático ou Beta), Sortino (penaliza apenas volatilidade negativa).
-                    \n- **Estratégias de Rebalanceamento:** Constant Proportion Portfolio Insurance (CPPI - define um "floor" em renda fixa e alavanca o "cushion" em renda variável para convexidade) e Constant Mix.
-                    \n- **Riscos e ESG:** Mitigação de riscos sistêmicos, operacionais, contraparte, liquidez e riscos transicionais/climáticos da agenda ESG.
-                `
+Avalia a capacidade analítica do profissional para montar e rebalancear carteiras (Asset Allocation) baseadas no cenário e perfil do cliente, usando matemática financeira, estatística e teoria moderna.
+
+### 1. Teoria Moderna do Portfólio (Markowitz) e CAPM
+*   **Fronteira Eficiente:** Markowitz provou que, combinando ativos descorrelacionados (correlação próxima de 0 ou negativa), é possível criar uma carteira que oferece o máximo retorno matemático para um dado nível de risco. A diversificação elimina o risco *não-sistemático* (da empresa/micro), restando apenas o risco *sistemático* (do mercado/macro).
+*   **CAPM (Capital Asset Pricing Model):** Calcula a taxa de retorno que os investidores devem exigir para aceitar investir em um ativo arriscado.
+    *   *Fórmula:* Re = Rf + Beta * (Rm - Rf)
+    *   Onde Rf é a taxa livre de risco (Selic), Rm é o retorno do mercado (Ibovespa), e **Beta** mede a volatilidade e o risco sistêmico do ativo em relação ao mercado.
+*   **Volatilidade da Carteira (Risco):** Não é a simples média das volatilidades individuais. Depende fundamentalmente da proporção de alocação (peso 'w') e da covariância entre os ativos.
+    *   *Exemplo Matemático:* Se a carteira Arrojada "X" tem risco de 18% a.a. e a restrição de risco do cliente é 12% a.a. Como a taxa livre de risco (Selic) tem volatilidade ZERO, a conta é simples: (Risco Alvo 12 / Risco da Carteira 18) = 0,6667. Logo, aloca-se 66,67% na Carteira X e o restante 33,33% na Selic.
+
+### 2. Indicadores de Performance Ajustados ao Risco
+*   **Índice de Sharpe:** Avalia o retorno gerado acima da Selic por cada unidade de risco assumido. (Prêmio / Volatilidade Total). Penaliza o gestor tanto por quedas bruscas quanto por altas bruscas (pois o desvio padrão trata qualquer fuga da média como risco).
+*   **Índice de Treynor:** Similar ao Sharpe, mas no denominador divide o prêmio pelo **Beta** (apenas o risco sistemático). É a métrica ideal para avaliar carteiras já perfeitamente diversificadas.
+*   **Índice de Sortino:** Evolução do Sharpe. No denominador, usa apenas o *Downside Risk* (desvio padrão apenas dos retornos negativos). Agrada mais aos investidores, pois não pune o fundo se ele tiver uma "volatilidade positiva" (se explodir de subir).
+
+### 3. Alocação de Ativos, Rebalanceamento e Gestão Tática
+*   **Glide Path (LDI - Liability Driven Investment):** Filosofia focada em um objetivo com data marcada (ex: faculdade do filho ou aposentadoria). O risco começa alto na fase de acumulação e é estrutural e mecanicamente reduzido para Renda Fixa e Inflação conforme o prazo encurta. O ajuste é temporal e estrutural, ignorando euforias ou pânicos do cenário macro.
+*   **Constant Mix (Rebalanceamento Passivo):** Manter proporções fixas (ex: 60% bolsa, 40% renda fixa). Se a bolsa dispara e o peso vai para 68%, o portfólio ficou mais arriscado do que o perfil do cliente permite. A regra exige vender ações (com lucro, na alta) e comprar renda fixa (na baixa) para voltar ao trilho 60/40.
+*   **Tactical Asset Allocation (Gestão Tática):** Desvios temporários da alocação estrutural para capturar oportunidades de cenário. Exemplo: se o Banco Central sinaliza queda aguda da Selic (juros caindo), o gestor tático compra Títulos Prefixados para ganhar dinheiro forte com a marcação a mercado positiva, e reduz a parcela de liquidez em Caixa (CDI), que renderá cada vez menos.
+
+### 4. Avaliação de Riscos Modelados
+*   **Value at Risk (VaR):** Métrica estatística de perda financeira. Ex: VaR Diário 99% = R$ 1 Milhão. Significa que, em 99% dos pregões, a perda não passará de R$ 1 milhão. Sobra 1% de chance estatística (a cauda do risco, cerca de 2 a 3 dias no ano útil de 252 dias) de o mercado enlouquecer e a perda ser pior que 1 milhão.
+*   **Backtesting de VaR:** A auditoria do modelo. Se um modelo de 99% previu errar 2.5 vezes no ano, mas na prática o fundo teve prejuízos maiores que o limite em 8 dias do ano, o modelo estatístico está "furado" (subestimando perigos reais da economia) e exige recalibração urgente para evitar sanções regulatórias.
+*   **Risco de Liquidez (O perigo das Small Caps):** Dificuldade de transformar ativo em dinheiro rápido sem derreter o preço. Avaliado via *Spread* bid-ask (ficou caro comprar/vender) e *Volume Médio Diário* (VMD). Para mitigar: limitar a posição do fundo a uma % pequena do VMD (ex: max 15%) ou estabelecer uma regra de "dias necessários para zerar a posição" (ex: max 5 dias).
+*   **Perda Esperada de Risco de Crédito (Expected Loss):** 
+    *   *Fórmula:* PE = Exposição (EAD) * Probabilidade de Calote (PD) * Perda Dado o Calote (LGD).
+    *   *Exemplo Prático:* Empréstimo de R$ 200 Milhões. Risco de Calote na economia de 2% ao ano. Se o calote ocorrer, a justiça só recupera 50% dos bens, logo a LGD (Perda Definitiva) é os outros 50%. Conta: R$ 200 Mi * 2% = 4 Mi sofrendo calote. Dos 4 Mi, metade se perde de vez = Perda Esperada Real de R$ 2 Milhões ao ano.
+`
             }
         ];
 
         const rawQuizData = [
             {
                 id: 1,
+                temaId: 'tema1', // Relaciona com o macrotema
                 contexto: "Ronaldo é um profissional certificado pela Anbima e trabalha numa distribuidora de valores mobiliários. Ele está preparando um briefing que será enviado a clientes pessoa física que desejam investir em um fundo multimercado da sua instituição, que cobra uma taxa de administração de 1,2% ao ano. Ele nota que os clientes não entendem bem como a taxa de administração impacta a rentabilidade do fundo, quando ou como essa taxa é cobrada. Devido a essas dúvidas, Ronaldo pretende explicar da maneira mais concisa e direta possível como a taxa de administração é cobrada para que os clientes possam entender o impacto sobre a rentabilidade do fundo.",
                 enunciado: "Sendo assim, Ronaldo está ciente, mediante dúvidas trazidas por colegas que trabalham diretamente com clientes, que estes não entendem que a taxa de administração é:",
                 options: [
-                    { text: "provisionada diariamente pelo fundo, sobre seu patrimônio líquido, e incorporada ao valor da cota.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de determinar, no contexto de Fundos de Investimento, que a taxa é cobrada ao final de cada mês, porém provisionada diariamente, uma vez que a rentabilidade divulgada é líquida de todas as taxas." },
+                    { text: "provisionada diariamente pelo fundo, sobre seu patrimônio líquido, e incorporada ao valor da cota.", isCorrect: true, gabarito: "A taxa de administração afeta a cota diária do fundo. A CVM determina que o provisionamento do pagamento do administrador seja deduzido diariamente do Patrimônio Líquido. Assim, quando o cliente olha a rentabilidade do fundo na lâmina ou no aplicativo, aquele rendimento já é líquido de taxas (a taxa já foi descontada). Isso evita a surpresa de um boleto no final do mês." },
                     { text: "debitada diretamente da conta do cotista mensalmente, separadamente do valor da cota.", isCorrect: false },
                     { text: "informada na assembleia anual, e o valor é abatido retroativamente do rendimento distribuído aos cotistas.", isCorrect: false },
                     { text: "cobrada do cotista quando o fundo apresenta rendimento positivo e é proporcional ao lucro obtido.", isCorrect: false }
@@ -99,10 +208,11 @@
             },
             {
                 id: 2,
+                temaId: 'tema4',
                 contexto: "Patrícia é analista de investimentos em uma gestora de recursos independente e apoia a equipe de alocação na avaliação de fundos multimercado que compõem o portfólio de clientes institucionais. Um dos fundos em análise tem o seguinte perfil: estratégia macro global com mandato amplo, podendo investir em renda fixa, ações, moedas e derivativos, tanto no Brasil quanto no exterior. O regulamento permite alavancagem de até 200% do patrimônio líquido e o benchmark adotado é o CDI. Nos últimos 18 meses, o fundo apresentou retorno acumulado de 22% contra 17% do CDI, mas também registrou maior volatilidade e queda máxima (drawdown de 12%) em um período de estresse cambial. A equipe de relacionamento solicitou a Patrícia um parecer sobre a natureza desse fundo.",
                 enunciado: "Nesse contexto, o parecer de Patrícia deve destacar que o fundo:",
                 options: [
-                    { text: "busca alfa via mandato flexível, mas apresenta alta volatilidade e drawdown, adequado a investidores com maior tolerância a risco.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de explicar, no contexto de fundos de investimento, a natureza do fundo e assim atender a demanda do cliente." },
+                    { text: "busca alfa via mandato flexível, mas apresenta alta volatilidade e drawdown, adequado a investidores com maior tolerância a risco.", isCorrect: true, gabarito: "O fundo opera de forma ativa buscando superar o CDI (Alfa) usando alavancagem e derivativos no exterior. Esse mandato flexível entregou rentabilidade maior, mas gerou um drawdown (queda máxima desde o pico) de 12% e alta volatilidade. Portanto, Patrícia deve alertar que, por conta da alavancagem de 200% e da estratégia macro, é um produto arriscado, exigindo um perfil agressivo/tolerante a risco, não sendo uma proteção segura." },
                     { text: "concentra risco em períodos de estresse, exigindo uma maior atenção dos investidores ao horizonte de investimento.", isCorrect: false },
                     { text: "busca diversificação internacional visando reduzir o risco local, apesar da alavancagem ampliar a exposição a choques globais.", isCorrect: false },
                     { text: "oferece retorno garantido acima do CDI, uma vez que pode operar alavancado em múltiplas classes de ativos.", isCorrect: false }
@@ -110,425 +220,450 @@
             },
             {
                 id: 3,
-                contexto: "Ana é especialista de investimentos e responsável por criar materiais educativos, apresentar cenários macroeconômicos que justifiquem a diversificação de investimentos, desenvolver propostas de elaboração e montar e acompanhar o desempenho da carteira de uma gama de investidores na instituição financeira em que trabalha.\nAna avalia o cenário atual da economia brasileira, com o intuito de fazer uma seleção dos fundos com potencial interessante de rentabilidade. Ela obtém as seguintes informações acerca do cenário brasileiro para os próximos dois anos:\n• Perspectiva de crescimento da economia acima da média dos últimos 10 anos;\n• Taxa de juros em patamar um pouco acima da média histórica dos últimos 15 anos;\n• Possível regulamentação dos criptoativos.\nApós avaliar o cenário econômico, ela criou um material de divulgação a ser disponibilizado por sua instituição, apresentando um levantamento de cinco fundos, com potencial de boa performance no cenário atual.\nFundo V fundo de curto prazo atrelado ao DI, com resgate em D+0.\nFundo W ETF de Bitcoin, com resgate em D+2;\nFundo X fundo de crédito privado, com risco moderado e resgate em D+30;\nFundo Y fundo de renda fixa de longo prazo, com resgate em D+20;\nFundo Z [Referência do Fundo Z ausente no texto inicial da Q3, mas complementado na Q3 Enunciado]",
+                temaId: 'tema1',
+                contexto: "Ana é especialista de investimentos e responsável por criar materiais educativos, apresentar cenários macroeconômicos que justifiquem a diversificação de investimentos, desenvolver propostas de elaboração e montar e acompanhar o desempenho da carteira de uma gama de investidores na instituição financeira em que trabalha.\nAna avalia o cenário atual da economia brasileira, com o intuito de fazer uma seleção dos fundos com potencial interessante de rentabilidade. Ela obtém as seguintes informações acerca do cenário brasileiro para os próximos dois anos:\n• Perspectiva de crescimento da economia acima da média dos últimos 10 anos;\n• Taxa de juros em patamar um pouco acima da média histórica dos últimos 15 anos;\n• Possível regulamentação dos criptoativos.\nApós avaliar o cenário econômico, ela criou um material de divulgação a ser disponibilizado por sua instituição, apresentando um levantamento de cinco fundos, com potencial de boa performance no cenário atual.\nFundo V: fundo de curto prazo atrelado ao DI, com resgate em D+0.\nFundo W: ETF de Bitcoin, com resgate em D+2;\nFundo X: fundo de crédito privado, com risco moderado e resgate em D+30;\nFundo Y: fundo de renda fixa de longo prazo, com resgate em D+20;",
                 enunciado: "Ana aponta em seu material que é importante destacar que, em casos de necessidade de resgate de recursos aplicados nos próximos 60 dias, o investimento recomendado é o:",
                 options: [
-                    { text: "Fundo V.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de determinar, no contexto de Tributação, Come-Cotas, IOF e possíveis impactos na recomendação de alocação, a necessidade por liquidez do investidor de acordo com seu plano de resgate de recursos no curto prazo." },
+                    { text: "Fundo V.", isCorrect: true, gabarito: "Para resgates muito curtos (próximos 60 dias), a prioridade absoluta é a liquidez imediata e a mitigação do risco de mercado e de IOF. O Fundo V (D+0, atrelado ao DI) protege o capital principal da volatilidade. Além disso, previne que o investidor fique preso em carências maiores como D+20 ou D+30 (Fundo Y e X) ou sofra com a alta volatilidade em 60 dias do ETF de Bitcoin." },
                     { text: "Fundo X.", isCorrect: false },
                     { text: "Fundo W.", isCorrect: false },
                     { text: "Fundo Y.", isCorrect: false }
                 ]
             },
             {
-                id: 3.5, // The text splits Q3 into two. It has another "Enunciado: Considerando o contexto..." as part of Question 3. I'll make it 3.5.
-                contexto: "Mesmo contexto da Questão 3. Adicionalmente, considere que o Fundo Z é um VGBL.",
+                id: 4,
+                temaId: 'tema3',
+                contexto: "Mesmo cenário de Ana da Questão 3. Considere agora que existe um Fundo Z que é um VGBL.",
                 enunciado: "Considerando o contexto apresentado, dentre os fundos destacados no material divulgado, o mais adequado para investir, em um horizonte de médio a longo prazo, seria o Fundo Z, porque teria:",
                 options: [
-                    { text: "o pagamento do imposto apenas no resgate, não tendo “come-cotas”.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de determinar, no contexto de Tributação, Come-Cotas, IOF e possíveis impactos na recomendação de alocação, que o VGBL teria o diferencial de não pagar “come-cotas”, sendo tributado apenas no momento do resgate. Desde junho/2025, a incidência é de 5% sobre valores aportados que ultrapassam R$ 300 mil no acumulado de 11/6/25 até 31/12/25. A partir de 01/01/2026 o IOF de 5% incidirá sobre valores aportados que ultrapassarem R$ 600 mil/ano. Além disso, não há incidência de “come-cotas” em fundo de previdência complementar." },
+                    { text: "o pagamento do imposto apenas no resgate, não tendo “come-cotas”.", isCorrect: true, gabarito: "O Fundo Z, por ser um VGBL (Previdência Complementar), possui uma gigantesca vantagem tributária para prazos longos: a inexistência do come-cotas (recolhimento semestral de IR na fonte). O dinheiro que iria para o governo continua rendendo juros compostos ao longo dos anos, e o imposto só incide no momento do resgate lá na frente." },
                     { text: "o benefício tributário sobre 12% da renda, reduzindo assim o IR pago.", isCorrect: false },
                     { text: "o resgate em D+1, sem necessidade de esperar muito para receber os recursos.", isCorrect: false },
                     { text: "a alíquota de imposto de renda menor do que a dos outros fundos após 2 anos.", isCorrect: false }
                 ]
             },
             {
-                id: 4,
-                contexto: "Fernanda, uma profissional certificada C-PRO I, está elaborando um material informativo sobre tributação fiscal de pessoas físicas residentes no Brasil. Como subsídio, ela utilizou os seguintes exemplos de operações de renda variável, considerando, em seu exemplo, o no ano-calendário 20XX:\nLucro de R$ 6 mil em fundos imobiliários (FIIs) em março;\nPrejuízo de R$ 4 mil em fundos imobiliários (FIIs) em fevereiro;\nLucro de R$ 10 mil em ações (swing trade) em maio;\nPrejuízo de R$ 5 mil em ações (day trade) em abril.",
+                id: 5,
+                temaId: 'tema1',
+                contexto: "Fernanda, uma profissional certificada C-PRO I, está elaborando um material informativo sobre tributação fiscal de pessoas físicas residentes no Brasil. Como subsídio, ela utilizou os seguintes exemplos de operações de renda variável, considerando, em seu exemplo, o no ano-calendário 20XX:\n- Lucro de R$ 6 mil em fundos imobiliários (FIIs) em março;\n- Prejuízo de R$ 4 mil em fundos imobiliários (FIIs) em fevereiro;\n- Lucro de R$ 10 mil em ações (swing trade) em maio;\n- Prejuízo de R$ 5 mil em ações (day trade) em abril.",
                 enunciado: "Considerando as regras da Receita Federal sobre a compensação de perdas em renda variável para pessoas físicas, a orientação que deve ser incluída no material preparado por Fernanda é que o prejuízo de:",
                 options: [
-                    { text: "R$ 4 mil em FIIs pode ser compensado com o lucro de R$ 6 mil também obtido em FIIs, desde que respeitada a mesma natureza de tributação.", isCorrect: true, gabarito: "O profissional demonstrou a capacidade de empregar, no contexto de tributação para pessoas físicas residentes no Brasil, as regras atuariais acerca das compensações de perdas nas operações. A Receita Federal permite que prejuízos em fundos imobiliários (FIIs) sejam compensados com lucros também obtidos em FIIs, desde que ambos sejam de mesma natureza tributável (operações comuns com tributação de 20%). Essa compensação não precisa ocorrer no mesmo mês, mas deve ser informada mensalmente no sistema de apuração e na declaração anual do IR." },
+                    { text: "R$ 4 mil em FIIs pode ser compensado com o lucro de R$ 6 mil também obtido em FIIs, desde que respeitada a mesma natureza de tributação.", isCorrect: true, gabarito: "As regras da Receita estipulam o princípio da 'mesma natureza'. Prejuízos de FII só abatem lucros de FII. Prejuízos de Swing Trade de Ações abatem apenas lucros de Swing Trade de Ações. Prejuízo de Day Trade só abate lucro de Day Trade. Portanto, os R$ 4 mil perdidos em FIIs em fevereiro podem abater os R$ 6 mil ganhos em FIIs em março, pagando os 20% de IR apenas sobre os R$ 2 mil de saldo positivo." },
                     { text: "R$ 5 mil em ações day trade pode ser compensado com o lucro de R$ 10 mil em ações swing trade, por se tratar do mesmo tipo de ativo.", isCorrect: false },
                     { text: "R$ 4 mil em FIIs pode ser compensado com o lucro de R$ 10 mil em ações, desde que dentro do mesmo ano-calendário.", isCorrect: false },
                     { text: "R$ 9 mil não poderão ser compensados, pois a compensação só é possível quando os lucros e prejuízos ocorrem no mesmo mês.", isCorrect: false }
                 ]
             },
             {
-                id: 5,
+                id: 6,
+                temaId: 'tema2',
                 contexto: "Rafael, analista de investimentos em uma gestora de patrimônio, é o responsável por produzir material informativo acerca da cobrança de imposto de renda sobre operações realizadas no exterior em títulos de renda fixa e variável. Nesse material ele exemplifica uma situação de compra de US$ 50 mil em bonds corporativos de uma empresa americana, com recebimento de cupons semestrais de juros, e de aquisição de 200 ações de uma companhia listada na New York Stock Exchange (NYSE), vendidas com lucro no mesmo ano. Os cupons foram creditados na conta da corretora internacional, em dólares, sem retenção de imposto no Brasil, mas houve retenção de 10% de imposto nos EUA. Já a venda das ações gerou ganho de capital equivalente a R$ 10 mil, quando convertido.",
                 enunciado: "Aplicando a legislação a esse exemplo, Rafael conclui, em seu material informativo, que os cupons dos bonds:",
                 options: [
-                    { text: "serão tributados em 15% na Declaração de Ajuste Anual, assim como também é tributado o ganho de capital da venda das ações.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de determinar, no contexto de rendimentos e ganho de capital, a alíquota correta de imposto de ambas as operações e o momento correto de pagamento/recolhimento do imposto." },
+                    { text: "serão tributados em 15% na Declaração de Ajuste Anual, assim como também é tributado o ganho de capital da venda das ações.", isCorrect: true, gabarito: "Pela nova Lei das Offshores/Aplicações Financeiras no Exterior (Lei 14.754/2023), aplicável desde janeiro de 2024, tanto rendimentos (como os cupons dos bonds) quanto ganhos de capital (venda das ações com lucro) auferidos no exterior por pessoa física residente no Brasil sofrem tributação de uma alíquota fixa de 15%. Esse recolhimento deve ser apurado na Declaração de Ajuste Anual do IRPF. Pode-se abater os 10% já retidos nos EUA em razão de tratados/reciprocidade, pagando a diferença de 5% no Brasil." },
                     { text: "são tributados via carnê-leão e a alíquota de imposto é igual à da renda fixa, enquanto o ganho de capital na venda das ações é tributado em 15%.", isCorrect: false },
                     { text: "são isentos de tributação devido ao acordo entre os países para evitar a bitributação, já o ganho de capital na venda das ações é tributado em 15%.", isCorrect: false },
                     { text: "são tributados conforme tabela de imposto da renda fixa e o ganho de capital na venda das ações é isento, pois foi inferior a R$ 20 mil.", isCorrect: false }
                 ]
             },
             {
-                id: 6,
+                id: 7,
+                temaId: 'tema2',
                 contexto: "No comitê de alocação de um family office especializado em clientes ultra-high-net-worth, a equipe de investimentos discute a viabilidade de aumentar a exposição a Fundos de Investimento em Participações (FIPs). Durante a reunião, Pedro, analista de investimento, ressalta que FIPs exigem aporte mínimo regulamentar, governança estruturada e participação ativa na gestão das empresas investidas, podendo incluir assento no conselho. A proposta envolve destinar 8% do portfólio de clientes qualificados a FIPs de setores estratégicos, como energia renovável e tecnologia, visando a capturar ganhos de valorização e possíveis sinergias com empresas já presentes nas carteiras. O ponto central da discussão é equilibrar o potencial de retorno com o prazo de maturação dos investimentos e o perfil de risco dos clientes.",
                 enunciado: "Considerando esse contexto e a análise de Pedro, o comitê decide, como política de alocação, considerar apenas investimentos em fundos que:",
                 options: [
-                    { text: "exijam participação mínima de 5% do capital votante ou de efetiva influência na gestão da investida, possibilitando intervenção estratégica, inclusive por meio de assento no conselho de administração.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de Fundos em Participações (FIP), a situação apresentada e de escolher uma política de alocação consistente com o investimento em FIPs. De acordo com a regulamentação da CVM (atualmente a Resolução CVM 578), os FIPs devem manter participação relevante nas companhias investidas — via capital votante ou por meio de instrumentos que garantam influência efetiva na gestão. Isso permite ao fundo agregar valor não apenas via capital, mas também por gestão ativa, assento em conselho e alinhamento estratégico com a empresa, o que é central para a tese de investimento de um FIP." },
+                    { text: "exijam participação mínima de 5% do capital votante ou de efetiva influência na gestão da investida, possibilitando intervenção estratégica, inclusive por meio de assento no conselho de administração.", isCorrect: true, gabarito: "Pela regulamentação da CVM, o FIP não é um fundo de alocação passiva. Ele tem a obrigatoriedade de deter efetiva influência nas políticas estratégicas das empresas investidas, seja participando do bloco de controle, seja indicando membros ao conselho de administração, ou tendo pactos de acionistas com poder de veto. O FIP visa atuar diretamente no crescimento da empresa para depois vendê-la." },
                     { text: "possuam estrutura de cotas seniores e subordinadas, permitindo a modulação do risco entre diferentes classes de cotistas e potencializando a captação de investidores institucionais.", isCorrect: false },
                     { text: "apliquem uma política de investimento restrita a empresas listadas no Novo Mercado, assegurando governança corporativa elevada e liquidez compatível com fundos abertos.", isCorrect: false },
                     { text: "apresentem garantia implícita de capital por meio de contratos de opções de recompra (buyback agreements) com os gestores, mitigando riscos de perda patrimonial.", isCorrect: false }
                 ]
             },
             {
-                id: 7,
+                id: 8,
+                temaId: 'tema1',
                 contexto: "José é um profissional certificado pela Anbima que atua em uma corretora de valores. Ele foi procurado por Ana, uma profissional C-Pro R, que buscava esclarecimentos sobre uma dúvida levantada por um de seus clientes. O cliente havia investido em um Fundo de Investimento em Participações (FIP) e, ao analisar o portfólio, percebeu a existência de posições em derivativos. Surpreso, o cliente questionou a regularidade da operação, pois acreditava que os FIPs deveriam investir exclusivamente em participações de empresas não listadas. Ana relatou a José que o cliente demonstrou desconfiança em relação ao FIP após identificar essas posições.",
                 enunciado: "José, então, responde a Ana que tais operações provavelmente foram feitas com a finalidade de:",
                 options: [
-                    { text: "proteção patrimonial ou de ajuste de preço e alienação das companhias que integram a carteira de ativos.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de explicar, no contexto da Resolução CVM nº 175: outros tipos de Fundos de Investimentos – demais anexos da Resolução CVM nº 175, o provável motivo de investimento em derivativos, reconhecendo que esses instrumentos podem ser utilizados de forma acessória e com finalidade de proteção patrimonial ou de ajuste de preço e alienação de ativos, conforme permitido pela regulação (Capítulo III, Art. 9, par. 3)." },
+                    { text: "proteção patrimonial ou de ajuste de preço e alienação das companhias que integram a carteira de ativos.", isCorrect: true, gabarito: "De acordo com a Resolução CVM 175, embora a essência do FIP seja investir em participações acionárias ilíquidas, o fundo é legalmente autorizado a usar derivativos exclusivamente para fins de 'Hedge' (proteção patrimonial das posições da carteira) ou para ajustes relacionados à alienação das empresas. Não podem usar derivativos para pura especulação ou alavancagem desmedida." },
                     { text: "melhoria da remuneração dos recursos investidos pelos cotistas, com objetivo de alavancagem operacional.", isCorrect: false },
                     { text: "obtenção de ganho em algum tipo de spread entre os investimentos no Brasil e os investimentos do fundo no exterior.", isCorrect: false },
                     { text: "manter caixa para futuros investimentos em empresas de capital fechado de acordo com o mandato do fundo.", isCorrect: false }
                 ]
             },
             {
-                id: 8,
+                id: 9,
+                temaId: 'tema1',
                 contexto: "Adriana, uma profissional certificada C-PRO I, elaborou uma carteira recomendada para os clientes de sua instituição, composta por fundos de investimento de renda fixa de longo prazo, priorizando uma boa liquidez, baixo risco de crédito e compatibilidade com um perfil conservador de investimentos. Além disso, Adriana estruturou uma segunda carteira recomendada, com o mesmo perfil de investimento conservador, mas que possui uma vantagem tributária. Essa carteira é composta por títulos públicos com durations superiores a cinco anos, como os títulos do Tesouro IPCA+ e Tesouro Prefixado de maior prazo.",
                 enunciado: "Diferentemente da primeira carteira, na qual os fundos podem ser vendidos a qualquer momento, Adriana estruturou a segunda carteira para ser carregada até o vencimento, a fim de:",
                 options: [
-                    { text: "aproveitar o ganho tributário inerente à ausência do “come-cotas” do imposto de renda.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de tributações, aplicar o conhecimento tributário na recomendação de uma carteira na sua instituição. Os fundos de investimento estão sujeitos à incidência semestral de imposto de renda, por meio do mecanismo conhecido como “come-cotas”, o que reduz o efeito dos juros compostos e, consequentemente, os retornos líquidos dos investidores. Por outro lado, ao investir diretamente em uma carteira de títulos públicos com foco no longo prazo, o investidor é tributado pela mesma alíquota final de 15%, porém o recolhimento do imposto ocorre apenas no vencimento dos títulos. Essa diferença no momento da tributação favorece o investimento direto, pois permite maior capitalização ao longo do tempo, resultando em um montante final superior, quando comparado à mesma alocação realizada por meio de fundos sujeitos ao “come-cotas”." },
+                    { text: "aproveitar o ganho tributário inerente à ausência do “come-cotas” do imposto de renda.", isCorrect: true, gabarito: "A segunda carteira é composta por Títulos Públicos comprados diretamente. Diferente dos Fundos de Renda Fixa abertos (primeira carteira), títulos públicos detidos diretamente na pessoa física não sofrem a incidência semestral do 'come-cotas'. O IR só será pago no resgate ou no vencimento do título. Ao carregar um título por 5 anos sem o governo morder parte do rendimento a cada 6 meses, o efeito dos juros sobre juros engrandece muito o saldo final (benefício do diferimento fiscal)." },
                     { text: "reduzir a base de cálculo do imposto de renda ao aplicar em títulos públicos com rendimento isento para pessoas físicas.", isCorrect: false },
                     { text: "aproveitar as alíquotas menores de imposto de renda incidentes sobre os títulos públicos.", isCorrect: false },
                     { text: "utilizar a tabela regressiva do imposto de renda, disponível para títulos públicos e não para os fundos de investimentos.", isCorrect: false }
                 ]
             },
             {
-                id: 9,
+                id: 10,
+                temaId: 'tema1',
                 contexto: "Bianca é responsável pela estruturação de portfólios de investimentos para clientes com perfil conservador, nos quais predominam os investimentos em Renda Fixa. Nos últimos meses, o país atravessa um período de instabilidade econômica marcado por pressões inflacionárias persistentes, alta volatilidade no câmbio e desaceleração do crescimento do PIB.\nA inflação ultrapassou o teto da meta definida pelo Conselho Monetário Nacional, impulsionada pelo aumento nos preços internacionais de commodities e pela desvalorização do real frente ao dólar. Déficits orçamentários recorrentes elevaram a percepção de risco do país.\nNesta semana, o Copom elevou a Selic e sinalizou continuidade do aperto para reancorar expectativas. Bianca deseja se antecipar na reestruturação da parcela de Renda Fixa.",
                 enunciado: "Com base no cenário e na decisão do Copom, Bianca deve aumentar a alocação em:",
                 options: [
-                    { text: "Títulos públicos pós-fixados atrelados ao CDI (Tesouro Selic) para capturar o repasse imediato da alta da Selic, preservar liquidez e reduzir risco de marcação a mercado.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de dimensionar, no contexto de instrumentos de renda fixa, os efeitos de decisões e sinalizações do Copom sobre a meta da Selic ao traduzir o canal da política monetária para a estrutura a termo e para a precificação/MTM de Tesouro Selic, LTN e Tesouro IPCA+, dimensionando escolhas de prazo, indexador e liquidez conforme o regime de juros." },
+                    { text: "Títulos públicos pós-fixados atrelados ao CDI (Tesouro Selic) para capturar o repasse imediato da alta da Selic, preservar liquidez e reduzir risco de marcação a mercado.", isCorrect: true, gabarito: "A lógica da curva de juros dita que: se o COPOM está aumentando ativamente a taxa básica (Selic) para combater inflação e risco fiscal, a melhor defesa para a Renda Fixa é o título Pós-Fixado (Tesouro Selic ou LFT). O rendimento da carteira sobe instantaneamente com a alta dos juros e o investidor não sofre com a desvalorização do título por conta da Marcação a Mercado, um risco enorme se ela estivesse alocada em títulos Prefixados ou IPCA longo durante um ciclo de aperto monetário." },
                     { text: "CDBs/LCI/LCAs pós-fixados com FGC para buscar taxa CDI+ em novas emissões, aceitando carências e menor liquidez operacional frente aos títulos públicos.", isCorrect: false },
                     { text: "Prefixados de longo prazo para “travar” juros elevados, aceitando maior sensibilidade a novas altas e volatilidade por marcação a mercado no curto prazo.", isCorrect: false },
                     { text: "Títulos indexados ao IPCA (cupons + IPCA) para reforçar proteção real, aceitando duration mais alta, maior sensibilidade a juros reais e volatilidade superior no curto prazo.", isCorrect: false }
                 ]
             },
             {
-                id: 10,
+                id: 11,
+                temaId: 'tema1',
                 contexto: "Daniel, profissional C-PRO I, foi convidado a participar de um estudo interno de cenários econômicos e, para tanto, está montando carteiras teóricas de investimento que demonstrem que o investimento em Tesouro Renda+ pode ser bem utilizado, de acordo com o nível de conhecimento do investidor e seus objetivos.",
                 enunciado: "Considerando as combinações entre os diferentes níveis de conhecimento e objetivos dos investidores, Daniel deverá recomendar em seu relatório final de estudo a utilização do Tesouro Renda+ como forma de os investidores:",
                 options: [
-                    { text: "avançados fazerem hedge em sua carteira para renda de aposentadoria, garantindo um fluxo de caixa estável em meio a ativos mais voláteis.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de principais títulos públicos negociados no mercado interno, aplicar adequadamente o Tesouro Renda+ ao perfil do investidor. A alternativa está correta porque esse título, por oferecer pagamentos periódicos na fase de usufruto, pode ser utilizado por investidores avançados como ferramenta de hedge, equilibrando o risco de ativos mais voláteis e garantindo fluxo de caixa estável." },
+                    { text: "avançados fazerem hedge em sua carteira para renda de aposentadoria, garantindo um fluxo de caixa estável em meio a ativos mais voláteis.", isCorrect: true, gabarito: "O Tesouro Renda+ (NTN-B com pagamentos amortizados em 240 meses) foi criado para suplementar a aposentadoria. Em uma carteira de um investidor avançado, ele atua como um excelente 'hedge de renda'. Enquanto ativos voláteis como ações sobem e descem, o Renda+ garante um fluxo de caixa protegido da inflação pago mensalmente por 20 anos durante a fase de usufruto." },
                     { text: "iniciantes aproveitarem para obter ganhos rápidos e altos com a variação da taxa de juros e obter uma rentabilidade atraente para as próximas décadas.", isCorrect: false },
                     { text: "iniciantes construírem uma reserva de emergência e buscarem objetivos de curto prazo, por oferecerem liquidez diária.", isCorrect: false },
                     { text: "intermediários aumentarem a liquidez de suas carteiras, preservando a rentabilidade ao vender o título antecipadamente no mercado secundário.", isCorrect: false }
                 ]
             },
             {
-                id: 11,
-                contexto: "Gabriel, profissional C-PRO I, está analisando ativos para uma carteira recomendada de crédito privado de sua instituição. Essa carteira inclui títulos corporativos expostos ao setor de energia. Diante de um cenário de queda nos preços de commodities e pressões inflacionárias, Gabriel precisa reavaliar o risco de crédito dos ativos. A carteira possui:\nTítulo X: Debênture da Empresa Ômega (rating BBB, yield 11,5% a.a., duration 4 anos);\nTítulo Y: Debênture da Empresa Sigma (rating AA, yield 8,2% a.a., duration 3 anos);\nTítulo Z: Letra Financeira de banco médio (rating A, yield 10,0% a.a.,duration 2 anos).\nDados adicionais:\nA taxa livre de risco é 6,5% a.a.;\nO CDS (Credit Default Swap) do setor de energia subiu 120 pb nos últimos 3 meses;\nA Ômega possui alto endividamento (D/E = 2,5), enquanto a Sigma tem D/E = 0,8.",
+                id: 12,
+                temaId: 'tema4',
+                contexto: "Gabriel, profissional C-PRO I, está analisando ativos para uma carteira recomendada de crédito privado de sua instituição. Essa carteira inclui títulos corporativos expostos ao setor de energia. Diante de um cenário de queda nos preços de commodities e pressões inflacionárias, Gabriel precisa reavaliar o risco de crédito dos ativos. A carteira possui:\n- Título X: Debênture da Empresa Ômega (rating BBB, yield 11,5% a.a., duration 4 anos);\n- Título Y: Debênture da Empresa Sigma (rating AA, yield 8,2% a.a., duration 3 anos);\n- Título Z: Letra Financeira de banco médio (rating A, yield 10,0% a.a.,duration 2 anos).\nDados adicionais:\nA taxa livre de risco é 6,5% a.a.;\nO CDS (Credit Default Swap) do setor de energia subiu 120 pb nos últimos 3 meses;\nA Ômega possui alto endividamento (D/E = 2,5), enquanto a Sigma tem D/E = 0,8.",
                 enunciado: "Considerando o contexto macroeconômico e os fatores específicos dos emissores, a decisão de Gabriel para mitigar riscos sem abandonar completamente a busca por yield é:",
                 options: [
-                    { text: "aumentar a ponderação do Título Y (Sigma) e reduzir a do Título X (Ômega), mantendo o Título Z para diversificar setorialmente.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de aplicar, no contexto dos riscos em aplicações de renda fixa, os conceitos de mensuração do risco setorial e específico dos emissores para readequar a carteira. A alternativa está correta porque reduz a exposição ao emissor mais alavancado e vulnerável (Ômega), aumenta a posição em Sigma, que apresenta melhor rating e menor endividamento, e mantém o Título Z para diversificação setorial, equilibrando risco e retorno." },
+                    { text: "aumentar a ponderação do Título Y (Sigma) e reduzir a do Título X (Ômega), mantendo o Título Z para diversificar setorialmente.", isCorrect: true, gabarito: "Gestão de risco de crédito ativa: O setor de energia piorou (CDS subiu). Ômega tem alto endividamento (D/E 2,5) e nota de crédito pior (BBB). O risco de calote (default) da Ômega aumentou muito. Sigma, do mesmo setor, tem menos dívida (D/E 0.8) e melhor nota (AA). Ao vender X e comprar Y, Gabriel atua com Flight-to-Quality dentro do setor para proteger o principal. Manter o ativo bancário Z (LF de 10%) ajuda na diversificação de setores mantendo um yield intermediário." },
                     { text: "manter todos os títulos, confiando nos ratings vigentes e no yield superior para compensar riscos.", isCorrect: false },
                     { text: "substituir o Título X (Ômega) por um título soberano de duration similar, mesmo com yield menor (7,5% a.a.).", isCorrect: false },
                     { text: "vender todos os títulos corporativos e alocar em títulos pós-fixados indexados à Selic, eliminando risco de crédito.", isCorrect: false }
                 ]
             },
             {
-                id: 12,
+                id: 13,
+                temaId: 'tema4',
                 contexto: "Guilherme, profissional C-PRO I, deve emitir diretrizes para as carteiras recomendadas de ações, distribuídas por profissionais C-Pro R, com exposição temática a small caps. Nas últimas 4 semanas, houve queda de 25% no Volume Médio Diário das posições do universo cobertura, alargamento do spread médio de 0,7% para 2,0% e sinais de deterioração fundamental em 20% dos nomes monitorados. A orientação institucional é reduzir o risco de liquidez sem abandonar a tese de small caps, padronizando alocação, monitoramento e entradas de novos recursos.",
                 enunciado: "Diante desse cenário, as melhores diretrizes que Guilherme pode incluir nas carteiras recomendadas e no manual de distribuição são:",
                 options: [
-                    { text: "implantar limites por nome de até 15% do Volume Médio Diário ou até 5 dias para zerar, pausar novas alocações com spread a partir de 2% ou com deterioração, direcionar aportes para ETF de small caps e fazer revisão semanal.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de renda variável, a piora objetiva de liquidez (Volume Médio Diário −25%, spread médio de 0,7%→2,0%) e a deterioração fundamental em 20% dos nomes, ao propor limites de execução por nome (≤15% do Volume Médio Diário ou ≤5 dias para zerar), pausa de novas alocações quando spread ≥2% ou houver deterioração, direcionamento de aportes para ETF de small caps (reduzindo risco de execução e impacto de mercado) e revisão semanal, alinhando a diretriz institucional de reduzir risco de liquidez sem abandonar a tese." },
+                    { text: "implantar limites por nome de até 15% do Volume Médio Diário ou até 5 dias para zerar, pausar novas alocações com spread a partir de 2% ou com deterioração, direcionar aportes para ETF de small caps e fazer revisão semanal.", isCorrect: true, gabarito: "O grande risco de Small Caps é a Liquidez. Como o spread abriu para 2% (ficou caro entrar/sair dos papéis) e o volume de negociação caiu (não há compradores suficientes), o fundo pode ficar travado. A técnica correta de gestão de risco manda definir travas: não se pode ter uma posição que demore mais de 5 dias ou seja mais que 15% do volume negociado no dia para ser zerada (impactaria muito o preço vendendo a mercado). Migrar novos recursos temporariamente para ETFs de small caps garante a exposição à tese macro desviando da iliquidez no micro." },
                     { text: "manter a recomendação atual da carteira, reforçar o disclosure de riscos, estender o horizonte de investimento para 24 meses, manter entradas proporcionais sem ajustes por liquidez e reavaliar quando a liquidez melhorar.", isCorrect: false },
                     { text: "aumentar a diversificação entre setores e emissores, exigir pelo menos 40 nomes, adiar limites baseados em Volume Médio Diário e dias para zeragem, manter revisões mensais e aceitar prazos maiores de execução até a melhora gradual da liquidez.", isCorrect: false },
                     { text: "elevar a alocação nos papéis com spreads mais largos para capturar possível prêmio de iliquidez, flexibilizar limites de participação em volume diário, manter a tese como diretriz principal e aceitar maior risco de execução no curto prazo.", isCorrect: false }
                 ]
             },
             {
-                id: 13,
+                id: 14,
+                temaId: 'tema1',
                 contexto: "Murilo, profissional C-Pro I, está analisando fundos para perfis mais propensos a risco. Ele observa um comportamento atípico no mercado em pregões intraday. As ações de várias companhias que compõem o índice, não raro, apresentam fortes oscilações de preço em poucos minutos, acompanhadas de picos súbitos de volume. Paralelamente, as demonstrações financeiras dessas empresas frequentemente mostram resultados abaixo do esperado, o que pode impactar seu valor de longo prazo. Visando se certificar de que um fundo escolhido é adequado para indicar para a área de distribuição, Murilo analisa se esse fundo fará operações de curtíssimo prazo, explorando a volatilidade, ou se reavaliará o valor justo das ações para a estratégia do fundo.",
                 enunciado: "Caso o fundo seja voltado para operações de curtíssimo prazo, a gestão do fundo deverá focar na análise:",
                 options: [
-                    { text: "técnica ou grafista, mais apropriada para decisões intraday, pois busca identificar padrões de preços e de volumes capazes de antecipar movimentos de curtíssimo prazo.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de avaliação de investimentos em ações, analisar o conceito da análise técnica no cenário de volatilidade intraday. A análise técnica é útil no curtíssimo prazo, como no intraday, pois avalia preços e volumes para identificar padrões de comportamento e aproveitar disfunções momentâneas." },
+                    { text: "técnica ou grafista, mais apropriada para decisões intraday, pois busca identificar padrões de preços e de volumes capazes de antecipar movimentos de curtíssimo prazo.", isCorrect: true, gabarito: "A análise técnica (ou gráfica) não olha para a saúde financeira da empresa (lucros, Ebitda, dívida). Ela é focada unicamente na formação de preços históricos e fluxos de volume de negociação para buscar tendências emocionais dos investidores no curtíssimo prazo (day trade e swing trade de dias). Quando um fundo busca lucro explorando oscilações bruscas 'intraday', ele necessariamente precisa usar ferramental de Análise Técnica." },
                     { text: "fundamentalista, mais apropriada para operações de curtíssimo prazo, já que indicadores contábeis permitem capturar distorções momentâneas de preço.", isCorrect: false },
                     { text: "fundamentalista, mais adequada para reavaliar o preço justo da ação após os resultados financeiros, dado que incorpora fundamentos econômicos e contábeis.", isCorrect: false },
                     { text: "técnica ou grafista, mais indicada para estimar o valor intrínseco da ação após a divulgação dos resultados trimestrais ou de outro fato relevante.", isCorrect: false }
                 ]
             },
             {
-                id: 14,
+                id: 15,
+                temaId: 'tema2',
                 contexto: "Francisco, profissional C-Pro I, é responsável pelos investimentos internacionais na gestora onde trabalha. Para realizar seu trabalho e embasar as recomendações das carteiras que elabora, ele tem de acompanhar a economia dos Estados Unidos e conhecer as metodologias utilizadas no cálculo dos principais índices de ações do mercado americano, já que, dependendo da metodologia, pode haver percepções diferentes desse mercado. Para elaborar uma nova carteira, Francisco quer utilizar um índice que sofra maior influência de empresas com ações de preço unitário mais elevado, mesmo que não sejam as maiores em termos de valor de mercado.",
                 enunciado: "Para essa nova carteira, o índice a ser utilizado por Francisco deve ser:",
                 options: [
-                    { text: "Dow Jones Industrial Average (DJIA)", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de investimento em ações no exterior, empregar a lógica de ponderação por preço e interpretar como isso afeta a representatividade do índice. O DJIA é calculado como uma média ajustada dos preços das ações, de forma que empresas com preços unitários mais elevados exercem influência maior sobre o índice, ainda que não sejam as maiores em valor de mercado." },
+                    { text: "Dow Jones Industrial Average (DJIA)", isCorrect: true, gabarito: "O DJIA (Dow Jones) utiliza uma metodologia peculiar e arcaica: a ponderação por preço nominal da ação (Price-Weighted). Isso significa que uma empresa como a UnitedHealth (ação cara) move o índice mais que a Apple (ação que dividiu suas cotas para ficar mais barata, embora valha trilhões de dólares). O S&P 500, pelo contrário, usa Market-Cap Weighted (peso pelo valor total de mercado da empresa)." },
                     { text: "S&P 500.", isCorrect: false },
                     { text: "Russell 5000.", isCorrect: false },
                     { text: "NASDAQ Composite.", isCorrect: false }
                 ]
             },
             {
-                id: 15,
+                id: 16,
+                temaId: 'tema4',
                 contexto: "Gideão Diniz, profissional C-Pro I certificado pela Anbima que atua na área de investimentos, identificou que uma oferta pública de valores mobiliários distribuída pela Instituição Participante (IP) à qual está vinculado teve atraso de 40 dias no envio de informações obrigatórias à Anbima. Ele tinha uma reunião para orientar os gerentes de relacionamento da instituição a distribuir a oferta, porém decidiu adiar essa reunião e entrou em contato com a área de compliance do banco, pois primeiro precisava entender as consequências desse descumprimento e atraso.",
                 enunciado: "O profissional de compliance explicou a Gideão que, nesse caso, de acordo com o Código de Ofertas Públicas, a Anbima poderá:",
                 options: [
-                    { text: "aplicar multa diária de R$ 150,00 à IP, limitada a 30 dias de atraso, pois, após esse limite, não há acréscimo, ainda que a falha persista.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de aplicar, no contexto de Código ANBIMA de ofertas públicas, as regras de penalidades. O Código de Ofertas Públicas prevê a possibilidade de multa diária de R$ 150,00 em casos de atraso no envio de informações, mas limita a cobrança a um período máximo de 30 dias para cada evento, independentemente do período total de atraso." },
+                    { text: "aplicar multa diária de R$ 150,00 à IP, limitada a 30 dias de atraso, pois, após esse limite, não há acréscimo, ainda que a falha persista.", isCorrect: true, gabarito: "Conforme o regulamento da ANBIMA para ofertas públicas (código de autorregulação), atrasos na remessa de relatórios ou informações técnicas geram uma multa pecuniária cobrada por dia de atraso. O valor estabelecido é de R$ 150,00/dia, porém há um teto de 30 dias para a cobrança sobre o mesmo fato gerador." },
                     { text: "cobrar da IP multa calculada sobre os 40 dias de atraso, pois o limite de 30 dias só se aplica a reincidências, não a atrasos pontuais.", isCorrect: false },
                     { text: "suspender automaticamente a oferta atribuída à IP, independentemente de análise posterior, diante do atraso superior a 30 dias.", isCorrect: false },
                     { text: "suspender a aplicação de multa automática nesse caso, pois apenas o Conselho de Ofertas decide sobre penalidades por atrasos.", isCorrect: false }
                 ]
             },
             {
-                id: 16.1,
-                contexto: "Glória é uma profissional C-Pro I da área de Wealth Management de um grande banco de investimentos, que conta com experientes profissionais especialistas em ativos digitais, análise on-chain e estruturação de veículos de investimento. Foi solicitado que Glória montasse um relatório detalhado, apresentando a análise de alguns investimentos que pudessem ser utilizados na recomendação de montagem de carteiras de investidores qualificados. Esse relatório será disponibilizado como subsídio aos profissionais C-PRO R desse banco.\nNa solicitação à Glória, foram destacados dois pontos para a elaboração do relatório:\n(i) evitar volatilidade excessiva em parte da alocação, utilizando instrumentos que ofereçam proteção contra quedas abruptas;\n(ii) explorar oportunidades em protocolos de finanças descentralizadas (DeFi) que gerem renda passiva via staking ou empréstimos de criptoativos, desde que haja segurança operacional e mitigação de riscos de contraparte.\nA análise macroeconômica realizada pela equipe do banco apontou:\n- Taxas de juros globais em patamar elevado, pressionando ativos de risco no curto prazo;\n- Forte expectativa de redução de juros nos EUA no médio prazo;\n- Adoção crescente de soluções de blockchain por grandes empresas e por governos;\n- Regulamentações mais claras em alguns mercados, porém ainda incertas em outros;\n- Volatilidade implícita das principais criptomoedas em níveis acima da média histórica.\nDentre os investimentos analisados, o relatório feito por Glória recomenda a organização de carteiras compostas pelos seguintes investimentos: Fundos de índice (ETFs) de Bitcoin e Ethereum negociados em bolsa brasileira, certificados de operações estruturadas (COEs) com barreira de proteção, stablecoins remuneradas via plataformas reguladas no exterior, fundos de venture capital focados em blockchain, além da compra direta e autocustódia (cold storage) dos criptoativos.",
+                id: 17,
+                temaId: 'tema2',
+                contexto: "Glória é uma profissional C-Pro I da área de Wealth Management de um grande banco de investimentos, que conta com experientes profissionais especialistas em ativos digitais, análise on-chain e estruturação de veículos de investimento. Foi solicitado que Glória montasse um relatório detalhado, apresentando a análise de alguns investimentos que pudessem ser utilizados na recomendação de montagem de carteiras de investidores qualificados.\nNa solicitação à Glória, foram destacados dois pontos: evitar volatilidade excessiva protegendo contra quedas, e explorar DeFi com renda passiva mitigando risco de contraparte.\nA análise macro apontou:\n- Taxas de juros globais em patamar elevado agora, mas com queda esperada nos EUA;\n- Adoção crescente de blockchain institucional;\n- Volatilidade implícita das criptos muito alta.\nInvestimentos em tela: ETFs de BTC/ETH, COEs, Stablecoins rendendo juros fora, Venture Capital, Cold Storage.",
                 enunciado: "Com base no cenário apresentado, a estratégia de alocação em criptoativos que está mais alinhada com o objetivo de equilibrar potencial de retorno e proteção de capital é:",
                 options: [
-                    { text: "alocar a maior parte em stablecoins remuneradas via plataformas reguladas, complementando com ETFs de Bitcoin e Ethereum, e utilizar COEs com barreira de proteção.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar o contexto apresentado e de escolher, no que se refere a estratégias de investimentos em criptoativos, a estratégia de alocação mais alinhada com os objetivos do cliente. Tendo em vista que o caso menciona que se deve evitar volatilidade excessiva em parte da alocação, utilizando instrumentos que ofereçam proteção contra quedas abruptas, os COEs podem ser estruturados de forma a proteger o capital do investidor. Além disso, o investimento em stablecoins reduz significativamente a volatilidade da carteira, tendo em vista que elas não possuem volatilidade. Finalmente, a alocação em BTC e ETH via ETFs dá ao investidor a possibilidade de se expor a esses tipos de ativos de forma simples e fácil, através do mercado organizado em bolsa de valores." },
+                    { text: "alocar a maior parte em stablecoins remuneradas via plataformas reguladas, complementando com ETFs de Bitcoin e Ethereum, e utilizar COEs com barreira de proteção.", isCorrect: true, gabarito: "Stablecoins não variam (não têm volatilidade como o Bitcoin), resolvendo o problema 1 (evitar volatilidade excessiva), e ao usar plataformas reguladas para gerar yields nelas, resolve a renda passiva DeFi mitigando o risco de contraparte. O COE com proteção garante um teto mínimo. E os ETFs de BTC/ETH permitem a exposição à alta de longo prazo (capturar retorno) em um ambiente regulado, sem os riscos complexos da Cold Storage." },
                     { text: "alocar a maior parte do montante previsto em protocolos DeFi, com o resto alocado diretamente em Bitcoin e Ethereum autocustodiados.", isCorrect: false },
                     { text: "Destinar 100% do montante previsto para cripto em compra direta de criptomoedas de baixa capitalização, visando a ganhos maiores.", isCorrect: false },
                     { text: "utilizar exclusivamente fundos de venture capital focados em blockchain, com prazo de resgate superior a 10 anos, sem nenhuma exposição direta ou líquida a criptoativos.", isCorrect: false }
                 ]
             },
             {
-                id: 16.2,
-                contexto: "Mesmo contexto da Questão 16.1",
+                id: 18,
+                temaId: 'tema2',
+                contexto: "Mesmo contexto do relatório de Glória em Wealth Management envolvendo Criptoativos.",
                 enunciado: "De acordo com o cenário macroeconômico descrito no caso, o fator macroeconômico que favorece o desempenho de criptoativos como Bitcoin e Ethereum é a:",
                 options: [
-                    { text: "expectativa de queda nas taxas de juros nos EUA.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar o contexto apresentado e de avaliar, no que se refere a estratégias de investimentos em criptoativos, qual dos cenários macroeconômicos afetaria o desempenho de investimentos em BTC e ETH de forma positiva. A queda das taxas de juros nos EUA favorece investimentos de risco, dentre eles o investimento em criptoativos. Assim, uma queda na taxa de juros americana tende a favorecer o mercado de criptoativos." },
+                    { text: "expectativa de queda nas taxas de juros nos EUA.", isCorrect: true, gabarito: "Criptoativos são extremamentes sensíveis à liquidez global. Quando os EUA (Federal Reserve) corta os juros (Treasuries pagam menos), o custo de oportunidade do capital cai, e grandes investidores buscam ativos de maior risco para compensar a perda de rentabilidade na Renda Fixa segura americana. Assim, a queda de juros nos EUA historicamente impulsiona rallies em Bitcoin." },
                     { text: "Manutenção de taxas de juros elevadas no Brasil e nos EUA.", isCorrect: false },
                     { text: "Incerteza quanto à regulação de criptoativos em algumas jurisdições.", isCorrect: false },
                     { text: "Alta volatilidade dos criptoativos.", isCorrect: false }
                 ]
             },
             {
-                id: 17,
+                id: 19,
+                temaId: 'tema2',
                 contexto: "A empresa Delta, do setor de logística, pretende investir R$ 20 milhões em um FIDC de classe fechada no mercado primário, com chamada de capital. Preocupada com o fluxo de caixa, a diretoria quer entender como isso impacta a previsibilidade do retorno.",
                 enunciado: "Diante desse contexto, conclui-se que a empresa:",
                 options: [
-                    { text: "desembolsará os recursos nas chamadas de integralização, e receberá seu capital em amortizações previstas.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de FIDCs, as diferenças entre o compromisso (subscrição), o desembolso (integralização) e o retorno do capital (amortizações ou vencimento), com a descrição correta do ciclo de vida de um investimento em um FIDC de classe fechada com chamadas de capital." },
+                    { text: "desembolsará os recursos nas chamadas de integralização, e receberá seu capital em amortizações previstas.", isCorrect: true, gabarito: "A principal característica de um FIDC (Fundo de Direitos Creditórios) Classe Fechada 'com chamada de capital' é o descasamento entre Subscrição (assinar o cheque) e Integralização (pagar o cheque). A empresa subscreve os 20 milhões, mas o gestor do FIDC só vai pedir as transferências ('chamar o capital') conforme ele for achando recebíveis/boletos para o fundo comprar no mercado. O retorno do dinheiro investido ocorre à medida que esses boletos vencem e são pagos pelos devedores, gerando as 'amortizações' da cota." },
                     { text: "desembolsará os R$ 20 milhões no ato da subscrição, e poderá solicitar resgates sempre que precisar de liquidez.", isCorrect: false },
                     { text: "terá o retorno de capital no vencimento final do fundo, sem possibilidade de amortizações antecipadas.", isCorrect: false },
                     { text: "poderá desistir do investimento antes do vencimento, bastando não fazer novos aportes.", isCorrect: false }
                 ]
             },
             {
-                id: 18.1,
-                contexto: "Ricardo é um profissional certificado Anbima que atua na área de análise de fundos listados em uma casa de análises independente. A diretoria dessa casa solicitou a ele que elaborasse um relatório sobre um Fundo de Investimento Imobiliário (FII) do segmento de lajes corporativas que apresentou aumento relevante no índice de vacância nos últimos 12 meses, saindo de 2% para 8% do portfólio. Esse fundo possui uma boa reserva de rendimentos retidos, além de 60% de contratos atípicos de longo prazo e 40% de contratos típicos de curta duração, cujos aluguéis vêm sendo renegociados com descontos de 5% a 10% devido ao desaquecimento do mercado de escritórios.\nPara fazer o relatório solicitado, Ricardo deve avaliar como a vacância crescente e a qualidade dos contratos vigentes podem impactar o fluxo de caixa do fundo, o pagamento de dividendos e a atratividade para investidores de perfil conservador.\nEle deve projetar cenários considerando:\nI Manutenção da vacância atual e suas consequências para o rendimento mensal;\nII Possibilidade de saída antecipada de inquilinos em contratos típicos;\nIII Resiliência dos contratos atípicos frente a possíveis crises de mercado.\nDurante as reuniões de Ricardo com a equipe de gestão, foi destacada a necessidade de elaboração de orientações para a equipe de relacionamento, explicando aos clientes como os diferentes tipos de contrato influenciam a estabilidade dos rendimentos e os riscos associados à vacância prolongada. Diante desse cenário, o relatório preparado por Ricardo deve apresentar estimativas realistas de fluxo de caixa sob diferentes taxas de vacância, discutir a solidez dos contratos de locação e propor estratégias de comunicação que permitam à equipe comercial orientar os investidores de forma clara, equilibrando expectativas de rendimento com riscos de perda de receita e valorização patrimonial.",
+                id: 20,
+                temaId: 'tema1',
+                contexto: "Ricardo é um profissional certificado Anbima que atua na área de análise de fundos listados em uma casa de análises independente. A diretoria dessa casa solicitou a ele que elaborasse um relatório sobre um Fundo de Investimento Imobiliário (FII) do segmento de lajes corporativas que apresentou aumento relevante no índice de vacância nos últimos 12 meses, saindo de 2% para 8% do portfólio. Esse fundo possui uma boa reserva de rendimentos retidos, além de 60% de contratos atípicos de longo prazo e 40% de contratos típicos de curta duração, cujos aluguéis vêm sendo renegociados com descontos de 5% a 10% devido ao desaquecimento do mercado de escritórios.",
                 enunciado: "Diante desse contexto, em seu relatório, Ricardo deve:",
                 options: [
-                    { text: "avaliar o risco de concentração de inquilinos e a resiliência dos contratos atípicos, projetando cenários de vacância.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de vacância, pessoas inquilinas e contratos, analisar, simultaneamente, o risco de concentração de inquilinos, a resiliência dos contratos atípicos e a projeção de cenários de vacância. Essa abordagem técnica permite avaliar a sustentabilidade do fluxo de caixa do fundo e a previsibilidade de distribuição de rendimentos." },
+                    { text: "avaliar o risco de concentração de inquilinos e a resiliência dos contratos atípicos, projetando cenários de vacância.", isCorrect: true, gabarito: "O FII de Lajes Corporativas de Ricardo tem o pilar do seu faturamento garantido pelos contratos Atípicos (que têm multas rescisórias astronômicas cobrindo todo o prazo restante, tornando a saída difícil). Já os Típicos são frágeis a vacância (rescisão é de apenas 3 meses de aviso em média). Logo, analisar a qualidade de quem são esses inquilinos atípicos (risco de concentração e de calote) é a melhor técnica para projetar os fluxos futuros." },
                     { text: "sugerir o investimento no respectivo fundo, argumentando que a vacância abriu uma oportunidade de entrada.", isCorrect: false },
                     { text: "concentrar a análise nos contratos atípicos do fundo, desconsiderando os contratos típicos nessa avaliação.", isCorrect: false },
                     { text: "inferir que a vacância não é um problema, devido aos contratos atípicos servirem de garantia contra a inadimplência.", isCorrect: false }
                 ]
             },
             {
-                id: 18.2,
-                contexto: "Mesmo contexto da Questão 18.1",
+                id: 21,
+                temaId: 'tema1',
+                contexto: "Mesmo FII de Lajes Corporativas de Ricardo, com vacância subindo para 8% e renegociação em baixa dos contratos típicos (desconto de 5% a 10%).",
                 enunciado: "Tendo em vista o contexto do mercado imobiliário, Ricardo avalia, em seu relatório, que os dividendos distribuídos pelo fundo devem sofrer:",
                 options: [
-                    { text: "redução no médio prazo.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de vacância, pessoas inquilinas e contratos, analisar que, no médio prazo, após o consumo da reserva de rendimentos retidos e não distribuídos, o fundo deve sofrer redução na distribuição dos rendimentos, devido ao aumento da vacância e da redução dos aluguéis dos contratos típicos." },
+                    { text: "redução no médio prazo.", isCorrect: true, gabarito: "No curto prazo, a 'boa reserva de rendimentos retidos' anunciada no contexto será utilizada pelo gestor do FII para suavizar os pagamentos e não cortar os dividendos subitamente. No entanto, matematicamente, uma vez que a reserva se esgotar, a vacância de 8% e as renegociações com aluguéis mais baratos nos contratos típicos impactarão negativamente a arrecadação estrutural do fundo, gerando redução de dividendos no médio prazo." },
                     { text: "redução no curto prazo.", isCorrect: false },
                     { text: "aumento no curto prazo.", isCorrect: false },
                     { text: "aumento no médio prazo.", isCorrect: false }
                 ]
             },
             {
-                id: 19,
-                contexto: "A equipe de profissionais certificados Anbima do banco de investimentos UBA está desenvolvendo diretrizes para a carteira recomendada de um novo fundo de ações globais. O objetivo é otimizar a diversificação internacional e a liquidez, incorporando ativos de mercados desenvolvidos e emergentes. Para isso, a equipe avalia a inclusão de BDRs de empresas americanas de tecnologia e ADRs de companhias brasileiras com forte presença global. Seu papel é analisar profundamente as estruturas e os níveis desses recibos depositários, considerando as exigências regulatórias da CVM e da SEC, os padrões de disclosure e as modalidades de negociação. Essa análise é crucial para definir a elegibilidade dos ativos e mitigar riscos de mercado, garantindo que a carteira esteja alinhada com o perfil do fundo e com as expectativas de retorno.",
+                id: 22,
+                temaId: 'tema2',
+                contexto: "A equipe de profissionais certificados Anbima do banco de investimentos UBA está desenvolvendo diretrizes para a carteira recomendada de um novo fundo de ações globais. O objetivo é otimizar a diversificação internacional e a liquidez, incorporando ativos de mercados desenvolvidos e emergentes. Para isso, a equipe avalia a inclusão de BDRs de empresas americanas de tecnologia e ADRs de companhias brasileiras com forte presença global. Seu papel é analisar profundamente as estruturas e os níveis desses recibos depositários, considerando as exigências regulatórias da CVM e da SEC, os padrões de disclosure e as modalidades de negociação.",
                 enunciado: "A decisão a ser tomada pela equipe de modo a refletir as diretrizes para a carteira recomendada deve:",
                 options: [
-                    { text: "incluir BDRs Nível II e III de empresas estrangeiras e ADRs de companhias brasileiras, garantindo transparência e liquidez compatíveis com o perfil do fundo.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de instrumentos de investimento no exterior, analisar a importância da elegibilidade e liquidez exigidos para a carteira global. BDRs Níveis II e III e ADRs listados em bolsas internacionais cumprem requisitos de registro, transparência e divulgação, permitindo composição diversificada e alinhada ao perfil global do fundo." },
+                    { text: "incluir BDRs Nível II e III de empresas estrangeiras e ADRs de companhias brasileiras, garantindo transparência e liquidez compatíveis com o perfil do fundo.", isCorrect: true, gabarito: "A regulação (tanto da CVM quanto da SEC americana) é severa quanto aos Níveis de recibos. BDRs Nível I são 'não patrocinados', ou seja, um banco pegou as ações lá fora e empacotou aqui sem a empresa americana se comprometer a publicar balanços traduzidos, gerando baixa transparência. Já os Níveis II e III (tanto BDRs na B3 quanto ADRs na NYSE) são patrocinados pela empresa, exigem alto compliance e fornecem liquidez apropriada a investidores institucionais como Fundos de Ações Globais." },
                     { text: "priorizar BDRs Nível I não patrocinados de empresas estrangeiras com baixo disclosure, pois apresentam menor custo de aquisição e menor exigência regulatória.", isCorrect: false },
                     { text: "substituir ADRs de companhias brasileiras por ações locais, para eliminar exigências de registro na SEC e reduzir o controle de compliance internacional.", isCorrect: false },
                     { text: "adotar BDRs e ADRs de qualquer nível, pois todos possuem liquidez e exigências de registro equivalentes nos mercados brasileiro e americano.", isCorrect: false }
                 ]
             },
             {
-                id: 20,
-                contexto: "Durante a revisão periódica da arquitetura de produtos previdenciários de uma corretora, a área técnica analisou os fundos disponíveis na oferta institucional. Verificou-se que fundos vinculados a planos distintos, com regulamentos próprios e gestores diferentes, mantinham exposição relevante a títulos privados emitidos por empresas de um mesmo conglomerado econômico. Tais posições resultaram de decisões independentes e estavam em conformidade com os limites de concentração por emissor e rating previstos nas normas. As análises individuais não indicaram desenquadramentos formais. Contudo, a discussão passou a considerar se a coerência da oferta deveria se restringir ao cumprimento individual dos limites ou incorporar a visão sobre a distribuição dos riscos subjacentes. O profissional C-Pro I participa da análise sob a ótica da coerência técnica e informacional da oferta.",
+                id: 23,
+                temaId: 'tema3',
+                contexto: "Durante a revisão periódica da arquitetura de produtos previdenciários de uma corretora, a área técnica analisou os fundos disponíveis na oferta institucional. Verificou-se que fundos vinculados a planos distintos, com regulamentos próprios e gestores diferentes, mantinham exposição relevante a títulos privados emitidos por empresas de um mesmo conglomerado econômico. Tais posições resultaram de decisões independentes e estavam em conformidade com os limites de concentração por emissor e rating previstos nas normas. As análises individuais não indicaram desenquadramentos formais. Contudo, a discussão passou a considerar se a coerência da oferta deveria se restringir ao cumprimento individual dos limites ou incorporar a visão sobre a distribuição dos riscos subjacentes.",
                 enunciado: "Considerando-se o contexto apresentado e o papel do C-Pro I na avaliação da coerência da oferta previdenciária, a interpretação tecnicamente mais consistente é que a:",
                 options: [
-                    { text: "análise da coerência da oferta pode requerer leitura agregada das exposições econômicas, ainda que os fundos sejam independentes.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de Rentabilidade dos Planos de Previdência, que a coerência da oferta não se limita ao enquadramento isolado de cada veículo, podendo exigir uma leitura agregada das exposições econômicas distribuídas. Essa avaliação é compatível com o papel do C-PRO I, que, embora não decida alocações, verifica se a estrutura da prateleira preserva princípios prudenciais e informacionais necessários para a governança institucional dos produtos ofertados." },
+                    { text: "análise da coerência da oferta pode requerer leitura agregada das exposições econômicas, ainda que os fundos sejam independentes.", isCorrect: true, gabarito: "A análise de risco de um C-Pro I não pode ser feita operando 'em silos'. Apesar de cada fundo previdenciário estar dentro do seu limite de risco de forma isolada, quando o portfólio do cliente (ou da corretora) é consolidado, descobre-se que a pessoa tem muito dinheiro alocado em dívida de um grupo econômico só (risco cruzado). A visão de risco moderna exige a consolidação e a 'leitura agregada' dos lastros de risco sistêmico." },
                     { text: "conformidade individual dos fundos com os limites regulatórios é suficiente para caracterizar a coerência da oferta distribuída.", isCorrect: false },
                     { text: "existência de gestores distintos e regulamentos próprios reduz a relevância da concentração identificada no nível da oferta institucional.", isCorrect: false },
                     { text: "ausência de desenquadramentos individuais indica que o risco de concentração não é material para a avaliação técnica da oferta.", isCorrect: false }
                 ]
             },
             {
-                id: 21,
-                contexto: "Um plano PGBL está contratado na Distribuidora Deltum, com recursos no Fundo Deltum Ações, gerido por uma asset independente. Em um pedido de portabilidade para a Distribuidora Gold, foi solicitada a manutenção do fundo, já que a Gold oferece o fundo Gold Ações, com a mesma gestora e carteira idêntica. A solicitação baseia-se no entendimento de que bastaria trocar a distribuidora, mantendo o veículo de investimento inalterado devido à sua identidade operacional. O profissional C-Pro I que presta assessoria aos profissionais de distribuição da Gold orienta a respeito da possibilidade de conclusão da operação.",
+                id: 24,
+                temaId: 'tema3',
+                contexto: "Um plano PGBL está contratado na Distribuidora Deltum, com recursos no Fundo Deltum Ações, gerido por uma asset independente. Em um pedido de portabilidade para a Distribuidora Gold, foi solicitada a manutenção do fundo, já que a Gold oferece o fundo Gold Ações, com a mesma gestora e carteira idêntica. A solicitação baseia-se no entendimento de que bastaria trocar a distribuidora, mantendo o veículo de investimento inalterado devido à sua identidade operacional.",
                 enunciado: "Considerando a estrutura contratual dos planos de previdência e o processo de portabilidade analisado, o entendimento correto do profissional C-Pro I é que o pedido não pode ser atendido porque:",
                 options: [
-                    { text: "o fundo está sendo confundido com o plano previdenciário, pois a portabilidade recai sobre o contrato regulado pela Susep, e não sobre o fundo vinculado.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de compreender, no contexto de Rentabilidade dos Planos de Previdência, que o objeto da portabilidade é o plano previdenciário (contrato), regulado pela SUSEP. O fundo é apenas o veículo de investimento acessado por meio do plano e não é transferível entre distribuidoras. Ainda que haja identidade de gestora e carteira, trata-se de CNPJs distintos vinculados a distribuidoras diferentes, o que inviabiliza a manutenção do fundo original." },
+                    { text: "o fundo está sendo confundido com o plano previdenciário, pois a portabilidade recai sobre o contrato regulado pela Susep, e não sobre o fundo vinculado.", isCorrect: true, gabarito: "Na Previdência Privada (PGBL/VGBL), a regulação da SUSEP rege que o investidor firma um contrato de Plano Previdenciário com a Seguradora. O fundo de investimento em si (FIF) é apenas onde a seguradora aloca as reservas para rentabilizar. Ao pedir portabilidade de um banco A para o banco B, você transfere o recurso do contrato da seguradora A para a seguradora B. Consequentemente, as cotas do fundo A são resgatadas em dinheiro, enviadas por TED para a seguradora B, que então aplica no fundo B. Não há 'transferência de cotas' do mesmo fundo entre bancos diferentes." },
                     { text: "a identidade de gestor e de carteira permite manter o mesmo fundo de investimento, ainda que a portabilidade ocorra apenas no nível do plano.", isCorrect: false },
                     { text: "a portabilidade deve permitir a transferência direta do fundo de investimento, com posterior vinculação formal ao novo plano de previdência.", isCorrect: false },
                     { text: "fundos com nomes e estratégias equivalentes são portáveis entre distribuidoras, independentemente da separação entre o plano e o fundo escolhido.", isCorrect: false }
                 ]
             },
             {
-                id: 22,
+                id: 25,
+                temaId: 'tema4',
                 contexto: "Durante a revisão da estratégia de distribuição de produtos de previdência, um profissional C-Pro I avalia três estratégias-modelo para planos de acumulação de longo prazo:\nEstratégia Alfa: 100% em renda fixa longa indexada ao IPCA\nEstratégia Beta: 60% renda fixa curta e 40% multimercados sem renda variável\nEstratégia Gama: 70% renda variável e 30% multimercados macro\nNos últimos cinco anos, Beta manteve retorno estável, Alfa teve perda real temporária e posterior recuperação, e Gama apresentou forte dispersão de retornos anuais, mas ganho real superior no acumulado.",
                 enunciado: "Com base na análise dos resultados e da composição de risco, o profissional C-Pro I conclui que a coerência estrutural entre os três produtos reside em:",
                 options: [
-                    { text: "diferenças de comportamento intertemporal: Alfa sustenta o poder de compra no longo prazo, Beta reduz volatilidade cíclica e Gama pode ampliar retorno real.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de escolha do fundo previdenciário durante a fase de acumulação: renda fixa, balanceados, multimercados e ações – definições e estratégias de cada macro classe, direcionamento das estratégias de investimento para pessoas investidoras comuns e qualificados, analisar a coerência estrutural entre as macrocategorias, reconhecendo que o portfólio previdenciário depende da interação entre proteção real, diversificação e crescimento. A análise correta exige perceber que as três estratégias não competem entre si: Alfa assegura duration e proteção contra inflação, Beta estabiliza o retorno e Gama gera ganho real superior. Essa coerência só é visível ao interpretar simultaneamente o comportamento de risco e o horizonte atuarial." },
+                    { text: "diferenças de comportamento intertemporal: Alfa sustenta o poder de compra no longo prazo, Beta reduz volatilidade cíclica e Gama pode ampliar retorno real.", isCorrect: true, gabarito: "Cada produto cumpre um papel atuaria na Previdência. O Alfa (IPCA+ longo) oscila no curto prazo pela marcação a mercado, mas a longo prazo protege a poupança perfeitamente contra a inflação. O Beta é voltado para controle absoluto de estômago do cliente (baixíssima volatilidade cíclica). O Gama assume enormes choques e quedas anuais dispersas em troca de uma explosão no ganho real lá no final. A coerência é que eles não concorrem, eles se complementam temporalmente dependendo da fase de vida do investidor." },
                     { text: "similaridade de propósito: todas as estratégias perseguem a mesma meta real de longo prazo e podem ser substituídas entre si sem perda de eficiência.", isCorrect: false },
                     { text: "convergência de riscos: a volatilidade de Gama e as perdas temporárias de Alfa indicam que ambas são equivalentes em termos de risco atuarial.", isCorrect: false },
                     { text: "divergência de horizonte: Alfa é adequada apenas para horizontes inferiores a cinco anos, enquanto Gama e Beta se destinam a prazos superiores a dez anos.", isCorrect: false }
                 ]
             },
             {
-                id: 23,
+                id: 26,
+                temaId: 'tema3',
                 contexto: "Caetano, profissional C-Pro I, ficou responsável por elaborar um material explicando a classificação de cada fundo para os profissionais que irão distribuí-los.\nAs informações dos fundos recebidas por Caetano foram:\nFundo Alfa: Manterá ao menos 75% do patrimônio líquido em ativos de renda variável, permitindo flexibilidade no percentual restante.\nFundo Beta: Manterá entre 15% e 30% do patrimônio líquido em ativos de renda variável e o restante em renda fixa com duration máxima de 4 anos.",
                 enunciado: "Caetano deve explicar no material elaborado que os fundos de previdência Alpha e Beta são respectivamente, um fundo:",
                 options: [
-                    { text: "de ações, pois investe mais que o mínimo regulatório em renda variável, e um fundo balanceado, pois define as faixas de investimento entre renda variável e renda fixa.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de compreender, no contexto de Regras para composição dos fundos previdenciários, que a diretriz proposta interpreta os dados de risco e composição de carteiras, transformando-os em uma orientação prática." },
+                    { text: "de ações, pois investe mais que o mínimo regulatório em renda variável, e um fundo balanceado, pois define as faixas de investimento entre renda variável e renda fixa.", isCorrect: true, gabarito: "De acordo com a classificação de Fundos Previdenciários da ANBIMA, fundos que garantem investir sistematicamente um mínimo elevado em bolsa (ex: no mínimo 67% segundo a CVM/ANBIMA, aqui Alfa usou o critério de 75%) são inquestionavelmente classificados como 'Fundos de Ações'. Já os fundos 'Balanceados' são aqueles que explicitam no mandato bandas fixas ou flexíveis de alocação de risco (ex: entre 15% a 30% em bolsa, e o resto em CDI/Renda Fixa, caso do fundo Beta)." },
                     { text: "de ações, pois investe a maior parte do patrimônio líquido em renda variável, e um fundo multimercado, pois investe em renda fixa e variável.", isCorrect: false },
                     { text: "multimercado, pois investe em diferentes classes de ativos, e um fundo de renda fixa, pois a maior parte do seu patrimônio, ao menos 70%, estará nesse ativo.", isCorrect: false },
                     { text: "multimercado, pois tem flexibilidade de investir em diferentes ativos, e um fundo de ações, pois estabelece a faixa que deve ser investida em renda variável.", isCorrect: false }
                 ]
             },
             {
-                id: 24,
-                contexto: "Luís, profissional certificado C-Pro I, atua na área de Estratégia de Produtos de uma instituição financeira e é responsável por definir diretrizes técnicas que orientam a atuação dos profissionais de distribuição. Em uma revisão das carteiras previdenciárias recomendadas, ele analisa um relatório consolidado com dados dos últimos 36 meses de quatro fundos previdenciários. O relatório apresenta:\nFundo P: 92% em títulos públicos e privados indexados ao CDI e IPCA, volatilidade anualizada de 2,1%;\nFundo Q: 48% renda fixa, 32% renda variável, 15% derivativos para proteção e 5% em ativos no exterior, volatilidade anualizada de 9,4%\nFundo R: 75% renda fixa e 25% renda variável, com rebalanceamento periódico, volatilidade anualizada de 6,8%;\nFundo S: 87% em ações, volatilidade anualizada de 18,6%.\nCom base nesses dados, Luís deve estabelecer diretrizes de utilização desses fundos nas carteiras recomendadas com objetivo de padronizar a atuação dos profissionais de distribuição.",
+                id: 27,
+                temaId: 'tema4',
+                contexto: "Luís, profissional certificado C-Pro I, atua na área de Estratégia de Produtos de uma instituição financeira e é responsável por definir diretrizes técnicas que orientam a atuação dos profissionais de distribuição. Em uma revisão das carteiras previdenciárias recomendadas, ele analisa um relatório consolidado com dados dos últimos 36 meses de quatro fundos previdenciários.\n- Fundo P: 92% em títulos públicos e privados indexados ao CDI e IPCA, volatilidade de 2,1%;\n- Fundo Q: 48% RF, 32% Renda Variável, 15% derivativos e 5% exterior, volatilidade de 9,4%;\n- Fundo R: 75% RF e 25% Renda Variável, volatilidade de 6,8%;\n- Fundo S: 87% em ações, volatilidade de 18,6%.",
                 enunciado: "Com base nas informações apresentadas, Luís deve:",
                 options: [
-                    { text: "estabelecer o Fundo P como base das carteiras e direcionar o Fundo S exclusivamente a clientes com maior tolerância ao risco.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de identificar, no contexto de regras para composição dos fundos previdenciários, que a alocação mínima de 75% em ações no fundo Alpha faria deste um fundo de ações, e a diferença primordial entre um fundo multimercado e um fundo balanceado é exatamente a definição de faixas de alocação dos recursos em cada classe de ativos." },
+                    { text: "estabelecer o Fundo P como base das carteiras e direcionar o Fundo S exclusivamente a clientes com maior tolerância ao risco.", isCorrect: true, gabarito: "O Fundo P é o alicerce clássico de alocação conservadora (base de carteira core) por atuar com caixa/liquidez indexada (CDI/IPCA) com apenas 2,1% de volatilidade. O fundo S atua como pimenta da carteira (direcional, quase 90% em bolsa e vol. alta perto dos 19%), logo não serve como fundo base para aposentadoria geral de conservadores, sendo focado exclusivamente para perfis agressivos ou alocações táticas mínimas." },
                     { text: "estipular o uso simultâneo dos Fundos P e S, assumindo que a combinação entre baixa e alta volatilidade neutraliza o risco.", isCorrect: false },
                     { text: "determinar a substituição do Fundo P pelo R nas carteiras conservadoras, pois o rebalanceamento periódico mitiga o risco.", isCorrect: false },
                     { text: "definir o Fundo Q como elemento-chave das carteiras, devido a sua diversificação, que é suficiente para diferentes perfis de risco.", isCorrect: false }
                 ]
             },
             {
-                id: 25,
+                id: 28,
+                temaId: 'tema3',
                 contexto: "O profissional certificado Anbima deve reconhecer que o risco de sequência de retornos pode afetar de forma crítica a fase de desacumulação. Quedas significativas nos primeiros anos, ainda que seguidas de recuperação, tendem a comprometer o patrimônio e reduzir a sustentabilidade das retiradas mensais. Por isso, a estratégia e análise para confecção de carteiras deve contemplar mecanismos de proteção que preservem o fluxo de renda no longo prazo.",
                 enunciado: "Ao analisar o risco de sequência de retornos na desacumulação, o profissional deve:",
                 options: [
-                    { text: "revisar a alocação para reduzir a volatilidade nos primeiros anos, estabelecendo reservas de liquidez que evitem a venda de ativos depreciados para sustentar as retiradas.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto da desacumulação, o impacto do risco de sequência de retornos, ajustando a alocação para proteger a renda nos primeiros anos e evitar liquidação de ativos em baixa." },
+                    { text: "revisar a alocação para reduzir a volatilidade nos primeiros anos, estabelecendo reservas de liquidez que evitem a venda de ativos depreciados para sustentar as retiradas.", isCorrect: true, gabarito: "O 'Risco da Sequência de Retornos' aniquila o aposentado. Imagine começar sua aposentadoria no ano de uma crise, como 2008 ou 2020. A bolsa cai 40%. Seus R$ 1.000.000 viram R$ 600.000. Para você sacar os R$ 10.000 da sua mesada, precisará vender uma grande quantidade de ações a um preço muito descontado na bolsa. O patrimônio acaba rápido demais. A saída que o C-PRO I indica é: nos anos próximos ao usufruto, faça o *Glide Path* diminuindo a bolsa (volatilidade) ou crie colchões de caixa em CDI gordo para suportar os resgates dos primeiros anos sem ter que vender cotas de renda variável na bacia das almas." },
                     { text: "manter a alocação inalterada, confiando que a recuperação futura dos ativos será capaz de compensar as perdas iniciais sem que haja ajustes no fluxo de retiradas.", isCorrect: false },
                     { text: "reduzir a renda mensal nos primeiros anos, independentemente da necessidade real de consumo, com o objetivo de preservar o capital em longo prazo.", isCorrect: false },
                     { text: "aumentar a exposição a ativos de maior risco logo após as quedas, buscando acelerar a recuperação do portfólio, mesmo durante a fase de retiradas.", isCorrect: false }
                 ]
             },
             {
-                id: 26,
-                contexto: "Durante a revisão de um manual interno de produtos de previdência complementar, foram identificadas orientações divergentes entre as áreas do banco quanto à classificação das modalidades de conversão de saldo em renda e à continuidade dos pagamentos após o falecimento do participante. Enquanto alguns documentos tratam a renda vitalícia com prazo mínimo garantido e os resgates programados como formas equivalentes de proteção aos beneficiários, outros materiais restringem essa característica apenas à renda vitalícia reversível. A inconsistência gera risco operacional e regulatório, pois pode levar os gerentes de agência a fornecer informações imprecisas sobre os produtos. A área técnica, composta por profissionais certificados C- PRO I, foi acionada para emitir um posicionamento único, eliminando a ambiguidade.",
+                id: 29,
+                temaId: 'tema3',
+                contexto: "Durante a revisão de um manual interno de produtos de previdência complementar, foram identificadas orientações divergentes entre as áreas do banco quanto à classificação das modalidades de conversão de saldo em renda e à continuidade dos pagamentos após o falecimento do participante. Enquanto alguns documentos tratam a renda vitalícia com prazo mínimo garantido e os resgates programados como formas equivalentes de proteção aos beneficiários, outros materiais restringem essa característica apenas à renda vitalícia reversível. A inconsistência gera risco operacional e regulatório, pois pode levar os gerentes de agência a fornecer informações imprecisas sobre os produtos.",
                 enunciado: "Considerando as características estruturais da previdência privada, o posicionamento técnico correto a ser adotado pelos analistas nesse caso é de que a renda:",
                 options: [
-                    { text: "mensal vitalícia reversível a beneficiários assegura, de forma contratual e atuarial, a continuidade do pagamento após o falecimento do participante.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto das principais características da previdência privada, que a renda mensal vitalícia reversível a beneficiários é a única modalidade que, por sua estrutura contratual e atuarial, assegura a continuidade do pagamento após o falecimento do participante, resolvendo a inconsistência técnica identificada e permitindo a padronização correta das orientações internas." },
+                    { text: "mensal vitalícia reversível a beneficiários assegura, de forma contratual e atuarial, a continuidade do pagamento após o falecimento do participante.", isCorrect: true, gabarito: "Em caso de falecimento do participante titular que já contratou um pagamento vitalício na seguradora, os modelos de Renda Simples param de pagar imediatamente, ficando a seguradora com os fundos restantes (mutualismo). A única modalidade onde o pagamento nunca para e é transferido integralmente ou parcialmente (revertido) por contrato para a esposa(o) ou filhos até a morte deles, independentemente do saldo da reserva matemática, é a Renda Vitalícia Reversível ao Beneficiário." },
                     { text: "mensal vitalícia simples assegura continuidade do pagamento, desde que o participante tenha recebido a renda por período mínimo previamente definido.", isCorrect: false },
                     { text: "vitalícia, com prazo mínimo garantido e resgates programados, oferece proteção equivalente à renda reversível, divergindo no cálculo do benefício.", isCorrect: false },
                     { text: "por meio de resgates programados, assegura a continuidade do pagamento aos beneficiários, pois permite a definição antecipada de valores e prazos.", isCorrect: false }
                 ]
             },
             {
-                id: 27,
-                contexto: "Na área de estruturação de produtos previdenciários, a equipe técnica revisa o desempenho de duas séries de planos VGBL com políticas de investimento equivalentes, mas com diferentes estruturas de custos.\nO primeiro cobra taxa de carregamento de 2% sobre cada aporte e taxa de administração de 0,8% ao ano; o segundo elimina o carregamento, mas aplica taxa de administração de 2,0% ao ano.\nAs simulações consideram aportes anuais de R$ 120 mil durante 20 anos, com rentabilidade bruta estimada em 8% a.a. antes das taxas.",
+                id: 30,
+                temaId: 'tema3',
+                contexto: "Na área de estruturação de produtos previdenciários, a equipe técnica revisa o desempenho de duas séries de planos VGBL com políticas de investimento equivalentes, mas com diferentes estruturas de custos.\n- O primeiro cobra taxa de carregamento de 2% sobre cada aporte e taxa de administração de 0,8% ao ano;\n- O segundo elimina o carregamento, mas aplica taxa de administração de 2,0% ao ano.\nAs simulações consideram aportes anuais de R$ 120 mil durante 20 anos, com rentabilidade bruta estimada em 8% a.a. antes das taxas.",
                 enunciado: "Considerando a avaliação técnica e os efeitos de longo prazo das taxas de carregamento e administração em planos de previdência, conclui-se que:",
                 options: [
-                    { text: "a taxa de carregamento impacta somente os aportes iniciais, e a taxa de administração incide de forma contínua sobre o saldo total, podendo gerar perda composta superior no horizonte de acumulação e reduzir o retorno real líquido do plano.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de Produto de Vida Gerador de Benefício Livre (VGBL), o impacto cumulativo das taxas na eficiência atuarial do produto. A análise correta reconhece que o carregamento reduz apenas o valor aplicado no momento do aporte, enquanto a administração incide de modo recorrente sobre o saldo total. Essa incidência composta produz erosão exponencial de capital, tornando-se o principal fator de redução do retorno real líquido em horizontes longos." },
+                    { text: "a taxa de carregamento impacta somente os aportes iniciais, e a taxa de administração incide de forma contínua sobre o saldo total, podendo gerar perda composta superior no horizonte de acumulação e reduzir o retorno real líquido do plano.", isCorrect: true, gabarito: "No universo de 20 anos acumulando muito dinheiro (saldo gordo), pagar 2% no momento que o dinheiro novo entra (taxa de carregamento de entrada) afeta apenas o R$ 120 mil daquele ano. Porém, pagar 2% *todos os anos* sobre a massa gigantesca total de todo o capital acumulado com os juros dos anos anteriores (Taxa de Administração), gera um efeito corrosivo que devora a maior parte da rentabilidade real do investidor. Sempre priorize taxas de administração módicas." },
                     { text: "a taxa de carregamento e a taxa de administração produzem efeitos proporcionais sobre o valor do saldo final, na medida em que ambas reduzem o montante acumulado de maneira linear e previsível ao longo do tempo.", isCorrect: false },
                     { text: "a ausência de carregamento é capaz de garantir, por definição, um maior retorno líquido no longo prazo, ainda que a taxa de administração seja superior à taxa que está sendo praticada em planos concorrentes.", isCorrect: false },
                     { text: "a taxa de administração tem relevância secundária na estrutura de custos, uma vez que incide apenas sobre a rentabilidade do fundo, sem que afete o saldo consolidado do participante durante o período de acumulação.", isCorrect: false }
                 ]
             },
             {
-                id: 28,
+                id: 31,
+                temaId: 'tema3',
                 contexto: "Foi solicitado a um profissional C-Pro I que examinasse um relatório de precificação de um PGBL. No relatório há um exemplo no qual um investidor aplica R$ 300 mil em aporte único, sujeito à taxa de carregamento de 2% na entrada e à taxa de administração de 1% a.a. O relatório considera rentabilidade bruta de 12% no período de um ano e apresenta projeção de saldo em R$ 335 mil, sem detalhar se houve dedução de taxas.",
                 enunciado: "Após examinar o relatório, o profissional C-Pro I deve registrar que:",
                 options: [
-                    { text: "o cálculo não considera a taxa de carregamento e a dedução do valor da taxa administração, superestimando o saldo final.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de conhecer, no contexto de Produto do Plano Gerador de Benefício Livre (PGBL), o cálculo do saldo líquido. O cálculo correto é: R$ 300 mil (Aporte) - R$ 6 mil (2% Carregamento) = R$ 294 mil (Líquido). R$ 294 mil x 12% = R$ 35.280 (Rendimento). Saldo Bruto = R$ 329.280. Taxa Adm. (1%) = R$ 3.292,80. Saldo Final Líquido ≈ R$ 325.987,20, o que é significativamente menor que R$ 335.000." },
+                    { text: "o cálculo não considera a taxa de carregamento e a dedução do valor da taxa administração, superestimando o saldo final.", isCorrect: true, gabarito: "Demonstração do cálculo falho do relatório (que deu os R$335 mil brutos irreais): Tirando os 2% de carregamento no aporte inicial, a reserva vira R$ 294 mil. Aplicando 12% bruto, sobe R$ 35.280, chegando a R$ 329.280. A taxa de ADM come em média 1% a.a desse montante (- R$ 3.292). O valor final real após 1 ano é de cerca de R$ 325.987, bem abaixo dos 335.000 projetados inocentemente." },
                     { text: "o resultado líquido se aproxima do valor apresentado, pois o carregamento não compromete o aporte inicial e a taxa de administração é irrelevante no primeiro ano.", isCorrect: false },
                     { text: "a projeção considera corretamente o valor líquido após o carregamento, mas não inclui o efeito da taxa de administração sobre o patrimônio.", isCorrect: false },
                     { text: "o impacto do carregamento é compensado pela rentabilidade bruta, que recompõe a perda inicial, restando apenas a influência da taxa de administração.", isCorrect: false }
                 ]
             },
             {
-                id: 29,
+                id: 32,
+                temaId: 'tema3',
                 contexto: "Antônia, profissional certificada Anbima, trabalha em um banco de investimentos e está elaborando estratégias de alocações de ativos. Dentre os seus objetivos, Antônia almeja que os profissionais de relacionamento de sua instituição possam fazer recomendações a clientes de maior renda, que investem R$ 500 mil por ano em VGBL, e que já obtêm o benefício tributário por investir em planos PGBL.",
                 enunciado: "Nesse documento, Antônia destaca que os gerentes devem observar com atenção os aportes adicionais anuais desses investidores em VGBL acima de:",
                 options: [
-                    { text: "R$ 100 mil, pois estarão sujeitos ao pagamento de IOF de 5%.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de conhecer o efeito do IOF, no contexto do regime regressivo, definitivo ou exclusivo – base de cálculo, alíquotas, aplicação prática da tabela, público-alvo. O Decreto nº 12.499/2025 atualizou as regras sobre a incidência de IOF em planos VGBL. Até 31/12/2025, o IOF de 5% era aplicado sobre aportes anuais que excedessem 300 mil reais, e, a partir de 01/01/2026, esse valor é atualizado para 600 mil reais." },
+                    { text: "R$ 100 mil, pois estarão sujeitos ao pagamento de IOF de 5%.", isCorrect: true, gabarito: "Decreto nº 12.499/2025 atualizou o impacto do IOF em aportes grandes de VGBL buscando frear uso excessivo desse mecanismo como planejamento tributário milionário. A regra em 2025 impõe IOF extra se os aportes do investidor baterem a marca de 300 mil. A partir de 1º de janeiro de 2026, esse teto muda. Em ambos os casos, aportes imensos geram retenção governamental precoce." },
                     { text: "R$ 200 mil, pois estarão sujeitos ao pagamento de IOF de 5%.", isCorrect: false },
                     { text: "R$ 500 mil, pois estarão sujeitos ao pagamento de “come-cotas”.", isCorrect: false },
                     { text: "R$ 1 milhão, pois estarão sujeitos ao pagamento de “come-cotas”.", isCorrect: false }
                 ]
             },
             {
-                id: 30,
+                id: 33,
+                temaId: 'tema4',
                 contexto: "Paulina, profissional C-Pro I, é responsável por elaborar um estudo de alocação de portfólio para subsidiar as recomendações de um banco de investimentos. O estudo busca otimizar a relação risco-retorno de uma carteira-modelo voltada a investidores com perfil de risco moderado.\nConsiderando-se a taxa livre de risco (Selic) de 10,5% a.a., foi identificada uma carteira de ativos de risco com retorno esperado de 16% a.a. e volatilidade de 18% a.a. O objetivo é determinar a composição ótima entre o ativo livre de risco e a carteira de risco, de modo que a volatilidade total da carteira-modelo não ultrapasse 12% a.a.",
                 enunciado: "Com base nas informações apresentadas, a alocação percentual ótima entre o ativo livre de risco e a carteira de ativos de risco que mantém a volatilidade total em até 12% a.a. é:",
                 options: [
-                    { text: "66,67% na carteira de ativos de risco e 33,33% no ativo livre de risco.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de aplicar, no contexto de Modelo de Precificação de Ativos – CAPM, a relação entre volatilidade alvo (12%) e volatilidade da carteira de risco (18%), obtendo a alocação ótima de 66,67% no portfólio de risco e 33,33% no ativo livre de risco. Nesse sentido, aplica-se a fórmula σp = w × σativos de risco, temos: 12% = w × 18%, resultando w = 66,67%. Esta é a alocação máxima permitida na carteira de risco respeitando a restrição de volatilidade, otimizando o retorno esperado de 14,17% a.a. conforme a Teoria do Portfólio." },
+                    { text: "66,67% na carteira de ativos de risco e 33,33% no ativo livre de risco.", isCorrect: true, gabarito: "Como o título livre de risco tem volatilidade zero e as correlações são simplificadas pelo CAPM, a volatilidade da carteira final é proporcional apenas ao peso do ativo arriscado. Se a carteira X tem risco de 18% e o limite de risco (tolerância do cliente) é bater no máximo 12%. Você pega os 12 desejado e divide pelos 18 da carteira (12/18 = 0,6666). Logo, ele investe 66,67% na carteira arriscada (peso w) e os 33,33% restantes ficam protegidos na Selic (sem risco)." },
                     { text: "75% na carteira de ativos de risco e 25% no ativo livre de risco.", isCorrect: false },
                     { text: "50% na carteira de ativos de risco e 50% no ativo livre de risco.", isCorrect: false },
                     { text: "100% na carteira de ativos de risco, pois oferece maior retorno esperado", isCorrect: false }
                 ]
             },
             {
-                id: 31,
-                contexto: "A carteira de um fundo multimercado, que adota uma abordagem de alocação dinâmica de ativos para otimizar a relação risco-retorno em momentos de aumento da volatilidade, atualmente está composta por 60% em ações brasileiras de alta capitalização, 25% em títulos públicos indexados à inflação e 15% em caixa. As projeções para os próximos 12 meses estão descritas a seguir:\nCrescimento econômico abaixo da média histórica;\nInflação em queda consistente;\nExpectativa de cortes adicionais na taxa básica de juros;\nAumento da incerteza política brasileira.",
+                id: 34,
+                temaId: 'tema4',
+                contexto: "A carteira de um fundo multimercado, que adota uma abordagem de alocação dinâmica de ativos para otimizar a relação risco-retorno em momentos de aumento da volatilidade, atualmente está composta por 60% em ações brasileiras de alta capitalização, 25% em títulos públicos indexados à inflação e 15% em caixa. As projeções para os próximos 12 meses estão descritas a seguir:\n- Crescimento econômico abaixo da média histórica;\n- Inflação em queda consistente;\n- Expectativa de cortes adicionais na taxa básica de juros;\n- Aumento da incerteza política brasileira.",
                 enunciado: "Considerando essas projeções e a alocação dos recursos, conclui-se que o fundo deve:",
                 options: [
-                    { text: "reduzir a exposição em ações, comprar títulos públicos prefixados e manter o caixa para ter alguma flexibilidade.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de determinar, no contexto de alocação de ativos, que o cenário previsto era desfavorável à alocação em ações, tendo em vista o baixo crescimento econômico e a incerteza política, com possível valorização dos títulos atrelados à inflação, devido ao quadro de queda dos juros reais e à queda da taxa básica de juros que levaria a uma valorização dos títulos prefixados." },
+                    { text: "reduzir a exposição em ações, comprar títulos públicos prefixados e manter o caixa para ter alguma flexibilidade.", isCorrect: true, gabarito: "Trata-se de Tactical Asset Allocation. O cenário joga contra as Ações: risco político altíssimo espanta estrangeiros, e economia fraca esmaga lucros de balanço das empresas de alta capitalização (reduzir bolsa). Como a inflação futura será fraca, os IPCA+ se beneficiam pouco, entretanto como o COPOM cortará agressivamente as taxas de juros, o ativo ganhador no cenário será o Título Prefixado por conta do efeito positivo da marcação a mercado e travamento da taxa. Caixa vira pó com juros caindo rápido." },
                     { text: "aumentar a exposição em ações, aproveitando a esperada queda dos juros como catalizador de valorização acionária.", isCorrect: false },
                     { text: "manter a alocação atual, já que a diversificação da carteira a protege contrachoques macroeconômicos.", isCorrect: false },
                     { text: "converter o caixa em opções de venda de dólar, aproveitando a incerteza política e a desvalorização do real.", isCorrect: false }
                 ]
             },
             {
-                id: 32.1,
-                contexto: "Um profissional C-Pro I integra a equipe responsável por desenvolver e revisar modelos internos de alocação de ativos utilizados pela instituição à qual ele está vinculado para padronizar análises e orientar a construção de portfólios por objetivo financeiro. Como parte desse processo, ele analisou o caso de referência de Carlos, 38 anos, perfil moderado, cuja situação financeira foi previamente mapeada pela área de dados da instituição para fins de estudo e parametrização dos modelos internos.\nO dossiê técnico descreve que Carlos possui renda familiar líquida de R$ 25.000, patrimônio financeiro de aproximadamente R$ 600.000 distribuído entre fundos multimercado e renda fixa tradicional, além de um plano de previdência voltado ao acúmulo para aposentadoria. A base cadastral também indica que ele vive em imóvel próprio quitado e tem dois filhos, de 6 e 9 anos. Para fins de modelagem, o C-Pro I utiliza três objetivos previamente categorizados:\nI - Educação dos filhos: Necessidade projetada para um intervalo de 8 a 12 anos, incluindo possibilidade de universidade privada e eventual intercâmbio.\nII - Aposentadoria: Compromisso de longo prazo com horizonte aos 65 anos, considerando renda futura que combina INSS, previdência e patrimônio acumulado.\nIII - Reserva de oportunidades: Parcela destinada a operações táticas pontuais, sem comprometer a estrutura estratégica de longo prazo.\nAo revisar o material, o C-Pro I avaliou se as premissas de horizonte, risco e estrutura de portfólio estão tecnicamente consistentes com as diretrizes internas de alocação estratégica e tática. No caso da educação, ele válida a lógica de uma estrutura de médio prazo que combina ativos indexados à inflação com participação parcial de renda variável, incorporando trajetória de redução progressiva de risco conforme o horizonte se aproxima, evitando dependência excessiva da renda variável na fase final.\nPara a aposentadoria, C-Pro I avalia se o modelo segue o princípio de glide path, que prevê maior exposição a risco durante a fase de acumulação e redução gradual dessa exposição ao longo do tempo, ajustando a composição da carteira conforme o investidor se aproxima do período de usufruto.\nPor fim, para a reserva de oportunidades, o profissional revisa se o documento diferencia adequamente alocação estratégica (base estrutural dos portfólios) de alocação tática (ajustes conjunturais), reforçando que a reserva não deve gerar revisões estruturais, mas apenas intervenções pontuais justificadas por condições específicas de mercado.\nO objetivo geral do C-Pro I é garantir que o caso técnico represente, de forma fiel e metodologicamente robusta, a aplicação dos princípios de horizonte de investimento, perfil de risco e diferenciação entre estratégias estratégicas e táticas, de modo que os materiais de referência reflitam padrões consistentes para análise interna e construção de portfólios por objetivo.",
+                id: 35,
+                temaId: 'tema4',
+                contexto: "Um profissional C-Pro I avaliou o caso de referência de Carlos, 38 anos, perfil moderado. Carlos possui patrimônio em Renda Fixa tradicional e previdência, imóvel próprio quitado e filhos pequenos de 6 e 9 anos. Objeivos definidos: \nI - Educação (8 a 12 anos).\nII - Aposentadoria (aos 65 anos, longo prazo)\nIII - Reserva de oportunidades (tática e pontual, sem atrapalhar as bases).",
                 enunciado: "Considerando-se exclusivamente o objetivo de educação descrito no contexto, a estrutura de alocação mais coerente com o horizonte e o perfil adotados é a:",
                 options: [
-                    { text: "combinação de ativos indexados à inflação com parcela moderada em renda variável, reduzida gradualmente conforme o prazo se aproxima.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de Alocação de ativos: horizonte de tempo e perfil do investidor, alocação estratégica em função da evolução do tempo do investimento e alocação tática em função de alterações nas condições do mercado, a coerência entre horizonte médio, proteção do poder de compra e redução progressiva de risco, sem dependência excessiva de ativos voláteis na fase final de utilização do capital." },
+                    { text: "combinação de ativos indexados à inflação com parcela moderada em renda variável, reduzida gradualmente conforme o prazo se aproxima.", isCorrect: true, gabarito: "O conceito de LDI (Liability Driven Investment) ou Glide Path estipula que a educação universitária tem um custo forte que acompanha a inflação em geral ou mais. Proteger com títulos atrelados a inflação (IPCA+) assegura a preservação do poder de compra no médio prazo (8-12 anos). E conforme a criança faz 17 anos (perto do uso do dinheiro), deve-se enxugar as alocações de ações para evitar uma desvalorização que destrua as economias da faculdade na boca do evento de uso." },
                     { text: "predominância de renda variável durante todo o período, priorizando retorno máximo no horizonte projetado para atingir a meta escolar.", isCorrect: false },
                     { text: "alocação concentrada em ativos pós-fixados de curto prazo, priorizando liquidez sobre retorno real exigido pelo longo prazo de educação.", isCorrect: false },
                     { text: "utilização central de produtos previdenciários, uma vez que o objetivo possui relevância financeira intermediária no planejamento do investidor.", isCorrect: false }
                 ]
             },
             {
-                id: 32.2,
-                contexto: "Mesmo contexto da Questão 32.1",
-                enunciado: "À luz do papel do C-Pro I na validação metodológica dos modelos internos, a diretriz mais consistente para objetivos de longo e médio prazo é:",
+                id: 36,
+                temaId: 'tema4',
+                contexto: "À luz do papel do C-Pro I na validação metodológica dos modelos internos sobre os casos de longo prazo como aposentadoria de Carlos.",
+                enunciado: "A diretriz mais consistente para objetivos de longo e médio prazo é:",
                 options: [
-                    { text: "ajustar estruturalmente a alocação ao longo do tempo, reduzindo risco conforme o horizonte encurta, independentemente de condições conjunturais.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de Alocação de ativos: horizonte de tempo e perfil do investidor, alocação estratégica em função da evolução do tempo do investimento e alocação tática em função de alterações nas condições do mercado, que o ajuste sistemático de risco ao longo do tempo (glide path) é elemento metodológico central da governança de produtos e independe de movimentos conjunturais de mercado para garantir o atingimento da meta." },
+                    { text: "ajustar estruturalmente a alocação ao longo do tempo, reduzindo risco conforme o horizonte encurta, independentemente de condições conjunturais.", isCorrect: true, gabarito: "A estratégia Core-Satellite e a filosofia do Glide Path atuam na fundação do planejamento financeiro: uma vez estabelecido que Carlos precisa de dinheiro seguro aos 65, aos 62 anos o gestor começará a baixar os riscos sistêmicos do Carlos quer a bolsa esteja bombando em otimismo ou afundando. A meta financeira ditada pelo horizonte prevalece sobre ruídos táticos e conjunturais passageiros." },
                     { text: "manter a alocação estrutural constante e realizar os ajustes por meio de decisões táticas conforme as oscilações do cenário econômico.", isCorrect: false },
                     { text: "priorizar os ajustes táticos recorrentes para capturar as oportunidades de mercado, mesmo em objetivos que foram definidos por um horizonte fixo.", isCorrect: false },
                     { text: "definir a alocação inicial com base exclusivamente no perfil do investidor e mantê-la estável até o término do objetivo financeiro.", isCorrect: false }
                 ]
             },
             {
-                id: 33,
-                contexto: "Marcelo, profissional C-Pro I, é responsável pela validação de modelos de risco para carteiras recomendadas de um fundo de ações e está revisando o desempenho do modelo de Value at Risk (VaR) diário (99% de confiança) utilizado. Nos últimos 250 dias úteis, o modelo registrou 8 exceções, ou seja, 8 dias em que a perda real da carteira superou o VaR previsto. Tal número de violações levanta questões sobre a aderência do modelo à realidade do mercado. Marcelo precisa avaliar se a frequência de exceções está alinhada às expectativas regulatórias e às boas práticas de gestão de risco, considerando-se a importância do backtesting para a confiabilidade das projeções de risco e a elaboração de diretrizes de investimento. A análise é crucial para determinar a necessidade de recalibração do modelo ou ajustes na política de risco.",
+                id: 37,
+                temaId: 'tema4',
+                contexto: "Marcelo, profissional C-Pro I, é responsável pela validação de modelos de risco para carteiras recomendadas de um fundo de ações e está revisando o desempenho do modelo de Value at Risk (VaR) diário (99% de confiança) utilizado. Nos últimos 250 dias úteis, o modelo registrou 8 exceções, ou seja, 8 dias em que a perda real da carteira superou o VaR previsto. Tal número de violações levanta questões sobre a aderência do modelo à realidade do mercado.",
                 enunciado: "A ação recomendada para Marcelo e a avaliação regulatória que a motiva, conforme as diretrizes de gestão de risco, devem ser:",
                 options: [
-                    { text: "exigir investigação detalhada e possível recalibração do modelo de VaR, na medida em que o nível de confiança de 99% foi extrapolado.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de gestão de riscos em fundos de investimento e carteiras administradas, determinar que 8 exceções em 250 observações extrapolam o limite de 3 eventos (aproximação de 1% de 250 observações) do nível de confiança de 99%, demandando investigação adicional e eventual recalibração para assegurar aderência ao risco real de mercado." },
+                    { text: "exigir investigação detalhada e possível recalibração do modelo de VaR, na medida em que o nível de confiança de 99% foi extrapolado.", isCorrect: true, gabarito: "Estatística simples do Backtesting: Um modelo VaR com margem de 99% de confiança implica dizer que em 1% dos dias operados o tombo será de fato maior que a previsão estatística. Em um ano útil financeiro brasileiro de 252 dias úteis, 1% representa de 2 a 3 dias. Como o relatório mostra a perda extrapolando a linha d'água 8 vezes, significa que a cauda de risco era muito maior que a contada pelo computador. O modelo VaR do fundo está quebrado e subestimando os perigos de mercado, devendo ser recalibrado urgentemente com a CVM." },
                     { text: "exigir recalibração imediata e severa, já que qualquer número de exceções representa falha grave do modelo e invalida sua utilização.", isCorrect: false },
                     { text: "não exigir ajustes, pois 8 exceções em 250 dias são consideradas dentro da variação normal esperada para um modelo de 99% de confiança.", isCorrect: false },
                     { text: "desconsiderar o backtesting, pois o VaR de 99% garante que a perda real nunca superará o valor projetado, sendo desnecessário verificar exceções.", isCorrect: false }
                 ]
             },
             {
-                id: 34,
+                id: 38,
+                temaId: 'tema4',
                 contexto: "Sílvia, gerente de relacionamento, possui um cliente institucional com patrimônio de R$ 10 milhões, com carteira originalmente alocada 60% em ações e 40% em renda fixa. Ela pede ajuda a Leonardo, profissional C-Pro I, para revisar a carteira de seu cliente. Após seis meses de mercado em alta, as ações se valorizaram alterando a composição da carteira para 68% em ações e 32% em renda fixa. O cliente possui uma carteira com horizonte de 10 anos, priorizando controle de risco com participação em ganhos.",
                 enunciado: "No cenário apresentado, a estratégia de gestão que Leonardo deve sugerir a Sílvia para que adote com seu cliente é:",
                 options: [
-                    { text: "rebalancear para 60/40 (constant mix), mantendo controle de risco conforme perfil moderado.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de, no contexto de rebalanceamento de carteira de ativos, sugerir à gerente que avalie a necessidade de alinhar a carteira ao perfil do cliente, reconhecendo que o rebalanceamento para 60/40 via constant mix restabelece a proporção de risco adequada, preservando a disciplina de investimento e o controle de volatilidade. A estratégia constant mix é adequada para perfil do cliente pois mantém exposição ao risco constante através do rebalanceamento periódico. O desbalanceamento para 68/32 aumentou o risco além do planejado, exigindo realocação para 60/40 original para manter coerência com o perfil e os objetivos do cliente." },
+                    { text: "rebalancear para 60/40 (constant mix), mantendo controle de risco conforme perfil moderado.", isCorrect: true, gabarito: "Conceito de Rebalanceamento Constante de Mix: Quando se monta uma carteira 60/40 em cima do perfil moderado do cliente e de seus riscos, você aceita que a exposição total sistêmica deve orbitar os 60%. A bolsa subiu sem parar. Agora, sua carteira virou 68% Ações. Seu cliente está rodando com 8% a mais de risco de ruína caso a bolsa desabe no mês seguinte, algo para o qual a mente e a política dele não foi programada (quebra do mandato de risco). A atitude correta é vender os 8% de lucro da bolsa e reinjetar no conservador (CDI), recolocando as peças nos 60/40 em obediência às metas de risco originais (Sell High, Buy Low passivo)." },
                     { text: "manter a posição atual (buy and hold), aproveitando momento favorável do mercado acionário.", isCorrect: false },
                     { text: "implementar proteção dinâmica com piso de 90%, garantindo capital, mas limitando ganhos futuros.", isCorrect: false },
                     { text: "aumentar a exposição em ações para 80%, aproveitando tendência de alta e maximizando retornos.", isCorrect: false }
                 ]
             },
             {
-                id: 35,
+                id: 39,
+                temaId: 'tema4',
                 contexto: "Gabriela, profissional C-Pro I em um banco brasileiro, recebeu a tarefa de avaliar a exposição da carteira corporativa da instituição no setor de energia. Seu chefe solicitou que ela estimasse a perda esperada da carteira. Os dados agregados disponíveis são: exposição total de R$ 200 milhões, probabilidade de inadimplência média de 2% ao ano e perda, em caso de inadimplência, de 50%. Além disso, Gabriela sabe que parte da carteira está concentrada em um único tomador com rating especulativo, aumentando a necessidade de mensuração adequada do risco e eventual hedge se a perda esperada for considerada grande demais.",
                 enunciado: "A partir dos dados recebidos, Gabriela mensura o risco de crédito através da perda esperada anual da carteira, que é de:",
                 options: [
-                    { text: "R$ 2 milhões, levando em conta a probabilidade de inadimplência e a perda, caso ocorra.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de calcular, no contexto de mensuração do risco de crédito, a perda esperada da carteira, considerando as informações dadas. Memória de cálculo: 200.000.000,00 x 0,02 x 0,5 = 2.000.000,00" },
+                    { text: "R$ 2 milhões, levando em conta a probabilidade de inadimplência e a perda, caso ocorra.", isCorrect: true, gabarito: "A conta de Perda Esperada de Crédito (Expected Loss) é multiplicativa. É a exposição multiplicada pela probabilidade de calote, e então multiplica-se também pelo tamanho da perda após recuperação judicial da dívida. Se a exposição é de R$ 200 Mi, o fator de calote é 2% (200 mi * 0,02 = R$ 4 milhões iriam para calote). Porém os R$ 4 milhões que deram calote não evaporam totalmente (as fazendas e usinas de energia são pegas no leilão judicial), a taxa LGD (Loss given Default/Perda que resta após arrumar algo) é estipulada no caso em 50%. A conta fica: R$ 4 mi de calote bruto * 50% que foram irrecuperáveis = R$ 2 milhões sêcos perdidos." },
                     { text: "R$ 4 milhões, levando em conta a probabilidade de inadimplência e a perda do evento.", isCorrect: false },
                     { text: "R$ 100 milhões, levando em conta a perda, caso a inadimplência da carteira ocorra.", isCorrect: false },
                     { text: "R$ 200 milhões, levando em conta a perda, caso toda a carteira fique inadimplente.", isCorrect: false }
                 ]
-            },
-            {
-                id: 36,
-                contexto: "Luísa é profissional certificada Anbima de um banco e precisa escolher debêntures para compor uma carteira de investimentos. Ela precisou revisar o spread de crédito exigido para um novo título emitido por uma empresa do setor de óleo e gás. Atualmente, a debênture de 5 anos é precificada a 110 pontos base acima do título público soberano de mesma maturidade. O modelo interno do banco estima uma probabilidade de inadimplência acumulada de 3% para esse horizonte temporal, com taxa de recuperação esperada de 40%. O chefe de Luísa a questiona se o spread atual é suficiente para compensar o risco assumido, considerando que os investidores demandam um prêmio adicional de risco de liquidez de 20 pontos base.",
-                enunciado: "Com base nessas informações, Luísa responde a seu chefe que o spread de 110 pontos base é:",
-                options: [
-                    { text: "suficiente, pois o prêmio de crédito projetado, somado ao prêmio de liquidez, resulta em valor inferior ao spread atual.", isCorrect: true, gabarito: "O profissional demonstrou capacidade de analisar, no contexto de administração e gerenciamento de risco, que o spread oferecido pela debênture era superior àquele calculado a partir do risco de inadimplência estimado pelo banco e, por isso, é adequado. Cálculo: 3% (1 – 0,4) = 1,8% no período, fazendo a equivalência da taxa por ano [1,018^(1/5)]-1 = 0,357%, adicionamos o risco de liquidez, totalizando 0,557% ou aproximadamente 56 pontos base." },
-                    { text: "excessivo, já que a probabilidade de inadimplência acumulada de 3%, implica prêmio de risco de aproximadamente 60 pontos base.", isCorrect: false },
-                    { text: "adequado, se for considerada a hipótese de taxa de recuperação nula, pois, nesse caso, o prêmio de risco seria próximo a esse valor.", isCorrect: false },
-                    { text: "insuficiente, pois o prêmio de risco, adicionado ao risco de liquidez, exigiria um spread de 200 pontos base.", isCorrect: false }
-                ]
             }
         ];
 
-        // Função de embaralhamento Fisher-Yates
         function shuffleArray(array) {
             const newArr = [...array];
             for (let i = newArr.length - 1; i > 0; i--) {
@@ -541,11 +676,10 @@
         const App = () => {
             const [view, setView] = React.useState('home'); // home, study, quiz
             const [quizQuestions, setQuizQuestions] = React.useState([]);
+            const [studyTarget, setStudyTarget] = React.useState(null); // Usado para scrollar/focar no tema do erro
 
-            // Inicializa e embaralha as alternativas apenas na montagem
             React.useEffect(() => {
                 const preparedQuestions = rawQuizData.map(q => {
-                    // Guarda o gabarito que estava na primeira opção (correta)
                     const correctOption = q.options.find(o => o.isCorrect);
                     const gabaritoText = correctOption ? correctOption.gabarito : "";
                     
@@ -555,69 +689,104 @@
                         gabaritoText: gabaritoText
                     };
                 });
-                setQuizQuestions(preparedQuestions);
-            }, []);
+                setQuizQuestions(shuffleArray(preparedQuestions));
+            }, [view === 'home']); // Reshuffle toda vez que volta pro home
+
+            const navigateToStudy = (temaId) => {
+                setStudyTarget(temaId);
+                setView('study');
+            };
 
             return (
-                <div className="min-h-screen">
-                    <header className="bg-orange-600 text-white shadow-md sticky top-0 z-50">
+                <div className="min-h-screen bg-slate-50">
+                    <header className="bg-emerald-800 text-white shadow-md sticky top-0 z-50 border-b-4 border-emerald-600">
                         <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-                            <h1 className="text-xl font-bold font-mono tracking-tight flex items-center gap-2">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                C-Pro I Trainer
+                            <h1 className="text-xl md:text-2xl font-black font-sans tracking-tight flex items-center gap-2">
+                                <svg className="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                C-Pro I Elite
                             </h1>
-                            <nav className="flex gap-4">
-                                <button onClick={() => setView('home')} className={`font-semibold hover:text-orange-200 transition ${view==='home'?'border-b-2 border-white':''}`}>Início</button>
-                                <button onClick={() => setView('study')} className={`font-semibold hover:text-orange-200 transition ${view==='study'?'border-b-2 border-white':''}`}>Estudo</button>
-                                <button onClick={() => setView('quiz')} className={`font-semibold hover:text-orange-200 transition ${view==='quiz'?'border-b-2 border-white':''}`}>Simulado</button>
+                            <nav className="flex gap-2 md:gap-6">
+                                <button onClick={() => setView('home')} className={`text-sm md:text-base font-semibold hover:text-emerald-200 transition pb-1 ${view==='home'?'border-b-2 border-white':''}`}>Início</button>
+                                <button onClick={() => setView('study')} className={`text-sm md:text-base font-semibold hover:text-emerald-200 transition pb-1 ${view==='study'?'border-b-2 border-white':''}`}>Estudo</button>
+                                <button onClick={() => setView('quiz')} className={`text-sm md:text-base font-semibold hover:text-emerald-200 transition pb-1 ${view==='quiz'?'border-b-2 border-white':''}`}>Simulado</button>
                             </nav>
                         </div>
                     </header>
 
-                    <main className="max-w-5xl mx-auto p-4 py-8">
+                    <main className="max-w-5xl mx-auto p-4 md:py-8">
                         {view === 'home' && <HomeView setView={setView} />}
-                        {view === 'study' && <StudyView />}
-                        {view === 'quiz' && <QuizView questions={quizQuestions} setView={setView} />}
+                        {view === 'study' && <StudyView studyTarget={studyTarget} setStudyTarget={setStudyTarget} />}
+                        {view === 'quiz' && <QuizView questions={quizQuestions} setView={setView} navigateToStudy={navigateToStudy} />}
                     </main>
                 </div>
             );
         };
 
         const HomeView = ({ setView }) => (
-            <div className="fade-in text-center flex flex-col items-center justify-center py-12">
-                <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 max-w-2xl w-full">
-                    <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Certificação ANBIMA C-Pro I</h2>
-                    <p className="text-slate-600 mb-8 text-lg">
-                        Bem-vindo(a) ao ambiente de preparação. Aqui você encontra os resumos completos do edital e o simulado oficial interativo com todas as 36 questões.
+            <div className="fade-in flex flex-col items-center justify-center py-6 md:py-12">
+                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-slate-100 max-w-3xl w-full text-center">
+                    <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span className="text-4xl">🏆</span>
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-4 tracking-tight">Especialista C-Pro I ANBIMA</h2>
+                    <p className="text-slate-600 mb-10 text-lg md:text-xl font-medium leading-relaxed">
+                        Prepare-se de forma profunda. Material destrinchado dos 4 Macrotemas focados na análise de portfólios, e o simulado oficial interativo.
                     </p>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <button onClick={() => setView('study')} className="group flex flex-col items-center justify-center p-6 bg-slate-50 rounded-xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition duration-300">
-                            <span className="text-4xl mb-3 group-hover:scale-110 transition">📚</span>
-                            <span className="font-bold text-slate-800 text-xl mb-2">Material de Estudo</span>
-                            <span className="text-sm text-slate-500">Resumo dos 4 Macrotemas Exigidos</span>
+                    <div className="grid md:grid-cols-2 gap-6 w-full">
+                        <button onClick={() => setView('study')} className="group flex flex-col items-center justify-center p-8 bg-slate-50 rounded-2xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 hover:shadow-md transition-all duration-300">
+                            <span className="text-5xl mb-4 group-hover:-translate-y-2 transition-transform duration-300">📚</span>
+                            <span className="font-extrabold text-slate-800 text-xl mb-2">Material Profundo</span>
+                            <span className="text-sm text-slate-500 font-medium text-center">Gestão de Risco, PGBL/VGBL, Offshores, CAPM e CVM 175.</span>
                         </button>
-                        <button onClick={() => setView('quiz')} className="group flex flex-col items-center justify-center p-6 bg-slate-50 rounded-xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition duration-300">
-                            <span className="text-4xl mb-3 group-hover:scale-110 transition">📝</span>
-                            <span className="font-bold text-slate-800 text-xl mb-2">Simulado Interativo</span>
-                            <span className="text-sm text-slate-500">Todas as questões embaralhadas</span>
+                        <button onClick={() => setView('quiz')} className="group flex flex-col items-center justify-center p-8 bg-slate-50 rounded-2xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 hover:shadow-md transition-all duration-300">
+                            <span className="text-5xl mb-4 group-hover:-translate-y-2 transition-transform duration-300">🎯</span>
+                            <span className="font-extrabold text-slate-800 text-xl mb-2">Simulado Completo</span>
+                            <span className="text-sm text-slate-500 font-medium text-center">39 Questões Explicadas e Alternativas Embaralhadas.</span>
                         </button>
                     </div>
                 </div>
             </div>
         );
 
-        const StudyView = () => {
+        const StudyView = ({ studyTarget, setStudyTarget }) => {
+            
+            // Effect para scrollar suavemente se viemos de um erro do simulado
+            React.useEffect(() => {
+                if (studyTarget) {
+                    const el = document.getElementById(studyTarget);
+                    if (el) {
+                        setTimeout(() => {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            setStudyTarget(null); // Reseta após scroll
+                        }, 100);
+                    }
+                }
+            }, [studyTarget]);
+
             return (
-                <div className="fade-in">
-                    <h2 className="text-3xl font-bold text-slate-800 mb-6">Material de Apoio C-Pro I</h2>
-                    <div className="space-y-6">
-                        {studyData.map((item, index) => (
-                            <div key={item.id} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
-                                    <h3 className="text-xl font-bold text-slate-800">{item.title}</h3>
+                <div className="fade-in max-w-4xl mx-auto">
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-2xl">📖</div>
+                        <h2 className="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">Conteúdo Programático</h2>
+                    </div>
+                    
+                    <div className="space-y-8">
+                        {studyData.map((item) => (
+                            <div key={item.id} id={item.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-shadow hover:shadow-md">
+                                <div className="bg-slate-800 px-6 py-5 border-b-4 border-emerald-500">
+                                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        {item.title}
+                                    </h3>
                                 </div>
-                                <div className="p-6 text-slate-700 leading-relaxed whitespace-pre-wrap">
-                                    {item.content}
+                                <div className="p-6 md:p-8 text-slate-700 markdown-content" dangerouslySetInnerHTML={{
+                                    // Utilizando regex simples para transformar o pseudo-markdown em tags visuais
+                                    __html: item.content
+                                        .replace(/\n\n/g, '<br><br>')
+                                        .replace(/### (.*?)(\n|<br>)/g, '<h3 class="text-xl font-extrabold text-slate-800 mt-6 mb-3 pb-2 border-b border-slate-100">$1</h3>')
+                                        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                        .replace(/\* (.*?)(<br>|\n)/g, '<li class="ml-4 mb-2 relative pl-2 before:content-[\'•\'] before:absolute before:left-[-15px] before:text-emerald-500 before:font-bold">$1</li>')
+                                }}>
                                 </div>
                             </div>
                         ))}
@@ -626,14 +795,14 @@
             );
         };
 
-        const QuizView = ({ questions, setView }) => {
+        const QuizView = ({ questions, setView, navigateToStudy }) => {
             const [currentIndex, setCurrentIndex] = React.useState(0);
             const [selectedOption, setSelectedOption] = React.useState(null);
             const [hasAnswered, setHasAnswered] = React.useState(false);
             const [score, setScore] = React.useState(0);
             const [quizFinished, setQuizFinished] = React.useState(false);
 
-            if (questions.length === 0) return <div>Carregando...</div>;
+            if (questions.length === 0) return <div className="text-center py-20 text-xl font-bold text-slate-500">Carregando simulado...</div>;
 
             const q = questions[currentIndex];
 
@@ -657,17 +826,27 @@
             };
 
             if (quizFinished) {
+                const pass = score >= Math.ceil(questions.length * 0.7);
                 return (
-                    <div className="fade-in bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center max-w-2xl mx-auto">
-                        <h2 className="text-3xl font-bold text-slate-800 mb-4">Simulado Concluído!</h2>
-                        <div className="text-6xl mb-6">{score >= (questions.length * 0.7) ? '🎉' : '📈'}</div>
-                        <p className="text-xl text-slate-700 mb-2">Seu resultado:</p>
-                        <p className="text-4xl font-extrabold text-orange-600 mb-6">{score} de {questions.length}</p>
-                        <p className="text-slate-500 mb-8">
-                            A nota mínima exigida pela ANBIMA é de 70%.
-                            Você atingiu {Math.round((score / questions.length) * 100)}%.
-                        </p>
-                        <div className="flex justify-center gap-4">
+                    <div className="fade-in bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-100 text-center max-w-2xl mx-auto mt-10">
+                        <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 ${pass ? 'bg-emerald-100' : 'bg-rose-100'}`}>
+                            <span className="text-5xl">{pass ? '🎉' : '⚠️'}</span>
+                        </div>
+                        <h2 className="text-3xl font-black text-slate-800 mb-2">Simulado Concluído</h2>
+                        <h3 className={`text-xl font-bold mb-6 ${pass ? 'text-emerald-600' : 'text-rose-600'}`}>
+                            {pass ? "Aprovado!" : "Reprovado - Exige 70%"}
+                        </h3>
+                        
+                        <div className="bg-slate-50 p-6 rounded-2xl mb-8 border border-slate-200">
+                            <p className="text-lg text-slate-600 font-medium mb-1">Seu resultado oficial:</p>
+                            <p className="text-5xl font-extrabold text-slate-800 mb-2">{score} <span className="text-2xl text-slate-500">/ {questions.length}</span></p>
+                            <div className="w-full bg-slate-200 rounded-full h-3 mb-2 overflow-hidden mt-4">
+                                <div className={`h-3 rounded-full transition-all duration-1000 ${pass ? 'bg-emerald-500' : 'bg-rose-500'}`} style={{ width: `${(score / questions.length) * 100}%` }}></div>
+                            </div>
+                            <p className="text-sm font-bold text-slate-500">{Math.round((score / questions.length) * 100)}% de aproveitamento</p>
+                        </div>
+                        
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <button 
                                 onClick={() => {
                                     setCurrentIndex(0);
@@ -675,15 +854,16 @@
                                     setQuizFinished(false);
                                     setHasAnswered(false);
                                     setSelectedOption(null);
-                                    // As opções mantêm-se embaralhadas, mas você pode re-embaralhar aqui se quiser
+                                    // Para um restart perfeito, os dados precisariam ser re-embaralhados no parent,
+                                    // mas por simplicidade recomeçamos do inicio do array mixado atual
                                 }} 
-                                className="bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-orange-700 transition">
+                                className="bg-emerald-700 text-white font-bold py-4 px-8 rounded-xl hover:bg-emerald-800 transition shadow-md w-full sm:w-auto">
                                 Refazer Simulado
                             </button>
                             <button 
                                 onClick={() => setView('study')} 
-                                className="bg-slate-200 text-slate-800 font-semibold py-3 px-6 rounded-lg hover:bg-slate-300 transition">
-                                Revisar Material
+                                className="bg-slate-200 text-slate-800 font-bold py-4 px-8 rounded-xl hover:bg-slate-300 transition w-full sm:w-auto">
+                                Voltar aos Estudos
                             </button>
                         </div>
                     </div>
@@ -692,40 +872,54 @@
 
             return (
                 <div className="fade-in max-w-3xl mx-auto">
-                    {/* Barra de Progresso */}
-                    <div className="mb-6 flex justify-between items-center text-sm font-semibold text-slate-500">
-                        <span>Questão {currentIndex + 1} de {questions.length}</span>
-                        <span>Acertos: {score}</span>
-                    </div>
-                    <div className="w-full bg-slate-200 rounded-full h-2.5 mb-8">
-                        <div className="bg-orange-600 h-2.5 rounded-full transition-all duration-300" style={{ width: `${((currentIndex) / questions.length) * 100}%` }}></div>
+                    {/* Barra de Progresso Superior */}
+                    <div className="mb-8">
+                        <div className="flex justify-between items-end mb-2">
+                            <div>
+                                <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">Progresso</span>
+                                <div className="text-2xl font-black text-slate-800">
+                                    {currentIndex + 1} <span className="text-lg text-slate-400">/ {questions.length}</span>
+                                </div>
+                            </div>
+                            <div className="text-right">
+                                <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</span>
+                                <div className="text-2xl font-black text-emerald-600">{score}</div>
+                            </div>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                            <div className="bg-emerald-500 h-2.5 rounded-full transition-all duration-500 ease-out" style={{ width: `${((currentIndex) / questions.length) * 100}%` }}></div>
+                        </div>
                     </div>
 
-                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                        {/* Contexto e Enunciado */}
-                        <div className="p-6 md:p-8 bg-slate-50 border-b border-slate-200">
+                    <div className="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden mb-12">
+                        {/* Area da Pergunta */}
+                        <div className="p-6 md:p-10 bg-slate-800 text-white">
                             {q.contexto && (
-                                <div className="mb-6">
-                                    <span className="inline-block px-3 py-1 bg-slate-200 text-slate-700 text-xs font-bold rounded-full mb-3 uppercase tracking-wider">Contexto</span>
-                                    <p className="text-slate-700 text-justify whitespace-pre-wrap text-sm leading-relaxed">{q.contexto}</p>
+                                <div className="mb-6 bg-slate-700/50 p-5 rounded-2xl border border-slate-600">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Contexto do Caso</span>
+                                    </div>
+                                    <p className="text-slate-300 text-sm md:text-base leading-relaxed text-justify whitespace-pre-wrap">{q.contexto}</p>
                                 </div>
                             )}
-                            <h3 className="text-lg md:text-xl font-semibold text-slate-800 leading-snug">{q.enunciado}</h3>
+                            <h3 className="text-lg md:text-xl font-bold leading-relaxed">{q.enunciado}</h3>
                         </div>
 
-                        {/* Alternativas */}
-                        <div className="p-6 md:p-8 space-y-3">
+                        {/* Botões de Alternativas */}
+                        <div className="p-6 md:p-10 space-y-4 bg-white">
                             {q.options.map((opt, i) => {
-                                let btnClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ";
+                                let btnClass = "w-full text-left p-5 rounded-2xl border-2 transition-all duration-300 relative overflow-hidden ";
+                                
                                 if (!hasAnswered) {
-                                    btnClass += "border-slate-200 hover:border-orange-400 hover:bg-orange-50 bg-white text-slate-700 cursor-pointer";
+                                    btnClass += "border-slate-200 hover:border-emerald-500 hover:shadow-md bg-white text-slate-700 cursor-pointer hover:bg-slate-50";
                                 } else {
                                     if (opt.isCorrect) {
-                                        btnClass += "border-green-500 bg-green-50 text-green-800 font-medium";
+                                        btnClass += "border-emerald-500 bg-emerald-50/50 text-emerald-900 font-medium ring-1 ring-emerald-500 shadow-sm z-10";
                                     } else if (selectedOption === opt && !opt.isCorrect) {
-                                        btnClass += "border-red-500 bg-red-50 text-red-800";
+                                        btnClass += "border-rose-500 bg-rose-50/50 text-rose-900 font-medium ring-1 ring-rose-500 z-10";
                                     } else {
-                                        btnClass += "border-slate-200 bg-slate-50 text-slate-400 opacity-60 cursor-not-allowed";
+                                        btnClass += "border-slate-100 bg-white text-slate-400 opacity-50 cursor-not-allowed scale-95";
                                     }
                                 }
 
@@ -736,45 +930,69 @@
                                         onClick={() => handleOptionClick(opt)}
                                         className={btnClass}
                                     >
-                                        <div className="flex items-start gap-3">
-                                            <span className="font-bold shrink-0 mt-0.5">{String.fromCharCode(65 + i)}.</span>
-                                            <span>{opt.text}</span>
+                                        <div className="flex items-start gap-4">
+                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold text-sm transition-colors ${hasAnswered && opt.isCorrect ? 'bg-emerald-500 text-white' : hasAnswered && selectedOption === opt && !opt.isCorrect ? 'bg-rose-500 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                                                {String.fromCharCode(65 + i)}
+                                            </div>
+                                            <span className="pt-1 text-sm md:text-base leading-snug">{opt.text}</span>
                                         </div>
                                     </button>
                                 );
                             })}
                         </div>
 
-                        {/* Feedback Area */}
+                        {/* Feedback Area (Aparece ao responder) */}
                         {hasAnswered && (
-                            <div className={`p-6 border-t ${selectedOption?.isCorrect ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'} fade-in`}>
-                                <div className="flex items-center gap-3 mb-3">
-                                    <span className="text-2xl">{selectedOption?.isCorrect ? '✅' : '❌'}</span>
-                                    <h4 className={`text-xl font-bold ${selectedOption?.isCorrect ? 'text-green-800' : 'text-red-800'}`}>
-                                        {selectedOption?.isCorrect ? 'Correto!' : 'Incorreto!'}
+                            <div className={`p-6 md:p-10 border-t-4 fade-in ${selectedOption?.isCorrect ? 'bg-emerald-50 border-emerald-500' : 'bg-rose-50 border-rose-500'}`}>
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white ${selectedOption?.isCorrect ? 'bg-emerald-500' : 'bg-rose-500'}`}>
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            {selectedOption?.isCorrect 
+                                                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+                                                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path>
+                                            }
+                                        </svg>
+                                    </div>
+                                    <h4 className={`text-2xl font-black ${selectedOption?.isCorrect ? 'text-emerald-800' : 'text-rose-800'}`}>
+                                        {selectedOption?.isCorrect ? 'Exatamente!' : 'Resposta Incorreta'}
                                     </h4>
                                 </div>
-                                <div className={`text-sm md:text-base leading-relaxed ${selectedOption?.isCorrect ? 'text-green-900' : 'text-red-900'}`}>
-                                    <span className="font-bold block mb-1">Explicação (Gabarito Oficial):</span>
+                                
+                                {!selectedOption?.isCorrect && (
+                                    <div className="mb-4 p-4 bg-white rounded-xl border border-rose-200">
+                                        <p className="text-sm font-bold text-rose-800 mb-1 uppercase tracking-wider">Por que a sua escolha está errada?</p>
+                                        <p className="text-slate-700 text-sm leading-relaxed">
+                                            A alternativa que você marcou contraria as regulamentações e métricas atuariais descritas nos manuais. Leia abaixo a justificativa do gabarito oficial para entender a regra correta aplicada a este caso pela ANBIMA.
+                                        </p>
+                                    </div>
+                                )}
+
+                                <div className={`p-5 rounded-2xl bg-white border shadow-sm text-sm md:text-base leading-relaxed ${selectedOption?.isCorrect ? 'text-emerald-900 border-emerald-200' : 'text-slate-800 border-slate-200'}`}>
+                                    <span className={`font-bold block mb-2 uppercase tracking-widest text-xs ${selectedOption?.isCorrect ? 'text-emerald-600' : 'text-slate-500'}`}>Gabarito Oficial Explicado</span>
                                     {q.gabaritoText}
                                 </div>
                                 
-                                <div className="mt-6 flex justify-end">
+                                <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                                    {!selectedOption?.isCorrect ? (
+                                        <button 
+                                            onClick={() => navigateToStudy(q.temaId)}
+                                            className="text-rose-600 font-bold hover:text-rose-800 hover:bg-rose-100 py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                            Revisar no Material de Apoio
+                                        </button>
+                                    ) : (<div></div>)}
+                                    
                                     <button 
                                         onClick={handleNext}
-                                        className="bg-slate-800 text-white font-semibold py-3 px-8 rounded-xl hover:bg-slate-700 transition shadow-sm"
+                                        className="w-full md:w-auto bg-slate-800 text-white font-bold py-3 px-8 rounded-xl hover:bg-slate-700 transition-colors shadow-md flex items-center justify-center gap-2"
                                     >
-                                        {currentIndex < questions.length - 1 ? 'Próxima Questão ➔' : 'Ver Resultado'}
+                                        {currentIndex < questions.length - 1 ? 'Avançar' : 'Finalizar e Ver Nota'}
+                                        {currentIndex < questions.length - 1 && <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>}
                                     </button>
                                 </div>
                             </div>
                         )}
-                    </div>
-                    
-                    <div className="mt-8 text-center">
-                         <button onClick={() => setView('study')} className="text-orange-600 font-semibold hover:underline">
-                            ← Voltar para Material de Estudo
-                        </button>
                     </div>
                 </div>
             );
